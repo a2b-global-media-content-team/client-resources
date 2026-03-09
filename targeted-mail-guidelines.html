@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Targeted Mail: Client Guidelines — a2b Global Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --primary:        #E25E7A;   /* a2b pink — main accent    */
+            --primary-tint:   #FDF0F3;   /* light pink tint            */
+            --secondary:      #49B7BE;   /* a2b teal                   */
+            --secondary-tint: #EDF8F9;   /* light teal tint            */
+            --grey:           #696A6D;   /* a2b grey                   */
+            --text:           #2E2E2E;
+            --border:         #E2E8F0;
+            --bg:             #F7F9FA;
+            --white:          #FFFFFF;
+            --dark:           #1B3342;   /* hero background            */
+            --dark-alt:       #1B3342;   /* header / footer background */
+        }
+
+        body {
+            font-family: 'Mukta', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        /* ── HEADER ─────────────────────────────────────── */
+        header {
+            background: var(--dark-alt);
+            padding: 30px 60px 26px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .header-logo {
+            height: 44px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-tagline {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            margin-top: 10px;
+        }
+
+        /* ── HERO ────────────────────────────────────────── */
+        .hero {
+            background: var(--dark);
+            padding: 56px 60px 48px;
+            text-align: center;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .hero-pill {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 5px 13px;
+            border-radius: 3px;
+            margin-bottom: 18px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.08;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 16.5px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.8);
+            max-width: 580px;
+            line-height: 1.7;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── MAIN ────────────────────────────────────────── */
+        main {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 52px 60px 20px;
+        }
+
+        section { margin-bottom: 52px; }
+
+        /* Section header */
+        .sh {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .sh-num {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .sh-num.accent {
+            background: var(--primary);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .sh h2 {
+            font-size: 23px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* Typography */
+        p { margin-bottom: 14px; font-size: 15.5px; line-height: 1.7; }
+
+        h3 {
+            font-size: 16.5px;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 22px 0 10px;
+        }
+
+        /* ── CHECKLIST ───────────────────────────────────── */
+        .checklist {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px 20px;
+            margin: 16px 0 4px;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14.5px;
+            line-height: 1.55;
+        }
+
+        .checklist li::before {
+            content: '';
+            min-width: 17px;
+            height: 17px;
+            margin-top: 2px;
+            border-radius: 3px;
+            background-color: var(--primary);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+            background-size: 11px;
+            background-repeat: no-repeat;
+            background-position: center;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .checklist li em {
+            font-style: normal;
+            color: var(--grey);
+            font-size: 13.5px;
+        }
+
+        /* ── ARROW LIST ──────────────────────────────────── */
+        ul.arrowlist {
+            list-style: none;
+            margin-bottom: 14px;
+        }
+
+        ul.arrowlist li {
+            padding: 10px 0 10px 22px;
+            position: relative;
+            font-size: 15px;
+            line-height: 1.6;
+            border-bottom: 1px solid var(--border);
+        }
+
+        ul.arrowlist li:last-child { border-bottom: none; }
+
+        ul.arrowlist li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* ── CALLOUT BOX ─────────────────────────────────── */
+        .callout {
+            border-left: 4px solid var(--primary);
+            background: var(--primary-tint);
+            border-radius: 0 6px 6px 0;
+            padding: 16px 20px;
+            margin: 20px 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .callout.teal-callout {
+            border-left-color: var(--secondary);
+            background: var(--secondary-tint);
+        }
+
+        .callout strong {
+            display: block;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .callout p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.65;
+        }
+
+        /* ── PROCESS GRID ────────────────────────────────── */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .process-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 18px;
+        }
+
+        .process-step {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .process-card h4 {
+            font-size: 15.5px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .process-card p {
+            font-size: 13.5px;
+            color: var(--grey);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ── TIMELINE ────────────────────────────────────── */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 8px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .tl-item {
+            position: relative;
+            margin-bottom: 26px;
+        }
+
+        .tl-item:last-child { margin-bottom: 0; }
+
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--bg);
+            box-shadow: 0 0 0 2px var(--primary);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .tl-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .tl-item h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 3px;
+        }
+
+        .tl-item p {
+            font-size: 14px;
+            color: var(--grey);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* ── FAQ ─────────────────────────────────────────── */
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .faq-q {
+            padding: 15px 20px;
+            background: var(--white);
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--dark);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.5;
+        }
+
+        .faq-q::before {
+            content: 'Q';
+            min-width: 25px;
+            height: 25px;
+            background: var(--secondary);
+            color: #fff;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 1px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .faq-a {
+            padding: 12px 20px 15px 57px;
+            background: #F8FAFC;
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── FOOTER ──────────────────────────────────────── */
+        footer {
+            background: var(--dark-alt);
+            padding: 26px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .footer-logo-img {
+            height: 28px;
+            width: auto;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .footer-meta {
+            font-family: 'Mukta', sans-serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .footer-right {
+            text-align: right;
+            font-family: 'Mukta', sans-serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.9;
+        }
+
+        /* ── PRINT ───────────────────────────────────────── */
+        @media print {
+            body { background: #fff; }
+
+            header { padding: 22px 44px; }
+            .hero  { padding: 40px 44px 36px; }
+            main   { padding: 38px 44px 10px; max-width: none; }
+            footer { padding: 20px 44px; }
+
+            .hero h1 { font-size: 34px; }
+
+            section       { break-inside: avoid; margin-bottom: 38px; }
+            .process-grid { break-inside: avoid; }
+            .checklist    { break-inside: avoid; }
+            .faq-item     { break-inside: avoid; }
+            .tl-item      { break-inside: avoid; }
+            .callout      { break-inside: avoid; }
+        }
+
+        @page { margin: 0; }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <img src="https://a2bglobalmedia.com/wp-content/themes/globala2bmedia/graphics/a2bglobalmedia-footer.svg"
+         alt="a2b Global Media" class="header-logo">
+    <div class="logo-tagline">Targeted Mail FAQs</div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-pill">Targeted Mail</div>
+    <h1>What we need from<br><em>you</em></h1>
+    <p>This document outlines everything you need to know about preparing and approving a targeted mail campaign with a2b Global Media — from supplying assets through to sign-off and send.</p>
+</div>
+
+<main>
+
+    <!-- 1. ASSETS -->
+    <section>
+        <div class="sh">
+            <div class="sh-num">1</div>
+            <h2>Assets Required</h2>
+        </div>
+
+        <p>We require <strong>all assets before we can begin work</strong>. Please do not submit a partial brief — we will hold the job until everything has been received.</p>
+
+        <h3>Please supply the following</h3>
+        <ul class="checklist">
+            <li>All body copy and text (proofread and final)</li>
+            <li>All images, in high resolution (PNG or JPEG)</li>
+            <li>Logo file(s) — PNG with transparent background preferred</li>
+            <li>Brand colour hex codes (e.g. <strong>#E25E7A</strong>)</li>
+            <li>All destination URLs for links and calls to action</li>
+            <li>Subject line and preview text</li>
+            <li>Contact details to include (if applicable)</li>
+            <li>Font preferences <em>— email font support is limited; see note below</em></li>
+            <li>Social media profile links (if to be included)</li>
+            <li>Any additional reference materials or brand guidelines</li>
+        </ul>
+
+        <div class="callout teal-callout" style="margin-top:22px;">
+            <strong>Note: Email font support is limited</strong>
+            <p>Most email clients — including all versions of Microsoft Outlook — do not support custom or commercial web fonts. We design using web-safe system fonts (Arial, Helvetica, Georgia, Verdana, and similar) and, where the client supports it, Google Fonts. If you have a preferred typeface, please share your brand guidelines and we will apply it where possible. A system font fallback will always be used for clients that do not support custom fonts.</p>
+        </div>
+
+        <div class="callout" style="margin-top:14px;">
+            <strong>Tip: Brand colours</strong>
+            <p>Please supply colours as <strong>hex codes</strong> — for example, <strong>#E25E7A</strong>. Descriptions such as "rose pink" or "duck egg blue" cannot be applied reliably. If you are unsure of your hex codes, refer to your brand guidelines or ask your design team.</p>
+        </div>
+    </section>
+
+    <!-- 2. PROCESS -->
+    <section>
+        <div class="sh">
+            <div class="sh-num">2</div>
+            <h2>Our Design Process</h2>
+        </div>
+
+        <p>We build all targeted mails as <strong>hand-coded HTML</strong>, designed specifically for email — not web browsers. Email HTML requires specialist knowledge: layout techniques and CSS that work perfectly on a website will frequently break in Outlook, Gmail, or Apple Mail. We account for this throughout.</p>
+
+        <div class="process-grid">
+            <div class="process-card">
+                <div class="process-step">Step 01</div>
+                <h4>HTML Design</h4>
+                <p>We code your email from scratch using techniques that ensure visual consistency across Outlook, Gmail, Apple Mail, and mobile clients.</p>
+            </div>
+            <div class="process-card">
+                <div class="process-step">Step 02</div>
+                <h4>Deliverability Testing</h4>
+                <p>We run deliverability checks before sending to maximise inbox placement and minimise the risk of your email being flagged as spam.</p>
+            </div>
+            <div class="process-card">
+                <div class="process-step">Step 03</div>
+                <h4>Client Approval</h4>
+                <p>A draft is shared with you for review and sign-off. We will not send the campaign until written approval has been received.</p>
+            </div>
+        </div>
+
+        <div class="callout teal-callout" style="margin-top:18px;">
+            <strong>Why does email HTML differ from web HTML?</strong>
+            <p>Email clients such as Outlook use Microsoft Word's rendering engine, which has significant CSS limitations. Other clients (Gmail, Apple Mail, mobile apps) each have their own quirks. We design to handle all of these, so your email looks professional wherever it lands.</p>
+        </div>
+    </section>
+
+    <!-- 3. CLIENT HTML -->
+    <section>
+        <div class="sh">
+            <div class="sh-num">3</div>
+            <h2>Supplying Your Own HTML</h2>
+        </div>
+
+        <p>If you would prefer to supply a fully coded HTML file rather than a brief and assets, we can work with that — subject to the following requirements.</p>
+
+        <ul class="arrowlist">
+            <li>Your HTML <strong>must be compatible with Mailchimp</strong>. We send all campaigns through Mailchimp, and proprietary template tags or syntax from other platforms — including <strong>Zoho Campaigns</strong> and <strong>Microsoft platforms</strong> — are not supported and will cause errors.</li>
+            <li><strong>Do not include a footer</strong> in your HTML file. We will insert our own footer containing the unsubscribe link, opt-out option, and postal address, which is required for legal compliance and our sending policy. Any footer present in a supplied file will be removed.</li>
+            <li>All links should be <strong>plain, absolute URLs</strong> — not shortened, tracking-wrapped, or platform-specific redirect links.</li>
+            <li>Images must be <strong>hosted at a publicly accessible URL</strong>, or supplied to us as separate files for us to host.</li>
+            <li>Please do not include JavaScript, embedded video, forms, or interactive elements — these are not supported in email clients.</li>
+        </ul>
+
+        <div class="callout">
+            <strong>Please note</strong>
+            <p>Even where you supply your own HTML, we reserve the right to modify it for Mailchimp compatibility, deliverability, and legal compliance. We will flag any significant changes to you before sending.</p>
+        </div>
+    </section>
+
+    <!-- 4. TIMELINE -->
+    <section>
+        <div class="sh">
+            <div class="sh-num">4</div>
+            <h2>Timeline &amp; Deadlines</h2>
+        </div>
+
+        <p>Once your targeted mail is booked, the schedule below applies. Please plan your internal review time accordingly.</p>
+
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-label">On booking</div>
+                <h4>Send date confirmed</h4>
+                <p>Your campaign date is secured upon booking. We recommend keeping this date in mind when preparing your assets.</p>
+            </div>
+            <div class="tl-item">
+                <div class="tl-label">3 weeks before send date</div>
+                <h4>Reminder email sent to you</h4>
+                <p>We will send you a reminder to begin preparing your assets and brief.</p>
+            </div>
+            <div class="tl-item">
+                <div class="tl-label">2 weeks before send date — deadline</div>
+                <h4>All assets must be received</h4>
+                <p>Copy, images, logos, links, brand guidelines, and subject line must all be submitted by this date. Late delivery of assets may require the send date to be rescheduled.</p>
+            </div>
+            <div class="tl-item">
+                <div class="tl-label">After assets received</div>
+                <h4>Design &amp; draft</h4>
+                <p>We will design your email and share a draft for your review as promptly as possible once all assets are in hand.</p>
+            </div>
+            <div class="tl-item">
+                <div class="tl-label">Before send date</div>
+                <h4>Written approval required</h4>
+                <p>We will not send the campaign without written confirmation of approval from you or your nominated contact.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. APPROVAL -->
+    <section>
+        <div class="sh">
+            <div class="sh-num">5</div>
+            <h2>Approval &amp; Amends</h2>
+        </div>
+
+        <p>When you receive your draft, please review it carefully before responding. Our standard service includes <strong>two rounds of amends</strong>.</p>
+
+        <ul class="arrowlist">
+            <li>Please <strong>consolidate all feedback into a single, clearly written response</strong> per round, rather than sending changes in multiple separate messages.</li>
+            <li>Additional rounds of amends beyond the standard two may be subject to an additional charge.</li>
+            <li>Amends arising from <strong>our own error</strong> — for example, a missing or incorrect link, a typo introduced by us, or a layout issue on our part — will not count against your rounds of amends.</li>
+            <li>The campaign <strong>will not be sent without written sign-off</strong> from you. Verbal approval is not sufficient.</li>
+        </ul>
+
+        <div class="callout">
+            <strong>Please check carefully before approving</strong>
+            <p>Before giving approval, please verify all links, all text, all images, and any contact details or dates. We recommend that all relevant internal stakeholders review the draft before you sign off.</p>
+        </div>
+    </section>
+
+    <!-- 6. FAQ -->
+    <section>
+        <div class="sh">
+            <div class="sh-num accent">6</div>
+            <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">What happens if I miss the two-week asset deadline?</div>
+            <div class="faq-a">Late submission of assets may mean your send date needs to be rescheduled. Please contact us as early as possible if you anticipate a delay. We will do our best to accommodate you, but cannot guarantee the original send date if assets are received late.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">What image formats and sizes do you need?</div>
+            <div class="faq-a">We accept JPEG and PNG files. Please supply images at the highest resolution available — we will crop, resize, and optimise them for email. For logos, PNG files with a transparent background are strongly preferred. Do not embed images inside a Word or PDF document, as they will be too low resolution to use.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Can I supply a PDF or Word document with my copy and layout ideas?</div>
+            <div class="faq-a">Yes — we can work from a PDF or Word document for copy and layout reference. However, all images and logos must still be supplied as separate files, and all links must be provided as full URLs in a separate document or email.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Which email clients do you test against?</div>
+            <div class="faq-a">We test across the major email environments, including Microsoft Outlook (multiple versions), Gmail (web and mobile), Apple Mail, and mobile clients on iOS and Android. Our goal is a consistent, professional appearance across all major platforms.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Will my email look identical across all email clients?</div>
+            <div class="faq-a">Not always — and this is normal in email design. Some clients, particularly older versions of Outlook, have significant rendering limitations. We design emails to degrade gracefully, so the result will always look professional, but minor differences in fonts, spacing, or layout between clients are inherent to email HTML.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Can I include video in my email?</div>
+            <div class="faq-a">Embedded video is not reliably supported across email clients. The best approach — and the one we recommend — is a still image with a play button overlay, linking through to your video on YouTube, Vimeo, or your website. We are happy to set this up for you.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Do you provide copywriting or translation services?</div>
+            <div class="faq-a">We are happy to advise on layout, structure, and email best practice, but all copy must be supplied by you — proofread, approved internally, and ready to use. Copywriting and translation are outside our standard service scope.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Will I receive campaign performance data after the send?</div>
+            <div class="faq-a">Yes. Campaign metrics — including open rate, click rate, and other key data — are included in our quarterly stats report, which is shared with all clients.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Can I make changes after I have approved the email?</div>
+            <div class="faq-a">If you need to request a change after approval, please contact us immediately. If there is sufficient time before the scheduled send date, we will do our best to accommodate the amendment. If there is not enough time, we will pause the campaign and wait to hear from you before proceeding. Please note that a sent email cannot be recalled or amended, so we strongly encourage all stakeholders to review the draft thoroughly before giving sign-off.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q">Where do I send my assets?</div>
+            <div class="faq-a">Please send all assets to <strong>content@a2bglobalmedia.com</strong>. If helpful, include a brief note with your booking reference or company name so we can assign your campaign correctly.</div>
+        </div>
+
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div>
+        <img src="https://a2bglobalmedia.com/wp-content/themes/globala2bmedia/graphics/a2bglobalmedia-footer.svg"
+             alt="a2b Global Media" class="footer-logo-img">
+        <div class="footer-meta">Targeted Mail Client Guidelines &nbsp;·&nbsp; March 2026</div>
+    </div>
+    <div class="footer-right">
+        a2b Global Media Ltd<br>
+        a2bglobalmedia.com
+    </div>
+</footer>
+
+</body>
+</html>
