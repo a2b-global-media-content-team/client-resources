@@ -158,6 +158,7 @@
         }
         .card h3 { font-size: 20px; font-weight: 600; color: var(--navy); line-height: 1.2; }
         .card .ex { font-size: 13px; color: var(--muted); margin: 2px 0 12px; word-break: break-word; }
+        .card .ex a { color: var(--orange-dk); }
         .card dl { font-size: 15px; }
         .card dt { font-weight: 600; color: var(--navy); margin-top: 10px; }
         .card dd { color: #3A4850; }
@@ -262,7 +263,7 @@
     <img src="https://railway-news.com/wp-content/uploads/2025/08/Railway-News-White-Logo-CLEAR.png" alt="Railway-News"><br>
     <a href="https://railway-news.com/" target="_blank" rel="noopener">railway-news.com</a><span class="sep">|</span>
     <a href="tel:+441392580002">+44 1392 580002</a><span class="sep">|</span>
-    <a href="mailto:content@a2bglobalmedia.com">content@a2bglobalmedia.com</a>
+    <a href="mailto:contact@a2bglobalmedia.com">contact@a2bglobalmedia.com</a>
 </footer>
 
 <script>
@@ -423,6 +424,7 @@ const CHAPTERS = [
     },
     {
         name: 'Homepage',
+        isPage: true,
         url: 'railway-news.com',
         img: 'rn-homepage.jpg', h: 7533,
         alt: 'Railway-News homepage',
@@ -620,7 +622,8 @@ new IntersectionObserver(([e]) => {
 CHAPTERS.forEach((c, ci) => {
     const card = document.createElement('article');
     card.className = 'card';
-    card.innerHTML = `<h3>${c.name}</h3><div class="ex">Example: ${c.url}</div>${c.ref}<button class="watch">Watch in the tour ▸</button>`;
+    const href = c.link || ('https://' + c.url);
+    card.innerHTML = `<h3>${c.name}</h3><div class="ex">${c.isPage ? '' : 'Example: '}<a href="${href}" target="_blank" rel="noopener">${c.url}</a></div>${c.ref}<button class="watch">Watch in the tour ▸</button>`;
     card.querySelector('.watch').onclick = () => { go(STEPS.findIndex(s => s.ci === ci), true); document.querySelector('.player-wrap').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); };
     $('cards').appendChild(card);
 });
