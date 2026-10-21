@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Guide: Bus-News — a2b Global Media</title>
+    <meta name="description" content="A guided tour of where your Bus-News package appears: company profile, products & services, newsletter, magazine, targeted mail, social media and homepage.">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:      #1B3342;
+            --navy-2:    #24465A;
+            --orange:    #9789B4;
+            --orange-dk: #5B4C8A;
+            --light:     #F7F7F7;
+            --text:      #1F2A30;
+            --muted:     #5D6B73;
+            --rule:      #E2E8EC;
+            --white:     #FFFFFF;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Mukta', Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: var(--light);
+            font-size: 16px;
+            line-height: 1.55;
+        }
+        a { color: var(--orange-dk); }
+
+        /* ── HEADER ─────────────────────────────────────── */
+        .site-head {
+            background: var(--navy);
+            color: var(--white);
+            padding: 22px 24px 64px;
+            text-align: center;
+        }
+        .site-head .brand { display: flex; justify-content: space-between; align-items: center; max-width: 1240px; margin: 0 auto 46px; gap: 16px; }
+        .site-head .brand img.rn { height: 34px; width: auto; }
+        .site-head .brand img.a2b { height: 26px; width: auto; }
+        .eyebrow { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); font-weight: 600; }
+        .site-head h1 { font-size: 46px; line-height: 1.1; font-weight: 600; margin: 10px 0 14px; }
+        .site-head p.lead { max-width: 640px; margin: 0 auto; color: #C9D6DE; font-size: 18px; }
+
+        /* ── PLAYER ─────────────────────────────────────── */
+        .player-wrap { max-width: 1240px; margin: -36px auto 0; padding: 0 24px; }
+        .chapters {
+            display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin;
+        }
+        .chapters button {
+            flex: none; border: 0; cursor: pointer; font: inherit; font-size: 14px; font-weight: 500;
+            background: var(--navy-2); color: #D5E0E6; padding: 8px 14px; border-radius: 6px;
+            display: flex; align-items: center; gap: 8px; white-space: nowrap;
+        }
+        .chapters button .n { font-size: 12px; opacity: 0.7; }
+        .chapters button[aria-current="true"] { background: var(--orange); color: var(--navy); }
+        .chapters button:focus-visible, .ctrl button:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+        .player {
+            display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 0;
+            background: var(--white); border-radius: 12px; overflow: hidden;
+            box-shadow: 0 18px 50px rgba(27, 51, 66, 0.22);
+        }
+
+        /* Screen-share window */
+        .screen { background: #0F1F29; padding: 14px; position: relative; }
+        .share-badge {
+            position: absolute; top: 22px; right: 26px; z-index: 6;
+            background: rgba(229, 57, 53, 0.95); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+            padding: 3px 9px 2px; border-radius: 20px; display: flex; align-items: center; gap: 6px;
+        }
+        .share-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: blink 1.4s infinite; }
+        @keyframes blink { 50% { opacity: 0.25; } }
+
+        .browser { background: #fff; border-radius: 8px; overflow: hidden; }
+        .chrome {
+            height: 40px; background: #E9EDF0; display: flex; align-items: center; gap: 12px; padding: 0 12px;
+            border-bottom: 1px solid #D6DCE0;
+        }
+        .dots { display: flex; gap: 6px; flex: none; }
+        .dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+        .dots i:nth-child(1) { background: #FF5F57; } .dots i:nth-child(2) { background: #FEBC2E; } .dots i:nth-child(3) { background: #28C840; }
+        .url {
+            flex: 1; min-width: 0; background: #fff; border-radius: 6px; height: 26px; display: flex; align-items: center; gap: 7px;
+            padding: 0 10px; font-size: 13px; color: #44515A; white-space: nowrap; overflow: hidden;
+        }
+        .url svg { flex: none; width: 12px; height: 12px; }
+        .url .caret { display: inline-block; width: 1px; height: 14px; background: #333; margin-left: 1px; animation: blink 1s steps(1) infinite; vertical-align: -2px; }
+
+        .viewport { position: relative; overflow: hidden; aspect-ratio: 16 / 10; background: #DDE3E7; }
+        .layer { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+        .layer.anim { transition: transform 1.4s cubic-bezier(0.65, 0, 0.25, 1); }
+        .layer img.page { display: block; width: 1440px; height: auto; user-select: none; -webkit-user-drag: none; }
+        .layer .html-page { width: 1440px; }
+
+        .ring {
+            position: absolute; border: 5px solid var(--orange); border-radius: 14px; pointer-events: none;
+            box-shadow: 0 0 0 9999px rgba(15, 31, 41, 0.42), 0 0 24px rgba(151, 137, 180, 0.95);
+            opacity: 0; transition: opacity 0.5s ease, left 1.4s cubic-bezier(0.65, 0, 0.25, 1), top 1.4s cubic-bezier(0.65, 0, 0.25, 1), width 1.4s cubic-bezier(0.65, 0, 0.25, 1), height 1.4s cubic-bezier(0.65, 0, 0.25, 1);
+        }
+        .ring.on { opacity: 1; animation: pulse 1.8s ease-in-out infinite 1.4s; }
+        @keyframes pulse { 50% { box-shadow: 0 0 0 9999px rgba(15, 31, 41, 0.42), 0 0 44px rgba(151, 137, 180, 1); } }
+
+        .cursor {
+            position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 5; pointer-events: none;
+            transition: transform 1.2s cubic-bezier(0.65, 0, 0.25, 1); filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35));
+        }
+        .click {
+            position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; z-index: 4;
+            border: 3px solid var(--orange); opacity: 0; pointer-events: none;
+        }
+        .click.go { animation: ripple 0.7s ease-out; }
+        @keyframes ripple { from { transform: scale(0.3); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+
+        .loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; background: #fff; z-index: 3; transition: opacity 0.3s; }
+        .loading.hide { opacity: 0; pointer-events: none; }
+
+        /* Caption panel */
+        .panel { display: flex; flex-direction: column; padding: 26px 26px 20px; border-left: 1px solid var(--rule); }
+        .panel .chap { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; }
+        .panel h2 { font-size: 27px; line-height: 1.15; font-weight: 600; color: var(--navy); margin: 6px 0 12px; }
+        .panel .body { font-size: 16px; color: #34424A; flex: 1; }
+        .panel .body ul { margin: 8px 0 0 18px; }
+        .panel .body li { margin-bottom: 3px; }
+        .panel .spec { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+        .panel .spec span { background: #F2EFF8; color: #4A3D75; font-size: 13px; font-weight: 500; padding: 3px 9px; border-radius: 4px; }
+        .panel .fade { animation: fadeUp 0.5s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+        .progress { display: flex; gap: 4px; margin: 18px 0 14px; }
+        .progress i { flex: 1; height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; position: relative; }
+        .progress i.done { background: var(--orange); }
+        .progress i.now::after { content: ""; position: absolute; inset: 0; background: var(--orange); transform-origin: left; animation: fill var(--dur, 7s) linear forwards; }
+        .progress.paused i.now::after { animation-play-state: paused; }
+        @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+        .ctrl { display: flex; align-items: center; gap: 8px; }
+        .ctrl button {
+            border: 0; cursor: pointer; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            background: #EEF2F4; color: var(--navy);
+        }
+        .ctrl button.play { width: 50px; height: 50px; background: var(--navy); color: #fff; }
+        .ctrl button svg { width: 18px; height: 18px; }
+        .ctrl .count { margin-left: auto; font-size: 13px; color: var(--muted); }
+        .ctrl .open { font-size: 13px; margin-left: 10px; white-space: nowrap; }
+
+        /* ── REFERENCE SECTION ──────────────────────────── */
+        .ref { max-width: 1240px; margin: 70px auto 0; padding: 0 24px; }
+        .ref > h2 { font-size: 32px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+        .ref > p { color: var(--muted); margin-bottom: 26px; max-width: 700px; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+        .card {
+            background: #fff; border-radius: 10px; padding: 22px 22px 18px; border-top: 4px solid var(--orange);
+            box-shadow: 0 2px 8px rgba(27, 51, 66, 0.06);
+        }
+        .card h3 { font-size: 20px; font-weight: 600; color: var(--navy); line-height: 1.2; }
+        .card .ex { font-size: 13px; color: var(--muted); margin: 2px 0 12px; word-break: break-word; }
+        .card .ex a { color: var(--orange-dk); }
+        .card dl { font-size: 15px; }
+        .card dt { font-weight: 600; color: var(--navy); margin-top: 10px; }
+        .card dd { color: #3A4850; }
+        .card ul { margin: 4px 0 0 18px; font-size: 15px; color: #3A4850; }
+        .card button.watch {
+            margin-top: 14px; border: 0; background: none; color: var(--orange-dk); font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; padding: 0;
+        }
+
+        .site-foot { margin-top: 80px; background: var(--navy); color: #C9D6DE; padding: 40px 24px; text-align: center; font-size: 15px; }
+        .site-foot img { height: 30px; width: auto; margin-bottom: 14px; }
+        .site-foot a { color: #fff; text-decoration: none; }
+        .site-foot .sep { opacity: 0.4; margin: 0 10px; }
+
+        /* ── RESPONSIVE ─────────────────────────────────── */
+        @media (max-width: 980px) {
+            .player { grid-template-columns: 1fr; }
+            .panel { border-left: 0; border-top: 1px solid var(--rule); }
+            .panel .body { min-height: 150px; }
+        }
+        @media (max-width: 600px) {
+            .site-head { padding: 18px 16px 56px; }
+            .site-head .brand { margin-bottom: 30px; }
+            .site-head .brand img.rn { height: 24px; }
+            .site-head .brand img.a2b { height: 18px; }
+            .site-head h1 { font-size: 34px; }
+            .site-head p.lead { font-size: 16px; }
+            .player-wrap, .ref { padding: 0 16px; }
+            .screen { padding: 8px; }
+            .chrome { height: 32px; } .dots { display: none; }
+            .url { font-size: 11px; height: 22px; }
+            .viewport { aspect-ratio: 4 / 5; }
+            .share-badge { top: 14px; right: 14px; }
+            .panel { padding: 20px 18px 16px; }
+            .panel h2 { font-size: 23px; }
+            .cards { grid-template-columns: 1fr; }
+            .ctrl .open { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .layer.anim, .cursor, .ring { transition-duration: 0.01s !important; }
+            .ring.on, .share-badge::before { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-head">
+    <div class="brand">
+        <img class="rn" src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News">
+        <img class="a2b" src="https://a2bglobalmedia.com/wp-content/uploads/sites/5/2026/04/a2b-Global-Media-White-Logo-1.png" alt="a2b Global Media">
+    </div>
+    <div class="eyebrow">Bus-News Packages</div>
+    <h1>Visual Guide</h1>
+    <p class="lead">Take a guided tour of Bus-News and see exactly where each part of your package appears.</p>
+</header>
+
+<main>
+    <section class="player-wrap" aria-label="Guided tour">
+        <nav class="chapters" id="chapters" aria-label="Tour chapters"></nav>
+        <div class="player">
+            <div class="screen">
+                <div class="share-badge" aria-hidden="true">Screen sharing</div>
+                <div class="browser">
+                    <div class="chrome">
+                        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                        <div class="url"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 5V3.5a3 3 0 0 1 6 0V5h.5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-5a.5.5 0 0 1 .5-.5H3zm1.2 0h3.6V3.5a1.8 1.8 0 0 0-3.6 0V5z" fill="#5D6B73"/></svg><span id="url"></span><span class="caret" aria-hidden="true"></span></div>
+                    </div>
+                    <div class="viewport" id="viewport">
+                        <div class="layer" id="layer"><div class="ring" id="ring"></div></div>
+                        <svg class="cursor" id="cursor" viewBox="0 0 26 26" aria-hidden="true"><path d="M5 3l15 8.2-6.6 1.6 3.9 7.4-2.9 1.5-3.9-7.4L5 19z" fill="#fff" stroke="#111" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                        <div class="click" id="click"></div>
+                        <div class="loading" id="loading">Loading page…</div>
+                    </div>
+                </div>
+            </div>
+            <aside class="panel" aria-live="polite">
+                <div class="fade" id="caption">
+                    <div class="chap" id="cap-chap"></div>
+                    <h2 id="cap-title"></h2>
+                    <div class="body" id="cap-body"></div>
+                    <div class="spec" id="cap-spec"></div>
+                </div>
+                <div class="progress" id="progress"></div>
+                <div class="ctrl">
+                    <button id="prev" aria-label="Previous step"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button id="play" class="play" aria-label="Pause"><svg viewBox="0 0 24 24" id="play-icon"></svg></button>
+                    <button id="next" aria-label="Next step"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <span class="count" id="count"></span>
+                    <a class="open" id="open" href="#" target="_blank" rel="noopener">Open page ↗</a>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <section class="ref" id="reference">
+        <h2>Package features at a glance</h2>
+        <p>Every feature from the tour, with the formats and details we need from you. Select “Watch in the tour” on any card to jump straight to it.</p>
+        <div class="cards" id="cards"></div>
+    </section>
+</main>
+
+<footer class="site-foot">
+    <img src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News"><br>
+    <a href="https://bus-news.com/" target="_blank" rel="noopener">bus-news.com</a><span class="sep">|</span>
+    <a href="tel:+441392580002">+44 1392 580002</a><span class="sep">|</span>
+    <a href="mailto:contact@a2bglobalmedia.com">contact@a2bglobalmedia.com</a>
+</footer>
+
+<script>
+/* ──────────────────────────────────────────────────────────────
+   TOUR DATA
+   Each chapter shows one page (a full-page screenshot 1440px wide,
+   or an HTML mock-up). Each step points the "camera" at a box on
+   that page: box = [x, y, width, height] in page pixels.
+   zoom: 1 = fit page width; higher = closer.
+   ────────────────────────────────────────────────────────────── */
+const A = 'visual-guide-assets/';
+const CHAPTERS = [
+    {
+        name: 'Company Profile',
+        url: 'bus-news.com/suppliers/elydium-data-quality-solutions-for-passenger-transport',
+        img: 'bn-profile.jpg', h: 9000,
+        alt: 'Bus-News company profile page for Elydium',
+        ref: `<dl>
+            <dt>Hero image</dt><dd>A showcase image behind your company name.</dd>
+            <dt>Profile text</dt><dd>300+ words, written with key phrases that help search engines send traffic to your page.</dd>
+            <dt>Logo, links and contact details</dt><dd>Your logo, website and social media links, address and telephone number.</dd>
+            <dt>Events</dt><dd>The events you are attending, with dates and stand numbers. Your next event also shows beside your enquiry form.</dd>
+            <dt>News, videos, documents and images</dt><dd>Your own news feed, video gallery, downloadable PDFs and image gallery. Add new content at any time.</dd>
+            <dt>Enquiry form</dt><dd>Readers can contact you directly from your profile.</dd>
+        </dl>`,
+        steps: [
+            { title: 'Your company profile', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'Your profile is your home on Bus-News. It brings together everything about your company in one place, and it is where readers land from your news, banners and listings.' },
+            { title: 'Hero image', box: [0, 62, 1440, 700], zoom: 1,
+              text: 'A large showcase image runs behind your company name at the top of the page. Choose an image that shows your products or people at their best.',
+              spec: ['Landscape image', 'High resolution'] },
+            { title: 'Logo, links and contact details', box: [1005, 805, 330, 700], zoom: 2,
+              text: 'Your logo sits beside your profile, with links to your website and social media, your address and a telephone button. Readers can also save you as a favourite.' },
+            { title: 'Profile text', box: [105, 805, 880, 1100], zoom: 1.5,
+              text: '300+ words about your company, enriched with key phrases so search engines send relevant traffic to your profile. You can add your products and services too.',
+              spec: ['300+ words'] },
+            { title: 'Latest news, right beside your profile', box: [1005, 1700, 330, 860], zoom: 1.7,
+              text: 'Your most recent news items show in the sidebar, with a link to all your supplier news.' },
+            { title: 'Events you are attending', box: [120, 5307, 227, 307], zoom: 2.6,
+              text: 'Add the events you are attending, with the date and your stand number, so readers know where to meet you in person.',
+              spec: ['Event dates', 'Stand numbers'] },
+            { title: 'News feed', box: [105, 5830, 1230, 525], zoom: 1.2,
+              text: 'Every press release you send us appears in your own news feed. Your news also features on the homepage, in our newsletter and across our social channels.' },
+            { title: 'Documents and brochures', box: [118, 6658, 292, 440], zoom: 2,
+              text: 'Host brochures, case studies and white papers as PDFs on your profile. Each document is optimised for search engines, so buyers can find it. You can host videos on your profile too.',
+              spec: ['PDF', 'Videos'] },
+            { title: 'Image gallery', box: [120, 7423, 387, 217], zoom: 2.2,
+              text: 'Add as many images as you like. Captions help search engines find your images.',
+              spec: ['Unlimited images'] },
+            { title: 'Enquiry form', box: [120, 7852, 1200, 944], zoom: 1.1,
+              text: 'Readers can contact you directly with the enquiry form at the bottom of your profile. Enquiries go straight to your inbox.' },
+            { title: 'Where to meet you', box: [160, 8698, 420, 54], zoom: 2.6,
+              text: 'Your next event shows beside the enquiry form too, so readers who want to talk to you can also find you on your stand.' }
+        ]
+    },
+    {
+        name: 'Products & Services',
+        url: 'bus-news.com/products-services/operational-management-software',
+        img: 'bn-products-services.jpg', h: 4879,
+        alt: 'Bus-News Products & Services page for Operational Management Software',
+        ref: `<dl>
+            <dt>Products &amp; Services banner</dt><dd>A banner on the Products &amp; Services page(s) of your choice, with a link to your website.</dd>
+            <dt>Featured supplier</dt><dd>Your company listed at the top of the Products &amp; Services page(s) of your choice, with a link to your profile.</dd>
+            <dt>Listings</dt><dd>Your profile appears in every relevant Products &amp; Services section across the site.</dd>
+        </dl>`,
+        steps: [
+            { title: 'Products & Services pages', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'Buyers browse our Products & Services pages to find suppliers by category. Your package puts you in front of them in three ways.' },
+            { title: 'Products & Services banner', box: [1017, 120, 305, 255], zoom: 2.4,
+              text: 'A banner at the top of the Products & Services page(s) of your choice, with a link to your website.',
+              spec: ['300 × 250 px', 'JPEG, PNG or GIF'] },
+            { title: 'Featured supplier', box: [105, 500, 1230, 360], zoom: 1.5,
+              text: 'Your company is listed at the top of the page, above all other suppliers, with your logo, a short description and a link to your company profile.' },
+            { title: 'Listings', box: [105, 1025, 1230, 775], zoom: 1.1,
+              text: 'Your profile also appears in every relevant Products & Services section across the site, with a link to your company profile.' }
+        ]
+    },
+    {
+        name: 'Digital Newsletter',
+        url: 'mailchi.mp/bus-news.com/bus-news-week-42-2026',
+        link: 'https://mailchi.mp/bus-news.com/bus-news-week-42-2026',
+        img: 'bn-newsletter.jpg', h: 2800,
+        alt: 'Bus-News newsletter, week 42 2026',
+        ref: `<dl>
+            <dt>Your news in our newsletter</dt><dd>Your latest news listed in our newsletter, with a link to the full article on Bus-News. Maximum one item per newsletter.</dd>
+            <dt>Newsletter banners</dt><dd>A 300 × 250 px banner in our newsletter(s) with a link to your website. We use your Products &amp; Services banner unless you send us a different one.</dd>
+            <dt>Your videos</dt><dd>Your videos can feature in our newsletter as the Featured Video.</dd>
+        </dl>`,
+        steps: [
+            { title: 'Our digital newsletter', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'Our weekly newsletter brings the Bus-News readership the latest bus and coach news, together with news from our suppliers.' },
+            { title: 'Newsletter banners', box: [418, 1275, 600, 240], zoom: 2.2,
+              text: 'A banner in our newsletter with a link to your website. We use your Products & Services banner here, unless you send us a different one.',
+              spec: ['300 × 250 px', 'JPEG, PNG or GIF'] },
+            { title: 'Your news in our newsletter', box: [418, 1575, 600, 735], zoom: 1.4,
+              text: 'Your latest news is listed under “Latest Supplier News”, with a link to the full article on Bus-News. Maximum one item per newsletter.' },
+            { title: 'Your videos', box: [418, 2320, 600, 420], zoom: 1.7,
+              text: 'Your videos can feature in our newsletter as the Featured Video, with a link to watch it on Bus-News.' }
+        ]
+    },
+    {
+        name: 'Digital Magazine',
+        url: 'bus-news.com/flipbook/issue-2-2026',
+        img: 'bn-magazine.jpg', h: 3180,
+        alt: 'Bus-News Magazine Issue 2 / 2026: cover, an Elydium advertorial and a Totalkare full-page advert',
+        ref: `<p style="font-size:15px;color:#3A4850">Up to 3 A4 pages in our interactive e-magazine, split as you choose. A popular choice is one full-page advert with a two-page advertorial.</p>
+        <ul><li>Full-page advert</li><li>300–400 words per page</li><li>1 high-resolution image per page</li><li>Videos</li><li>Contact details</li></ul>`,
+        steps: [
+            { title: 'Our digital magazine', box: [500, 265, 430, 615], zoom: 1.4,
+              text: 'The Bus-News Magazine is an interactive flipbook that readers can browse online or download.' },
+            { title: 'Your advertorial', box: [285, 1305, 870, 612], zoom: 1.3,
+              text: 'Advertorial pages tell your story in our editorial style, with your headline, images and logo, like Elydium’s pages in Issue 2 / 2026.',
+              spec: ['300–400 words per page', '1 image per page'] },
+            { title: 'Your logo and contact details', box: [950, 1795, 165, 70], zoom: 3,
+              text: 'Your logo and contact details close your advertorial, so readers know how to reach you.' },
+            { title: 'Full-page advert', box: [720, 2342, 435, 618], zoom: 1.8,
+              text: 'A full-page advert puts your own design in front of every reader. Your package can include up to 3 A4 pages, split between adverts and advertorial as you choose.',
+              spec: ['Full-page advert', 'Up to 3 A4 pages'] }
+        ]
+    },
+    {
+        name: 'Targeted Mail',
+        url: 'mailchi.mp/bus-news.com/do-you-offer-transport-for-schools-or-staff-we-can-help-you',
+        link: 'https://mailchi.mp/bus-news.com/do-you-offer-transport-for-schools-or-staff-we-can-help-you',
+        img: 'bn-targeted-mail.jpg', h: 2166,
+        alt: 'Bus-News targeted mail for BatOnRoute: Do you offer transport for schools or staff?',
+        ref: `<p style="font-size:15px;color:#3A4850">An email with only your content. A dedicated mail goes to our entire database. A targeted mail goes to your most relevant audience, chosen by our AI software, with optional parameters (for example, region) from you.</p>
+        <dl><dt>Process</dt><dd>Send your content one week before the agreed send date. We send you a preview to approve, then send your email at the agreed date and time.</dd>
+        <dt>We need</dt><dd>A subject line (about 65 characters), the content (text and images, as PDF or HTML), valid links, and your preferred audience parameters.</dd>
+        <dt>Design service</dt><dd>We can design your campaign for you. Ask us for details.</dd></dl>`,
+        steps: [
+            { title: 'Dedicated and targeted mail', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'An email campaign with only your content: press releases, videos, brochures, webinars or event invitations.' },
+            { title: 'Sent by Bus-News', box: [416, 60, 600, 58], zoom: 2.6,
+              text: 'Your email is sent from Bus-News, a sender our readers know and trust, which helps it reach the inbox and get opened.' },
+            { title: 'Your content, your audience', box: [416, 120, 600, 1760], zoom: 1,
+              text: 'A dedicated mail goes to our entire database. A targeted mail goes to your most relevant audience, chosen by our AI software, with optional parameters (for example, region) from you.' },
+            { title: 'Your call to action', box: [416, 905, 600, 85], zoom: 2.2,
+              text: 'Each mail leads to a clear next step, such as a link to your website, a demo request or your stand at an event.' },
+            { title: 'How it works', box: [416, 0, 600, 2166], noRing: true,
+              text: '<ul><li>Send your content one week before the agreed send date</li><li>We send you a preview to approve</li><li>We send your email at the agreed date and time</li></ul>',
+              spec: ['Subject line ≈ 65 characters', 'PDF or HTML', 'Valid links'] }
+        ]
+    },
+    {
+        name: 'Social Media Banners',
+        url: 'linkedin.com/feed/update/urn:li:activity:7424330866157457408',
+        link: 'https://www.linkedin.com/feed/update/urn:li:activity:7424330866157457408/',
+        img: 'bn-social-linkedin.jpg', h: 950,
+        alt: 'Bus-News LinkedIn post with a Kiel Americas banner advert',
+        ref: `<dl>
+            <dt>Banner adverts on our social platforms</dt><dd>A dedicated social media banner advert, with only your content, posted to our followers on LinkedIn.</dd>
+            <dt>Format</dt><dd>JPEG, PNG, GIF or PDF, 1024 × 512 px.</dd>
+            <dt>Design service</dt><dd>We can design your social media banner for you. Ask us for details.</dd>
+        </dl>`,
+        steps: [
+            { title: 'Social media banner adverts', box: [440, 86, 562, 492], zoom: 1.2,
+              text: 'A dedicated post with only your content, shared with our followers on LinkedIn.' },
+            { title: 'Posted by Bus-News', box: [440, 88, 560, 74], zoom: 2.6,
+              text: 'Your post comes from the Bus-News page and reaches our followers across the bus and coach industry.' },
+            { title: 'Your banner', box: [440, 243, 560, 290], zoom: 2,
+              text: 'Your banner advert is the centrepiece of the post, with a link to your website or event. We can design it for you.',
+              spec: ['1024 × 512 px', 'JPEG, PNG, GIF or PDF'] },
+            { title: 'Reach and engagement', box: [440, 532, 560, 46], zoom: 2.4,
+              text: 'Followers can like, comment on and share your post, which takes it to their own networks too. We report views, interactions and clicks in your stats report.' }
+        ]
+    },
+    {
+        name: 'Homepage',
+        isPage: true,
+        url: 'bus-news.com',
+        img: 'bn-homepage.jpg', h: 7498,
+        alt: 'Bus-News homepage',
+        ref: `<dl>
+            <dt>Homepage featured supplier position</dt><dd>A banner advert in the Featured Suppliers section of our homepage, linking to your website. Depending on your package, it shows for 4 weeks or for your whole contract.</dd>
+            <dt>Format</dt><dd>JPEG, PNG or GIF, 1024 × 512 px.</dd>
+            <dt>Latest News banner</dt><dd>A second banner position in the Latest News grid near the top of the homepage, linking to your website.</dd>
+            <dt>Your news on the homepage</dt><dd>Your press releases also appear in the Supplier News section.</dd>
+            <dt>Design service</dt><dd>We can design your homepage banner for you. Ask us for details.</dd>
+        </dl>`,
+        steps: [
+            { title: 'The Bus-News homepage', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'The homepage is the busiest page on Bus-News, with the latest bus and coach news, events and videos.' },
+            { title: 'Banner in the latest news', box: [932, 1314, 388, 195], zoom: 2.4,
+              text: 'A second banner position sits in the Latest News grid near the top of the homepage, right beside the newest headlines, with a link to your website.' },
+            { title: 'Your news on the homepage', box: [110, 1960, 1220, 1120], zoom: 1.1,
+              text: 'Your press releases appear in the Supplier News section of the homepage, as well as on your profile.' },
+            { title: 'Featured Suppliers', box: [110, 3170, 1220, 580], zoom: 1.3,
+              text: 'The homepage featured supplier position puts your banner advert in the Featured Suppliers section, with a link to your website.' },
+            { title: 'Your homepage banner', box: [130, 3310, 785, 416], zoom: 1.8,
+              text: 'Depending on your package, your banner shows for 4 weeks or for your whole contract. We can design it for you.',
+              spec: ['1024 × 512 px', 'JPEG, PNG or GIF'] }
+        ]
+    }
+];
+
+/* ── ENGINE ──────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const viewport = $('viewport'), layer = $('layer'), ring = $('ring'), cursor = $('cursor'), click = $('click');
+const STEPS = [];
+CHAPTERS.forEach((c, ci) => c.steps.forEach((s, si) => STEPS.push({ ...s, ci, si })));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let idx = 0, playing = !reduced, timer = null, pageCi = -1, typeTimer = null;
+let cursorPos = { x: 40, y: 40 };
+
+// Page elements, one per chapter, built once
+const pages = CHAPTERS.map(c => {
+    let el;
+    if (c.html) { el = document.createElement('div'); el.className = 'html-page'; el.innerHTML = c.html; }
+    else { el = new Image(); el.className = 'page'; el.alt = c.alt || ''; el.decoding = 'async'; el.loading = 'eager'; }
+    el.style.display = 'none';
+    layer.insertBefore(el, ring);
+    return el;
+});
+
+// Chapter buttons
+CHAPTERS.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.innerHTML = `<span class="n">${i + 1}</span>${c.name}`;
+    b.onclick = () => go(STEPS.findIndex(s => s.ci === i), true);
+    $('chapters').appendChild(b);
+});
+
+const icon = p => $('play-icon').innerHTML = p
+    ? '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/>'
+    : '<path d="M8 5l11 7-11 7z" fill="currentColor"/>';
+
+function typeUrl(text) {
+    clearInterval(typeTimer);
+    const el = $('url');
+    if (reduced) { el.textContent = text; return; }
+    let i = 0; el.textContent = '';
+    typeTimer = setInterval(() => { el.textContent = text.slice(0, ++i); if (i >= text.length) clearInterval(typeTimer); }, 22);
+}
+
+function showPage(ci) {
+    if (ci === pageCi) return Promise.resolve(false);
+    const c = CHAPTERS[ci], el = pages[ci];
+    pages.forEach((p, i) => p.style.display = i === ci ? 'block' : 'none');
+    pageCi = ci;
+    typeUrl(c.url);
+    $('open').href = c.link || ('https://' + c.url);
+    $('open').style.visibility = c.link === null ? 'hidden' : 'visible';
+    if (c.html) { $('loading').classList.add('hide'); return Promise.resolve(true); }
+    $('loading').classList.remove('hide');
+    return new Promise(res => {
+        const done = () => { $('loading').classList.add('hide'); res(true); };
+        if (el.src && el.complete) return done();
+        el.onload = done; el.onerror = done;
+        if (!el.src) el.src = A + c.img;
+    });
+}
+
+function pageHeight(ci) {
+    const c = CHAPTERS[ci];
+    return c.h || pages[ci].offsetHeight || 4000;
+}
+
+// Camera: fit `box` into the viewport at `zoom`, clamp to the page edges
+function camera(step, animate) {
+    const vw = viewport.clientWidth, vh = viewport.clientHeight;
+    const base = vw / 1440;
+    const [bx, by, bw, bh] = step.box || [0, 0, 1440, vh / base];
+    let s = base * (step.zoom || 1);
+    // never zoom so far that the box no longer fits
+    s = Math.min(s, (vw * 0.92) / bw, (vh * 0.86) / bh);
+    s = Math.max(s, base * 0.5);              // zoom out past full width if a tall box needs it
+    const H = pageHeight(step.ci) * s, W = 1440 * s;
+    let tx = vw / 2 - (bx + bw / 2) * s, ty = vh / 2 - (by + bh / 2) * s;
+    if (step.top) ty = -by * s + 20;
+    tx = W <= vw ? (vw - W) / 2 : Math.min(0, Math.max(vw - W, tx));
+    ty = H <= vh ? (vh - H) / 2 : Math.min(0, Math.max(vh - H, ty));
+    layer.classList.toggle('anim', animate && !reduced);
+    layer.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+
+    if (step.box && !step.noRing) {
+        Object.assign(ring.style, { left: bx - 10 + 'px', top: by - 10 + 'px', width: bw + 20 + 'px', height: bh + 20 + 'px' });
+        ring.classList.add('on');
+        // cursor goes to the lower-right part of the box, as seen on screen
+        const cx = tx + (bx + bw * 0.62) * s, cy = ty + (by + bh * 0.6) * s;
+        moveCursor(Math.min(vw - 30, Math.max(10, cx)), Math.min(vh - 30, Math.max(10, cy)), true);
+    } else {
+        ring.classList.remove('on');
+        moveCursor(vw * 0.55, vh * 0.35, false);
+    }
+}
+
+function moveCursor(x, y, doClick) {
+    cursorPos = { x, y };
+    cursor.style.transform = `translate(${x}px, ${y}px)`;
+    if (doClick && !reduced) setTimeout(() => {
+        click.style.left = x + 4 + 'px'; click.style.top = y + 4 + 'px';
+        click.classList.remove('go'); void click.offsetWidth; click.classList.add('go');
+    }, 1400);
+}
+
+function caption(step) {
+    const c = CHAPTERS[step.ci];
+    const cap = $('caption');
+    cap.classList.remove('fade'); void cap.offsetWidth; cap.classList.add('fade');
+    $('cap-chap').textContent = `${step.ci + 1}. ${c.name}`;
+    $('cap-title').textContent = step.title;
+    $('cap-body').innerHTML = step.text;
+    $('cap-spec').innerHTML = (step.spec || []).map(s => `<span>${s}</span>`).join('');
+    $('count').textContent = `Step ${idx + 1} of ${STEPS.length}`;
+    [...$('chapters').children].forEach((b, i) => b.setAttribute('aria-current', i === step.ci ? 'true' : 'false'));
+    const cur = $('chapters').children[step.ci];
+    cur.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' });
+}
+
+function progress(step) {
+    const inChap = STEPS.filter(s => s.ci === step.ci);
+    const dur = (step.dur || 7) + 's';
+    $('progress').innerHTML = inChap.map(s => `<i class="${s.si < step.si ? 'done' : s.si === step.si ? 'now' : ''}" style="--dur:${dur}"></i>`).join('');
+    $('progress').classList.toggle('paused', !playing);
+}
+
+async function go(i, user) {
+    idx = (i + STEPS.length) % STEPS.length;
+    const step = STEPS[idx];
+    clearTimeout(timer);
+    caption(step); progress(step);
+    const fresh = await showPage(step.ci);
+    if (STEPS[idx] !== step) return;          // user moved on while the page loaded
+    if (fresh) {
+        // start a new page at the top, then glide to the first focus
+        camera({ ci: step.ci }, false);
+        await new Promise(r => setTimeout(r, reduced ? 0 : 450));
+    }
+    camera(step, true);
+    schedule();
+}
+
+function schedule() {
+    clearTimeout(timer);
+    if (!playing) return;
+    timer = setTimeout(() => go(idx + 1), (STEPS[idx].dur || 7) * 1000);
+}
+
+function setPlaying(p) {
+    playing = p; icon(p);
+    $('play').setAttribute('aria-label', p ? 'Pause' : 'Play');
+    $('progress').classList.toggle('paused', !p);
+    if (p) { progress(STEPS[idx]); schedule(); } else clearTimeout(timer);
+}
+
+$('play').onclick = () => setPlaying(!playing);
+$('next').onclick = () => { go(idx + 1, true); };
+$('prev').onclick = () => { go(idx - 1, true); };
+document.addEventListener('keydown', e => {
+    if (e.target.closest('input, textarea')) return;
+    if (e.key === 'ArrowRight') go(idx + 1, true);
+    else if (e.key === 'ArrowLeft') go(idx - 1, true);
+    else if (e.key === ' ' && e.target === document.body) { e.preventDefault(); setPlaying(!playing); }
+});
+let resizeT; addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(() => camera(STEPS[idx], false), 120); });
+
+// Pause the tour while it is off screen
+new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting && playing) { clearTimeout(timer); $('progress').classList.add('paused'); }
+    else if (e.isIntersecting && playing) { progress(STEPS[idx]); schedule(); }
+}, { threshold: 0.35 }).observe(viewport);
+
+// Reference cards
+CHAPTERS.forEach((c, ci) => {
+    const card = document.createElement('article');
+    card.className = 'card';
+    const href = c.link || ('https://' + c.url);
+    card.innerHTML = `<h3>${c.name}</h3><div class="ex">${c.isPage ? '' : 'Example: '}<a href="${href}" target="_blank" rel="noopener">${c.url}</a></div>${c.ref}<button class="watch">Watch in the tour ▸</button>`;
+    card.querySelector('.watch').onclick = () => { go(STEPS.findIndex(s => s.ci === ci), true); document.querySelector('.player-wrap').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); };
+    $('cards').appendChild(card);
+});
+
+// Preload the remaining screenshots after the first one
+icon(playing);
+go(0).then(() => CHAPTERS.forEach((c, i) => { if (!c.html && !pages[i].src) setTimeout(() => pages[i].src = A + c.img, 1500 + i * 400); }));
+</script>
+</body>
+</html>
