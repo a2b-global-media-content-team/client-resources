@@ -278,13 +278,14 @@ const A = 'visual-guide-assets/';
 const CHAPTERS = [
     {
         name: 'Company Profile',
-        url: 'airportindustry-news.com/suppliers/robson-baggage-handling-technology',
-        img: 'ain-profile.jpg', h: 7791,
-        alt: 'Aviation Industry-News company profile page for Robson Handling Technology',
+        url: 'airportindustry-news.com/suppliers/amadeus-digital-biometric-and-operational-airport-solutions',
+        img: 'ain-profile.jpg', h: 7482,
+        alt: 'Aviation Industry-News company profile page for Amadeus',
         ref: `<dl>
             <dt>Hero image</dt><dd>A showcase image behind your company name.</dd>
             <dt>Profile text</dt><dd>300+ words, written with key phrases that help search engines send traffic to your page.</dd>
-            <dt>Logo, links and contact details</dt><dd>Your logo, social media links, website link, address and telephone number.</dd>
+            <dt>Logo, links and contact details</dt><dd>Your logo, website and social media links, address and telephone number.</dd>
+            <dt>Events</dt><dd>The events you are attending, with dates and stand numbers. Your next event also shows beside your enquiry form.</dd>
             <dt>News, videos, documents and images</dt><dd>Your own news feed, video gallery, downloadable PDFs and image gallery. Add new content at any time.</dd>
             <dt>Enquiry form</dt><dd>Readers can contact you directly from your profile.</dd>
         </dl>`,
@@ -294,25 +295,30 @@ const CHAPTERS = [
             { title: 'Hero image', box: [0, 62, 1440, 700], zoom: 1,
               text: 'A large showcase image runs behind your company name at the top of the page. Choose an image that shows your products or people at their best.',
               spec: ['Landscape image', 'High resolution'] },
-            { title: 'Logo, links and contact details', box: [1005, 805, 330, 880], zoom: 2,
-              text: 'Your logo sits beside your profile, with your social media links, a link to your website, your address and a telephone button. Readers can also save you as a favourite.' },
-            { title: 'Profile text', box: [105, 805, 880, 1100], zoom: 1.5,
-              text: '300+ words about your company, enriched with key phrases so search engines send relevant traffic to your profile. You can add a list of your key products too.',
+            { title: 'Logo, links and contact details', box: [1005, 805, 330, 760], zoom: 2,
+              text: 'Your logo sits beside your profile, with links to your website and social media, your address and a telephone button. Readers can also save you as a favourite.' },
+            { title: 'Profile text', box: [105, 800, 880, 1100], zoom: 1.5,
+              text: '300+ words about your company, enriched with key phrases so search engines send relevant traffic to your profile. You can add your products and services too.',
               spec: ['300+ words'] },
-            { title: 'Latest news, right beside your profile', box: [1005, 1750, 330, 900], zoom: 1.6,
+            { title: 'Latest news, right beside your profile', box: [1005, 1750, 330, 560], zoom: 1.8,
               text: 'Your most recent news items show in the sidebar, with a link to all your supplier news.' },
-            { title: 'Video gallery', box: [100, 3370, 1240, 560], zoom: 1.3,
+            { title: 'Events you are attending', box: [120, 2553, 227, 307], zoom: 2.6,
+              text: 'Add the events you are attending, with the date and your stand number, so readers know where to meet you in person.',
+              spec: ['Event dates', 'Stand numbers'] },
+            { title: 'Video gallery', box: [105, 3075, 1230, 385], zoom: 1.3,
               text: 'Host your videos on your profile and add new ones at any time. Videos can also feature on our homepage, in our newsletter and on our social channels.' },
-            { title: 'News feed', box: [100, 3995, 1240, 690], zoom: 1.2,
+            { title: 'News feed', box: [105, 3710, 1230, 525], zoom: 1.2,
               text: 'Every press release you send us appears in your own news feed. Your news also features on the homepage, in our newsletter and across our social channels.' },
-            { title: 'Documents and white papers', box: [100, 4755, 1240, 720], zoom: 1.2,
-              text: 'Host brochures, white papers and other PDFs on your profile. Each document is optimised for search engines, so buyers can find it.',
+            { title: 'Documents and case studies', box: [105, 4485, 1230, 550], zoom: 1.2,
+              text: 'Host brochures, case studies and white papers as PDFs on your profile. Each document is optimised for search engines, so buyers can find it.',
               spec: ['PDF'] },
-            { title: 'Image gallery', box: [120, 5671, 1200, 265], zoom: 1.3,
+            { title: 'Image gallery', box: [120, 5332, 1200, 295], zoom: 1.3,
               text: 'Add as many images as you like. Captions help search engines find your images.',
               spec: ['Unlimited images'] },
-            { title: 'Enquiry form', box: [120, 6191, 1200, 950], zoom: 1.1,
-              text: 'Readers can contact you directly with the enquiry form at the bottom of your profile. Enquiries go straight to your inbox.' }
+            { title: 'Enquiry form', box: [120, 5888, 1200, 945], zoom: 1.1,
+              text: 'Readers can contact you directly with the enquiry form at the bottom of your profile. Enquiries go straight to your inbox.' },
+            { title: 'Where to meet you', box: [160, 6740, 420, 75], zoom: 2.6,
+              text: 'Your next event shows beside the enquiry form too, so readers who want to talk to you can also find you on your stand.' }
         ]
     },
     {
