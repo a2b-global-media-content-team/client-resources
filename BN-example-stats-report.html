@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Stats Report: Bus-News — a2b Global Media</title>
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:        #1B3342;   /* a2b general / header bar     */
+            --orange:      #9789B4;   /* Bus-News brand               */
+            --orange-text: #5B4C8A;   /* table header text            */
+            --orange-tint: #F2EFF8;   /* table header background      */
+            --orange-pale: #E9E5F2;   /* gauge track                  */
+            --text:        #1F1F1F;
+            --muted:       #5F6368;
+            --rule:        #D5D5D5;
+            --page-bg:     #F7F7F7;
+            --white:       #FFFFFF;
+            --zero:        #E5493A;   /* zero values in package grid  */
+        }
+
+        html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        body {
+            font-family: 'Roboto', Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: var(--page-bg);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        a { color: var(--text); }
+
+        /* ── INTRO NOTE ─────────────────────────────────── */
+        .note {
+            max-width: 1000px;
+            margin: 24px auto 0;
+            padding: 12px 18px;
+            background: var(--white);
+            border: 1px dashed var(--orange);
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .note strong { color: var(--text); }
+
+        /* ── PAGES ──────────────────────────────────────── */
+        .page {
+            max-width: 1000px;
+            margin: 24px auto;
+            background: var(--white);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+        .page:last-of-type { margin-bottom: 48px; }
+
+        .bar {
+            background: var(--navy);
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            gap: 12px;
+        }
+        .bar img { height: 30px; width: auto; display: block; }
+
+        .date-pill {
+            background: var(--orange);
+            color: var(--white);
+            border: 1px solid #CFC8E0;
+            border-radius: 4px;
+            font-size: 12px;
+            padding: 12px 18px 12px 24px;
+            min-width: 258px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            white-space: nowrap;
+        }
+        .date-pill::after {
+            content: "";
+            border: 4px solid transparent;
+            border-top-color: var(--white);
+            margin-top: 4px;
+        }
+
+        .body {
+            border-left: 8px solid var(--orange);
+            padding: 22px 16px 28px 16px;
+            position: relative;
+            min-height: 400px;
+        }
+
+        .client-logo {
+            position: absolute;
+            top: 18px;
+            right: 16px;
+            width: 58px;
+            height: 58px;
+            object-fit: contain;
+            display: block;
+            background: var(--white);
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 90px 20px 8px;
+        }
+        h3 {
+            font-size: 21px;
+            font-weight: 400;
+            margin: 26px 0 14px 6px;
+        }
+        h3.icon { display: flex; align-items: center; gap: 14px; }
+        h3.icon svg { width: 34px; height: 34px; flex: none; }
+
+        /* ── SCORECARDS ─────────────────────────────────── */
+        .cards { display: grid; gap: 16px; }
+        .card {
+            border: 2px solid var(--orange);
+            border-radius: 5px;
+            text-align: center;
+            padding: 10px 8px 8px;
+            background: var(--white);
+        }
+        .card .label { font-size: 13px; color: #444; }
+        .card .value { font-size: 24px; line-height: 1.25; }
+
+        /* ── TABLES ─────────────────────────────────────── */
+        .tbl { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; }
+        .tbl th {
+            background: var(--orange-tint);
+            color: var(--orange-text);
+            font-weight: 700;
+            font-size: 12px;
+            text-align: left;
+            padding: 6px 6px;
+        }
+        .tbl th.num, .tbl td.num { text-align: right; }
+        .tbl th.sorted::after { content: " \25BE"; font-size: 9px; }
+        .tbl th.sorted-up::after { content: " \25B4"; font-size: 9px; }
+        .tbl td {
+            padding: 6px 6px;
+            border-bottom: 1px solid var(--rule);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .tbl td a { color: var(--text); }
+        .tbl .nodata td { text-align: center; border: 0; }
+
+        .chart-box {
+            border: 2px solid var(--orange);
+            border-radius: 5px;
+            padding: 14px 16px 10px;
+            background: var(--white);
+        }
+        .chart-box svg { width: 100%; height: auto; display: block; }
+        .legend { font-size: 11px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+        .legend i { display: inline-block; width: 22px; height: 11px; background: var(--orange); }
+        .legend.blue i { background: #1E73BE; }
+
+        /* ── LAYOUT HELPERS ─────────────────────────────── */
+        .grid { display: grid; gap: 20px; }
+        .g-2  { grid-template-columns: 1fr 1fr; }
+        .g-content { grid-template-columns: 1.6fr 1fr; }
+        .g-side { grid-template-columns: 230px 1fr; }
+
+        /* ── COVER ──────────────────────────────────────── */
+        .cover {
+            background: var(--navy);
+            min-height: 680px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            padding: 140px 20px 120px;
+        }
+        .cover .client-logo {
+            top: 14px; left: 14px; right: auto;
+            width: 188px; height: 188px;
+            padding: 14px;
+        }
+        .cover .date-pill { position: absolute; top: 9px; right: 10px; }
+        .cover h1 {
+            font-size: 33px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 18px;
+        }
+        .cover .a2b { width: 420px; max-width: 80%; height: auto; }
+        .cover .network {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ── PACKAGE ────────────────────────────────────── */
+        .pkg-box .head {
+            background: var(--orange-tint);
+            color: var(--orange-text);
+            font-weight: 700;
+            font-size: 12px;
+            padding: 5px 7px;
+        }
+        .pkg-box .head::after { content: " \25BE"; font-size: 9px; }
+        .pkg-box .content {
+            padding: 6px 7px 8px;
+            border-bottom: 1px solid var(--rule);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .pkg-box + .pkg-box { margin-top: 26px; }
+
+        .gauge { text-align: center; }
+        .gauge svg { width: 100%; max-width: 330px; height: auto; }
+
+        .in-pkg { font-size: 24px; font-weight: 400; margin: 34px 0 30px 16px; }
+        .devices {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 34px 10px;
+            text-align: center;
+            align-items: end;
+        }
+        .devices.five { grid-template-columns: repeat(5, 1fr); margin-top: 38px; }
+        .device img { height: 90px; width: auto; max-width: 100%; object-fit: contain; display: block; margin: 0 auto 14px; }
+        .device .label { font-size: 12px; color: #333; }
+        .device .value { font-size: 24px; line-height: 1.2; }
+        .device .value.zero { color: var(--zero); }
+
+        /* ── MAGAZINES ──────────────────────────────────── */
+        .covers { display: flex; flex-direction: column; gap: 10px; }
+        .covers img { width: 100%; max-width: 104px; display: block; border: 1px solid #DDD; }
+        .covers figure { padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+        .covers figcaption { font-size: 11px; color: var(--muted); margin-top: 4px; }
+        .pie-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 236px; }
+        .pie-wrap svg { width: 165px; height: 165px; flex: none; }
+        .pie-legend { font-size: 10.5px; line-height: 1.45; white-space: nowrap; }
+        .pie-legend span { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+
+        /* ── TARGETED MAIL PREVIEW ──────────────────────── */
+        .tm-preview {
+            background: #5F5F5F;
+            height: 356px;
+            overflow: hidden;
+            position: relative;
+            border-bottom: 1px solid var(--rule);
+        }
+        .tm-preview iframe {
+            width: 640px;
+            height: 1200px;
+            border: 0;
+            position: absolute;
+            left: 50%;
+            top: 4px;
+            transform: translateX(-50%) scale(0.4);
+            transform-origin: top center;
+            background: var(--white);
+            pointer-events: none;
+        }
+        .tm-preview a {
+            position: absolute;
+            inset: 0;
+        }
+
+        /* ── BANNERS ────────────────────────────────────── */
+        .banner-img { width: 100%; max-width: 300px; height: auto; display: block; margin-top: 6px; }
+        .footnote { font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+        .page-foot {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            font-size: 12px;
+            color: var(--muted);
+            text-align: center;
+            padding: 0 16px;
+        }
+
+        /* ── RESPONSIVE ─────────────────────────────────── */
+        @media (max-width: 800px) {
+            .grid { grid-template-columns: 1fr !important; gap: 16px !important; margin-left: 0 !important; }
+            .grid > * { grid-column: auto !important; }
+            .tm-preview { max-width: 100%; }
+            .devices, .devices.five { grid-template-columns: repeat(2, 1fr); }
+            .cards { grid-template-columns: 1fr 1fr !important; }
+            .covers { flex-direction: row; flex-wrap: wrap; }
+            .covers figure { border: 0; }
+            .hide-sm { display: none; }
+        }
+        @media (max-width: 560px) {
+            .page, .note { margin-left: 0; margin-right: 0; }
+            .note { border-radius: 0; }
+            .bar img { height: 18px; }
+            .date-pill { min-width: 0; padding: 8px 8px; font-size: 10px; gap: 6px; }
+            .body { padding: 18px 10px 24px 10px; }
+            .cover { min-height: 560px; padding-top: 200px; }
+            .cover .client-logo { width: 120px; height: 120px; }
+            .cover .date-pill { top: auto; bottom: 120px; right: 50%; transform: translateX(50%); }
+            .cover h1 { font-size: 26px; }
+            .tbl .opt { display: none; }
+            .tbl th { font-size: 10px; padding: 5px 4px; overflow-wrap: anywhere; }
+            .tbl td { padding: 6px 4px; }
+        }
+        @media print {
+            body { background: var(--white); }
+            .note { display: none; }
+            .page { box-shadow: none; margin: 0 auto; break-after: page; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="note">
+    <strong>Example report.</strong> All figures on this page are dummy figures. The articles, magazines and newsletters listed are real Bus-News items that were published between 1 January 2026 and 30 September 2026.
+</div>
+
+<!-- ═══ PAGE 1: COVER ═══════════════════════════════════ -->
+<section class="page">
+    <div class="cover">
+        <img class="client-logo" src="stats-report-assets/a2b-favicon.png" alt="a2b Global Media">
+        <div class="date-pill" data-range></div>
+        <h1>Your Journey<br>with</h1>
+        <img class="a2b" src="https://a2bglobalmedia.com/wp-content/uploads/sites/5/2026/04/a2b-Global-Media-White-Logo-1.png" alt="a2b Global Media">
+        <img class="network" src="https://railway-news.com/wp-content/uploads/2026/10/a2b-Global-Media-network-logos-banner.png" alt="a2b Global Media network: Railway-News, Aviation Industry-News, Bus-News, Future Transport-News, Maritime Industry-News" width="1200" height="80">
+    </div>
+</section>
+
+<!-- ═══ PAGE 2: PACKAGE ═════════════════════════════════ -->
+<section class="page">
+    <div class="bar"><img src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News"><div class="date-pill" data-range></div></div>
+    <div class="body">
+        <div class="grid g-2" style="grid-template-columns: 1.45fr 1fr;">
+            <div>
+                <div class="pkg-box">
+                    <div class="head">Your Package</div>
+                    <div class="content">
+                        <strong>Bus-News Premium Package</strong><br>
+                        x1 digital magazine (up to 2 A4 pages)<br>
+                        x4 products &amp; services featured supplier positions<br>
+                        x2 products &amp; services banners<br>
+                        x12 newsletter banners (monthly)<br>
+                        x4 social media banners<br>
+                        x1 homepage featured supplier position (12 months)<br>
+                        x1 targeted mail
+                    </div>
+                </div>
+                <div class="pkg-box">
+                    <div class="head">Your Extras</div>
+                    <div class="content">
+                        x1 inside front cover in your magazine booking<br>
+                        x1 additional targeted mail
+                    </div>
+                </div>
+            </div>
+            <div class="gauge" id="gauge"></div>
+        </div>
+
+        <div class="in-pkg">In your package:</div>
+        <div class="devices">
+            <div class="device"><img src="stats-report-assets/device-magazine.png" alt=""><div class="label">Magazines</div><div class="value">1</div></div>
+            <div class="device"><img src="stats-report-assets/device-targeted-mail.png" alt=""><div class="label">Targeted Mails</div><div class="value">2</div></div>
+            <div class="device"><img src="stats-report-assets/device-content-writing.png" alt=""><div class="label">Content Writing</div><div class="value zero">0</div></div>
+            <div class="device"><img src="stats-report-assets/device-featured-supplier.png" alt=""><div class="label">Products &amp; Services Featured Supplier Positions</div><div class="value">4</div></div>
+        </div>
+        <div class="devices five">
+            <div class="device"><img src="stats-report-assets/device-ps-banner.png" alt=""><div class="label">Products &amp; Services Banners</div><div class="value">2</div></div>
+            <div class="device"><img src="stats-report-assets/device-newsletter.png" alt=""><div class="label">Newsletter Banners</div><div class="value">12</div></div>
+            <div class="device"><img src="stats-report-assets/device-social-media.png" alt=""><div class="label">Social Media Banners</div><div class="value">4</div></div>
+            <div class="device"><img src="stats-report-assets/device-homepage-banner.png" alt=""><div class="label">Homepage Featured Supplier Banner</div><div class="value">1</div></div>
+            <div class="device"><img src="stats-report-assets/device-news-pages-banner.png" alt=""><div class="label">News Pages Banner</div><div class="value">1</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ PAGE 3: WEBSITE ═════════════════════════════════ -->
+<section class="page">
+    <div class="bar"><img src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News"><div class="date-pill" data-range></div></div>
+    <div class="body">
+        <img class="client-logo" src="stats-report-assets/a2b-favicon.png" alt="a2b Global Media">
+        <h2>Your Website Performance</h2>
+        <div class="cards" style="grid-template-columns: repeat(3, 1fr); max-width: 860px; margin: 0 0 6px 8px;">
+            <div class="card"><div class="label">Total Company Views</div><div class="value" id="w-company"></div></div>
+            <div class="card"><div class="label">Total Featured Supplier Views</div><div class="value" id="w-fs"></div></div>
+            <div class="card hide-sm" style="visibility:hidden"></div>
+            <div class="card"><div class="label">Total Content Views</div><div class="value" id="w-content"></div></div>
+            <div class="card"><div class="label">Total Engagements</div><div class="value" id="w-eng"></div></div>
+            <div class="card"><div class="label">Available Featured Supplier Positions</div><div class="value">4</div></div>
+        </div>
+
+        <div class="grid g-content">
+            <div>
+                <h3>Your Content</h3>
+                <table class="tbl" id="t-content"></table>
+            </div>
+            <div>
+                <h3>Your Featured Supplier Positions</h3>
+                <table class="tbl" id="t-fs"></table>
+                <h3>Your Engagements</h3>
+                <table class="tbl" id="t-eng"></table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ PAGE 4: SOCIAL ══════════════════════════════════ -->
+<section class="page">
+    <div class="bar"><img src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News"><div class="date-pill" data-range></div></div>
+    <div class="body">
+        <img class="client-logo" src="stats-report-assets/a2b-favicon.png" alt="a2b Global Media">
+        <h2>Your Social Media Performance</h2>
+        <div class="grid g-side" style="grid-template-columns: 216px 1fr; align-items: start;">
+            <div class="card"><div class="label">Available Social Media Banners</div><div class="value">4</div></div>
+            <div class="chart-box" style="border:0; padding-top:0;">
+                <div class="legend blue"><i></i>Views</div>
+                <div id="c-social"></div>
+            </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns: 1fr 1fr 1fr 1fr; align-items: end; margin-top: 22px;">
+            <h3 class="icon" style="margin:0 0 0 6px;"><svg viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="4" fill="#0A66C2"/><rect x="6" y="13" width="5" height="15" fill="#fff"/><circle cx="8.5" cy="8.3" r="3" fill="#fff"/><path d="M14 13h4.8v2.1c.7-1.3 2.4-2.5 4.9-2.5 5.1 0 6 3.2 6 7.4V28h-5v-7.1c0-1.7 0-3.9-2.4-3.9s-2.8 1.8-2.8 3.8V28H14z" fill="#fff"/></svg>Your LinkedIn</h3>
+            <div class="card"><div class="label">Views</div><div class="value" id="s-views"></div></div>
+            <div class="card"><div class="label">Interactions</div><div class="value" id="s-int"></div></div>
+            <div class="card"><div class="label">Clicks</div><div class="value" id="s-clicks"></div></div>
+        </div>
+
+        <h3 class="icon">Your Top LinkedIn Posts</h3>
+        <table class="tbl" id="t-posts"></table>
+
+        <h3 class="icon">Your Top Social Media Banners</h3>
+        <table class="tbl" id="t-banners"></table>
+    </div>
+</section>
+
+<!-- ═══ PAGE 5: MAGAZINE ════════════════════════════════ -->
+<section class="page">
+    <div class="bar"><img src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News"><div class="date-pill" data-range></div></div>
+    <div class="body">
+        <img class="client-logo" src="stats-report-assets/a2b-favicon.png" alt="a2b Global Media">
+        <h2>Your Bus-News e-Magazine Performance</h2>
+        <div class="grid g-side" style="grid-template-columns: 120px 1fr;">
+            <div class="covers">
+                <figure><img src="stats-report-assets/bn-magazine-cover-1.jpg" alt="Bus-News Magazine cover"></figure>
+                <figure><img src="stats-report-assets/bn-magazine-cover-2.jpg" alt="Bus-News Magazine cover"></figure>
+                <figure><img src="stats-report-assets/bn-magazine-cover-3.jpg" alt="Bus-News Magazine cover"></figure>
+                <figure><img src="stats-report-assets/bn-magazine-cover-4.jpg" alt="Bus-News Magazine cover"></figure>
+            </div>
+            <div>
+                <div class="grid" style="grid-template-columns: 1fr 1.6fr; gap: 18px 20px; margin-top: 50px;">
+                    <div class="card"><div class="label">Available Magazines</div><div class="value">1</div></div>
+                    <div class="cards" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="card"><div class="label">Total Web Reads</div><div class="value" id="m-reads"></div></div>
+                        <div class="card"><div class="label">Total Downloads</div><div class="value" id="m-dl"></div></div>
+                    </div>
+                    <div class="chart-box"><div class="pie-wrap" id="c-pie"></div></div>
+                    <div><table class="tbl" id="t-mags"></table></div>
+                </div>
+                <div style="margin-top: 22px;"><table class="tbl" id="t-pages"></table></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ PAGE 6: NEWSLETTER ══════════════════════════════ -->
+<section class="page">
+    <div class="bar"><img src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News"><div class="date-pill" data-range></div></div>
+    <div class="body">
+        <img class="client-logo" src="stats-report-assets/a2b-favicon.png" alt="a2b Global Media">
+        <h2>Your Newsletter Performance</h2>
+        <div class="grid g-side" style="margin: 10px 0 0 8px; grid-template-columns: 216px 1fr; gap: 66px;">
+            <div class="cards">
+                <div class="card"><div class="label">Available Newsletter Banners</div><div class="value">12</div></div>
+                <div class="card"><div class="label">Total Newsletter Views</div><div class="value" id="n-views"></div></div>
+                <div class="card"><div class="label">Total Newsletter Features</div><div class="value" id="n-feat"></div></div>
+            </div>
+            <div class="chart-box">
+                <div class="legend"><i></i>Open Rate (%)</div>
+                <div id="c-news"></div>
+            </div>
+        </div>
+        <div style="margin: 22px 0 0 8px;">
+            <table class="tbl" id="t-nnews"></table>
+            <div style="height: 30px"></div>
+            <table class="tbl" id="t-nban"></table>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ PAGE 7: TARGETED MAIL ═══════════════════════════ -->
+<section class="page">
+    <div class="bar"><img src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News"><div class="date-pill" data-range></div></div>
+    <div class="body">
+        <img class="client-logo" src="stats-report-assets/a2b-favicon.png" alt="a2b Global Media">
+        <h2>Your Targeted Mail Performance</h2>
+        <div class="card" style="max-width: 200px; margin: 0 0 12px 10px;"><div class="label">Available Targeted Mails</div><div class="value">2</div></div>
+        <div class="grid g-2" style="margin-left: 10px; grid-template-columns: 0.85fr 1fr; gap: 30px; align-items: start;">
+            <div>
+                <div class="chart-box" style="margin-bottom: 12px;"><div class="legend"><i></i>Open Rate (%)</div><div id="c-tm-open"></div></div>
+                <div class="chart-box"><div class="legend"><i></i>Click Rate (%)</div><div id="c-tm-click"></div></div>
+            </div>
+            <div>
+                <div class="cards" style="grid-template-columns: 1fr 1fr; margin: 0 0 30px;">
+                    <div class="card"><div class="label">Opens</div><div class="value" id="tm-opens"></div></div>
+                    <div class="card"><div class="label">Recipients</div><div class="value" id="tm-rec"></div></div>
+                </div>
+                <div class="tm-preview">
+                    <iframe src="2026-10-BN-dummy-email.html" title="Targeted mail preview" loading="lazy" tabindex="-1"></iframe>
+                    <a href="2026-10-BN-dummy-email.html" target="_blank" rel="noopener" aria-label="Open the targeted mail"></a>
+                </div>
+            </div>
+        </div>
+        <div style="margin: 22px 0 0 10px;"><table class="tbl" id="t-tm"></table></div>
+    </div>
+</section>
+
+<!-- ═══ PAGE 8: BANNERS ═════════════════════════════════ -->
+<section class="page">
+    <div class="bar"><img src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News"><div class="date-pill" data-range></div></div>
+    <div class="body">
+        <img class="client-logo" src="stats-report-assets/a2b-favicon.png" alt="a2b Global Media">
+        <h2>Your Banners on Our Website</h2>
+        <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 50px; margin-left: 14px;">
+            <div>
+                <img class="banner-img" src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus_advertise_with_us.png" alt="Advertise With Us banner on Bus-News" width="300" height="250">
+                <div class="card" style="margin-top: 30px;"><div class="label">Banner Clicks</div><div class="value" id="b-clicks"></div></div>
+            </div>
+            <div style="grid-column: span 2;"><table class="tbl" id="t-bloc"></table></div>
+        </div>
+        <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 50px; margin: 30px 0 0 14px;">
+            <table class="tbl" id="t-psdate"></table>
+            <table class="tbl" id="t-hpdate"></table>
+            <div class="hide-sm"></div>
+        </div>
+        <div class="cards" style="grid-template-columns: repeat(3, 1fr); gap: 16px 50px; margin: 24px 0 0 14px;">
+            <div class="card"><div class="label">Products &amp; Services Banners</div><div class="value">2</div></div>
+            <div class="card"><div class="label">Homepage Featured Supplier Banner</div><div class="value">1</div></div>
+            <div class="card"><div class="label">News Pages Banner</div><div class="value">1</div></div>
+            <div class="card"><div class="label">P&amp;S Banner Impressions</div><div class="value" id="b-ps"></div></div>
+            <div class="card"><div class="label">Homepage Banner Impressions</div><div class="value" id="b-hp"></div></div>
+            <div class="card"><div class="label">News Pages Banner Impressions</div><div class="value" id="b-np"></div></div>
+        </div>
+        <p class="footnote" style="margin-left: 14px;">Please note: banner click tracking only goes back to 11 April 2025.</p>
+    </div>
+</section>
+
+<p class="page-foot">Example report prepared by a2b Global Media. All figures are for illustration only.</p>
+
+<script>
+/* ──────────────────────────────────────────────────────────────
+   REPORT DATA — dummy figures. Content, magazines and newsletters
+   are real Bus-News items published 1 Jan – 30 Sep 2026.
+   Totals on the page are summed from these arrays.
+   ────────────────────────────────────────────────────────────── */
+const RANGE = 'Q3: 1 Jan 2026 - 30 Sept 2026';
+const CONTRACT = { day: 273, length: 365 };   // 1 Jan – 30 Sep 2026
+
+const COMPANY_VIEWS = 11842;
+const FS_VIEWS = 4317;
+
+const CONTENT = [
+    ['Karsan Wins Order for 150 ATAK Buses for Istanbul', 'https://bus-news.com/karsan-wins-order-for-150-atak-buses-for-istanbul/', '22 Sept 2026', 1227],
+    ['SEPTA Launches First Phase of Redesigned Bus Network', 'https://bus-news.com/septa-launches-first-phase-of-redesigned-bus-network/', '21 Aug 2026', 1019],
+    ['Government Announces £2 Bus Fare Cap in England From January 2027', 'https://bus-news.com/government-announces-2-bus-fare-cap-in-england-from-january-2027/', '22 Jul 2026', 1704],
+    ['FlixBus Unveils Wrapping Celebrating 5 Years of UK Operation', 'https://bus-news.com/flixbus-unveils-wrapping-celebrating-5-years-of-uk-operation/', '22 Jun 2026', 1085],
+    ['Germany Announces Funding for 1,500 Additional Electric Buses', 'https://bus-news.com/germany-announces-funding-for-1500-additional-electric-buses/', '22 May 2026', 1391],
+    ['UK: Stagecoach Unveils 22 Yutong Electric Double Decker Buses in Guildford', 'https://bus-news.com/uk-stagecoach-unveils-22-yutong-electric-double-decker-buses-in-guildford/', '21 Apr 2026', 963],
+    ['Canada: Victoria Introduces First of 39 New Double-Decker Buses into Service', 'https://bus-news.com/canada-victoria-introduces-first-of-39-new-double-decker-buses-into-service/', '19 Mar 2026', 1532],
+    ['Go-Ahead London Launches 1,000th Zero-Emission Bus', 'https://bus-news.com/go-ahead-london-launches-1000th-zero-emission-bus/', '20 Feb 2026', 1148],
+    ['Dubai RTA Receives First of 735 New Buses', 'https://bus-news.com/dubai-rta-receives-first-of-735-new-buses/', '22 Jan 2026', 1276]
+];
+
+const FS_POSITIONS = [
+    ['Charging Infrastructure', 'https://bus-news.com/products-services/charging-infrastructure/'],
+    ['Electric Buses', 'https://bus-news.com/products-services/electric-buses/'],
+    ['Maintenance & Servicing', 'https://bus-news.com/products-services/maintenance-servicing/'],
+    ['Operational Management Software', 'https://bus-news.com/products-services/operational-management-software/']
+];
+
+const ENGAGEMENTS = [
+    ['in_body_link_click', 37],
+    ['share_copy', 12],
+    ['email_click', 7],
+    ['phone_click', 3]
+];
+
+// LinkedIn posts: [article URL, date, views, interactions, clicks]
+const POSTS = [
+    ['https://bus-news.com/government-announces-2-bus-fare-cap-in-england-from-january-2027/', '22 Jul 2026', 1216, 23, 14],
+    ['https://bus-news.com/canada-victoria-introduces-first-of-39-new-double-decker-buses-into-service/', '19 Mar 2026', 1034, 18, 11],
+    ['https://bus-news.com/germany-announces-funding-for-1500-additional-electric-buses/', '22 May 2026', 712, 10, 7],
+    ['https://bus-news.com/karsan-wins-order-for-150-atak-buses-for-istanbul/', '22 Sept 2026', 586, 8, 5],
+    ['https://bus-news.com/dubai-rta-receives-first-of-735-new-buses/', '22 Jan 2026', 497, 7, 4],
+    ['https://bus-news.com/go-ahead-london-launches-1000th-zero-emission-bus/', '20 Feb 2026', 389, 5, 3]
+];
+
+// Social media banners: [landing page, date, views, interactions, clicks]
+const SOCIAL_BANNERS = [
+    ['https://www.yourcompany.com/bus', '16 Jun 2026', 531, 8, 5],
+    ['https://www.yourcompany.com/euro-bus-expo-2026', '15 Sept 2026', 498, 8, 5],
+    ['https://www.yourcompany.com/bus', '24 Mar 2026', 452, 6, 4]
+];
+
+// Magazine pages: [publication, page, web reads, page link, publication date]
+const MAG_PAGES = [
+    ['Issue 1 / 2026', '10-11', 287, 'https://bus-news.com/flipbook/issue-1-2026/#issue-1-2026/10-11', '26 Apr 2026'],
+    ['Issue 1 / 2026', '12-13', 264, 'https://bus-news.com/flipbook/issue-1-2026/#issue-1-2026/12-13', '26 Apr 2026']
+];
+const MAG_DOWNLOADS = 126;
+// Web reads by country: top 9 largest first, then Others (as in the Looker report)
+const MAG_COUNTRIES = [
+    ['United Kingdom', 27.3], ['United States', 12.4], ['Germany', 8.9], ['Poland', 6.7], ['India', 6.1],
+    ['Spain', 5.2], ['Turkey', 4.6], ['Netherlands', 3.9], ['Canada', 3.1], ['Others', 21.8]
+];
+const PIE_COLOURS = ['#EC008C', '#E8437A', '#7CC576', '#1A73E8', '#03A9F4', '#F6A15E', '#6D6D6D', '#FF7043', '#E28BC0', '#7CB342'];
+
+// Newsletters: [article in newsletter, newsletter, date sent, views, CTR %, open rate %]
+const NEWS_FEATURES = [
+    ['https://bus-news.com/karsan-wins-order-for-150-atak-buses-for-istanbul/', 'Newsletter, Week 39 2026', '24 Sept 2026', 2946, 4.87, 33.1],
+    ['https://bus-news.com/septa-launches-first-phase-of-redesigned-bus-network/', 'Newsletter, Week 35 2026', '24 Aug 2026', 2712, 3.96, 30.8],
+    ['https://bus-news.com/government-announces-2-bus-fare-cap-in-england-from-january-2027/', 'Newsletter, Week 31 2026', '27 Jul 2026', 2874, 5.34, 32.7],
+    ['https://bus-news.com/germany-announces-funding-for-1500-additional-electric-buses/', 'Newsletter, Week 22 2026', '25 May 2026', 2798, 4.12, 31.4],
+    ['https://bus-news.com/canada-victoria-introduces-first-of-39-new-double-decker-buses-into-service/', 'Newsletter, Week 13 2026', '23 Mar 2026', 2653, 3.71, 30.2],
+    ['https://bus-news.com/dubai-rta-receives-first-of-735-new-buses/', 'Newsletter, Week 5 2026', '26 Jan 2026', 2689, 3.94, 30.9]
+];
+const NEWS_BANNERS = [
+    ['Newsletter, Week 37 2026', '7 Sept 2026', 2768, 3.31, 31.2],
+    ['Newsletter, Week 33 2026', '10 Aug 2026', 2547, 2.98, 28.9],
+    ['Newsletter, Week 27 2026', '29 Jun 2026', 2681, 3.22, 30.1],
+    ['Newsletter, Week 25 2026', '15 Jun 2026', 2826, 3.58, 31.7],
+    ['Newsletter, Week 20 2026', '11 May 2026', 2604, 3.14, 29.6],
+    ['Newsletter, Week 16 2026', '13 Apr 2026', 2479, 2.91, 28.4],
+    ['Newsletter, Week 11 2026', '9 Mar 2026', 2873, 3.67, 30.8],
+    ['Newsletter, Week 7 2026', '9 Feb 2026', 2795, 3.05, 29.9],
+    ['Newsletter, Week 3 2026', '12 Jan 2026', 2538, 3.12, 29.1]
+];
+
+// Targeted mail: [date, URL, recipients, opens, click rate %]
+const TARGETED_MAILS = [
+    ['9 Jun 2026', 'https://a2b-global-media-content-team.github.io/client-resources/2026-10-BN-dummy-email.html', 684, 291, 5.81]
+];
+
+const BANNER_LOCATIONS = [
+    ['https://bus-news.com/products-services/charging-infrastructure/', 'https://bus-news.com/products-services/charging-infrastructure/'],
+    ['https://bus-news.com/products-services/electric-buses/', 'https://bus-news.com/products-services/electric-buses/'],
+    ['News Pages', null],
+    ['Homepage', 'https://bus-news.com/']
+];
+const BANNERS = { clicks: 16, ps: 2104, hp: 10692, np: 18827, psLive: '5 Jan 2026', hpLive: '5 Jan 2026' };
+
+/* ── HELPERS ─────────────────────────────────────────────────── */
+const fmt = n => n.toLocaleString('en-GB');
+const sum = (arr, i) => arr.reduce((t, r) => t + r[i], 0);
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const link = (url, text) => url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(text || url)}</a>` : esc(text);
+
+function table(id, cols, rows) {
+    // cols: [label, width, className]
+    const head = '<colgroup>' + cols.map(c => `<col style="width:${c[1] || 'auto'}">`).join('') + '</colgroup>'
+        + '<thead><tr>' + cols.map(c => `<th class="${c[2] || ''}">${esc(c[0])}</th>`).join('') + '</tr></thead>';
+    const body = rows.length
+        ? rows.map(r => '<tr>' + r.map((v, i) => `<td class="${(cols[i][2] || '').replace(/sorted(-up)?/g, '')}" title="${esc(String(v).replace(/<[^>]+>/g, ''))}">${v}</td>`).join('') + '</tr>').join('')
+        : `<tr class="nodata"><td colspan="${cols.length}">No data</td></tr>`;
+    $(id).innerHTML = head + '<tbody>' + body + '</tbody>';
+}
+
+function barChart(id, labels, values, opts) {
+    const W = 600, H = opts.h || 220, L = 44, B = 26, T = 10;
+    const max = opts.max || Math.ceil(Math.max(...values) / opts.step) * opts.step;
+    const plotH = H - B - T, plotW = W - L - 10;
+    const slot = plotW / values.length, bw = Math.min(slot * 0.62, 260);
+    let g = '';
+    for (let v = 0; v <= max + 1e-9; v += opts.step) {
+        const y = T + plotH - (v / max) * plotH;
+        g += `<line x1="${L}" x2="${W - 10}" y1="${y}" y2="${y}" stroke="${v ? '#DADADA' : '#333'}"/>`
+           + `<text x="${L - 8}" y="${y + 4}" font-size="11" text-anchor="end" fill="#333">${opts.dec ? v.toFixed(2) : v}</text>`;
+    }
+    values.forEach((v, i) => {
+        const h = (v / max) * plotH, x = L + slot * i + (slot - bw) / 2, y = T + plotH - h;
+        g += `<rect x="${x}" y="${y}" width="${bw}" height="${h}" fill="#9789B4"><title>${esc(labels[i])}: ${v}</title></rect>`;
+        if (opts.showVal) g += `<text x="${x + bw / 2}" y="${y + 14}" font-size="11" text-anchor="middle" fill="#333">${v}</text>`;
+        if (!opts.skipLabel || i % 2 === 0) g += `<text x="${x + bw / 2}" y="${H - 8}" font-size="${values.length > 8 ? 9.5 : 11}" text-anchor="middle" fill="#333">${esc(labels[i])}</text>`;
+    });
+    $(id).innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opts.aria)}">${g}</svg>`;
+}
+
+function hBarChart(id, labels, values, step) {
+    const W = 600, rowH = 32, T = 4, L = 190, B = 22;
+    const max = Math.ceil(Math.max(...values) / step) * step;
+    const H = T + rowH * values.length + B, plotW = W - L - 14;
+    let g = '';
+    for (let v = 0; v <= max; v += step) {
+        const x = L + (v / max) * plotW;
+        g += `<line x1="${x}" x2="${x}" y1="${T}" y2="${H - B}" stroke="${v ? '#E3E3E3' : '#333'}"/>`
+           + `<text x="${x}" y="${H - 6}" font-size="10.5" text-anchor="middle" fill="#333">${v >= 1000 ? (v / 1000) + 'k' : v}</text>`;
+    }
+    values.forEach((v, i) => {
+        const y = T + rowH * i + 7, w = (v / max) * plotW;
+        g += `<text x="${L - 8}" y="${y + 13}" font-size="10.5" text-anchor="end" fill="#333">${esc(labels[i])}</text>`
+           + `<rect x="${L}" y="${y}" width="${w}" height="${rowH - 14}" fill="#1E73BE"><title>${esc(labels[i])}: ${fmt(v)}</title></rect>`;
+    });
+    $(id).innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="LinkedIn views per post">${g}</svg>`;
+}
+
+function pie(id, data) {
+    let a = -Math.PI / 2, s = '';
+    const cx = 110, cy = 110, r = 100;
+    data = data.map((d, i) => [d[0], d[1], PIE_COLOURS[i]]);
+    data.forEach(([name, pct, col]) => {
+        const a2 = a + pct / 100 * Math.PI * 2, big = pct > 50 ? 1 : 0;
+        s += `<path d="M${cx},${cy} L${cx + r * Math.cos(a)},${cy + r * Math.sin(a)} A${r},${r} 0 ${big} 1 ${cx + r * Math.cos(a2)},${cy + r * Math.sin(a2)} Z" fill="${col}" stroke="#fff" stroke-width="1"><title>${esc(name)}: ${pct}%</title></path>`;
+        if (pct >= 7) {
+            const m = (a + a2) / 2;
+            s += `<text x="${cx + r * 0.66 * Math.cos(m)}" y="${cy + r * 0.66 * Math.sin(m) + 4}" font-size="11" text-anchor="middle" fill="#222">${pct}%</text>`;
+        }
+        a = a2;
+    });
+    const legend = data.map(([n, , c]) => `<div><span style="background:${c}"></span>${esc(n)}</div>`).join('');
+    $(id).innerHTML = `<svg viewBox="0 0 220 220" role="img" aria-label="Magazine web reads by country">${s}</svg><div class="pie-legend">${legend}</div>`;
+}
+
+function gauge(id, day, length) {
+    const cx = 160, cy = 160, r = 125, w = 34, f = day / length;
+    const pt = t => [cx - r * Math.cos(Math.PI * t), cy - r * Math.sin(Math.PI * t)];
+    const [x1, y1] = pt(0), [xf, yf] = pt(f), [x2, y2] = pt(1);
+    $(id).innerHTML = `<svg viewBox="0 0 320 200" role="img" aria-label="${day} of ${length} days through contract">
+        <path d="M${x1},${y1} A${r},${r} 0 0 1 ${x2},${y2}" fill="none" stroke="#E9E5F2" stroke-width="${w}"/>
+        <path d="M${x1},${y1} A${r},${r} 0 0 1 ${xf},${yf}" fill="none" stroke="#9789B4" stroke-width="${w}"/>
+        <text x="${cx}" y="${cy - 40}" font-size="12" text-anchor="middle" fill="#444">Days through contract</text>
+        <text x="${cx}" y="${cy - 12}" font-size="26" text-anchor="middle" fill="#111">${day}</text>
+        <text x="${x1}" y="${cy + 22}" font-size="12" text-anchor="middle" fill="#111">0</text>
+        <text x="${x2}" y="${cy + 22}" font-size="12" text-anchor="middle" fill="#111">${length}</text>
+    </svg>`;
+}
+
+/* ── RENDER ──────────────────────────────────────────────────── */
+document.querySelectorAll('[data-range]').forEach(el => el.textContent = RANGE);
+gauge('gauge', CONTRACT.day, CONTRACT.length);
+
+// Website
+$('w-company').textContent = fmt(COMPANY_VIEWS);
+$('w-fs').textContent = fmt(FS_VIEWS);
+$('w-content').textContent = fmt(sum(CONTENT, 3));
+$('w-eng').textContent = fmt(sum(ENGAGEMENTS, 1));
+table('t-content', [['Supplier Content', '62%'], ['Publication Date', '22%', 'num sorted'], ['Impressions', '16%', 'num']],
+    CONTENT.map(r => [link(r[1], r[0]), r[2], fmt(r[3])]));
+table('t-fs', [['Your Featured Supplier Positions', '100%', 'sorted-up']], FS_POSITIONS.map(r => [link(r[1], r[0])]));
+table('t-eng', [['Engagements', '75%'], ['Count', '25%', 'num sorted']], ENGAGEMENTS.map(r => [r[0], fmt(r[1])]));
+
+// Social
+const allSocial = POSTS.concat(SOCIAL_BANNERS);
+$('s-views').textContent = fmt(sum(allSocial, 2));
+$('s-int').textContent = fmt(sum(allSocial, 3));
+$('s-clicks').textContent = fmt(sum(allSocial, 4));
+hBarChart('c-social', POSTS.map(p => p[0].replace(/^https:\/\/[^/]+\//, '').replace(/\/$/, '').slice(0, 30) + '…'), POSTS.map(p => p[2]), 500);
+const urn = i => `https://www.linkedin.com/feed/update/urn:li:activity:74${(i * 7919 + 1103).toString().padStart(5, '0')}…`;
+table('t-posts', [['Post Link', '36%'], ['Update link', '26%', 'opt'], ['Date Published', '13%', 'num'], ['Views', '9%', 'num sorted'], ['Interactions', '9%', 'num opt'], ['Clicks', '7%', 'num']],
+    POSTS.map((r, i) => [link(r[0], r[0]), urn(i + 1), r[1], fmt(r[2]), fmt(r[3]), fmt(r[4])]));
+table('t-banners', [['Link', '36%'], ['Update link', '26%', 'opt'], ['Date Published', '13%', 'num'], ['Views', '9%', 'num sorted'], ['Interactions', '9%', 'num opt'], ['Clicks', '7%', 'num']],
+    SOCIAL_BANNERS.map((r, i) => [r[0], urn(i + 11), r[1], fmt(r[2]), fmt(r[3]), fmt(r[4])]));
+
+// Magazine
+$('m-reads').textContent = fmt(sum(MAG_PAGES, 2));
+$('m-dl').textContent = fmt(MAG_DOWNLOADS);
+pie('c-pie', MAG_COUNTRIES);
+table('t-mags', [['All Your Magazines', '70%'], ['Publication Date', '30%', 'num sorted']], MAG_PAGES.map(r => [link(r[3], r[3]), r[4]]));
+table('t-pages', [['Publication Name', '50%'], ['Page', '25%', 'num'], ['Web Reads', '25%', 'num sorted']],
+    MAG_PAGES.map(r => [r[0], r[1], fmt(r[2])]));
+
+// Newsletter
+const allNews = NEWS_FEATURES.map(r => r.slice(1)).concat(NEWS_BANNERS);
+$('n-views').textContent = fmt(sum(allNews, 2));
+$('n-feat').textContent = NEWS_FEATURES.length;
+const byDate = allNews.slice().sort((a, b) => new Date(a[1].replace('Sept', 'Sep')) - new Date(b[1].replace('Sept', 'Sep')));
+barChart('c-news', byDate.map(r => r[1].replace(/ 2026$/, '')), byDate.map(r => r[4]), { step: 10, max: 40, aria: 'Newsletter open rate per send', h: 230 });
+table('t-nnews', [['Your news in our newsletters:', '42%'], ['Newsletter', '26%', 'opt'], ['Date Sent', '12%', 'num sorted'], ['Views', '10%', 'num'], ['CTR (%)', '10%', 'num']],
+    NEWS_FEATURES.map(r => [link(r[0], r[0]), esc(r[1]), r[2], fmt(r[3]), r[4].toFixed(2)]));
+table('t-nban', [['Your banners in our newsletters:', '68%'], ['Date Sent', '12%', 'num sorted'], ['Views', '10%', 'num'], ['CTR (%)', '10%', 'num']],
+    NEWS_BANNERS.map(r => [esc(r[0]), r[1], fmt(r[2]), r[3].toFixed(2)]));
+
+// Targeted mail
+$('tm-opens').textContent = fmt(sum(TARGETED_MAILS, 3));
+$('tm-rec').textContent = fmt(sum(TARGETED_MAILS, 2));
+const openRate = r => +(r[3] / r[2] * 100).toFixed(2);
+barChart('c-tm-open', TARGETED_MAILS.map(r => r[0]), TARGETED_MAILS.map(openRate), { step: 20, max: 60, dec: true, showVal: true, aria: 'Targeted mail open rate', h: 200 });
+barChart('c-tm-click', TARGETED_MAILS.map(r => r[0]), TARGETED_MAILS.map(r => r[4]), { step: 2, max: 8, dec: true, showVal: true, aria: 'Targeted mail click rate', h: 200 });
+table('t-tm', [['Campaign Sent Date', '18%'], ['Your AI-driven targeted mail:', '52%'], ['Click Rate (%)', '15%', 'num'], ['Open Rate (%)', '15%', 'num sorted']],
+    TARGETED_MAILS.map(r => [r[0], link(r[1], r[1]), r[4].toFixed(2), openRate(r).toFixed(2)]));
+
+// Banners
+$('b-clicks').textContent = fmt(BANNERS.clicks);
+$('b-ps').textContent = fmt(BANNERS.ps);
+$('b-hp').textContent = fmt(BANNERS.hp);
+$('b-np').textContent = fmt(BANNERS.np);
+table('t-bloc', [['Banner Locations', '100%', 'sorted']], BANNER_LOCATIONS.map(r => [link(r[1], r[0])]));
+table('t-psdate', [['P&S Banner Live Date', '100%', 'sorted-up']], [[BANNERS.psLive]]);
+table('t-hpdate', [['Homepage Banner Live Date', '100%', 'sorted-up']], [[BANNERS.hpLive]]);
+</script>
+</body>
+</html>
