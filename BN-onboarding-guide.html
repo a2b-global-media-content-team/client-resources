@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding Guide: Bus-News — a2b Global Media</title>
+    <meta name="description" content="A step-by-step guide to your Bus-News company page: activate your account, build your page in Manage My Page, preview it and submit it for publication.">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:      #1B3342;
+            --navy-2:    #24465A;
+            --orange:    #9789B4;
+            --orange-dk: #5B4C8A;
+            --light:     #F7F7F7;
+            --text:      #1F2A30;
+            --muted:     #5D6B73;
+            --rule:      #E2E8EC;
+            --white:     #FFFFFF;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Mukta', Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: var(--light);
+            font-size: 16px;
+            line-height: 1.55;
+        }
+        a { color: var(--orange-dk); }
+
+        /* ── HEADER ─────────────────────────────────────── */
+        .site-head {
+            background: var(--navy);
+            color: var(--white);
+            padding: 22px 24px 64px;
+            text-align: center;
+        }
+        .site-head .brand { display: flex; justify-content: space-between; align-items: center; max-width: 1240px; margin: 0 auto 46px; gap: 16px; }
+        .site-head .brand img.rn { height: 34px; width: auto; }
+        .site-head .brand img.a2b { height: 26px; width: auto; }
+        .eyebrow { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); font-weight: 600; }
+        .site-head h1 { font-size: 46px; line-height: 1.1; font-weight: 600; margin: 10px 0 14px; }
+        .site-head p.lead { max-width: 640px; margin: 0 auto; color: #C9D6DE; font-size: 18px; }
+
+        /* ── PLAYER ─────────────────────────────────────── */
+        .player-wrap { max-width: 1240px; margin: -36px auto 0; padding: 0 24px; }
+        .chapters {
+            display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin;
+        }
+        .chapters button {
+            flex: none; border: 0; cursor: pointer; font: inherit; font-size: 14px; font-weight: 500;
+            background: var(--navy-2); color: #D5E0E6; padding: 8px 14px; border-radius: 6px;
+            display: flex; align-items: center; gap: 8px; white-space: nowrap;
+        }
+        .chapters button .n { font-size: 12px; opacity: 0.7; }
+        .chapters button[aria-current="true"] { background: var(--orange); color: var(--navy); }
+        .chapters button:focus-visible, .ctrl button:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+        .player {
+            display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 0;
+            background: var(--white); border-radius: 12px; overflow: hidden;
+            box-shadow: 0 18px 50px rgba(27, 51, 66, 0.22);
+        }
+
+        /* Screen-share window */
+        .screen { background: #0F1F29; padding: 14px; position: relative; }
+        .share-badge {
+            position: absolute; top: 22px; right: 26px; z-index: 6;
+            background: rgba(229, 57, 53, 0.95); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+            padding: 3px 9px 2px; border-radius: 20px; display: flex; align-items: center; gap: 6px;
+        }
+        .share-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: blink 1.4s infinite; }
+        @keyframes blink { 50% { opacity: 0.25; } }
+
+        .browser { background: #fff; border-radius: 8px; overflow: hidden; }
+        .chrome {
+            height: 40px; background: #E9EDF0; display: flex; align-items: center; gap: 12px; padding: 0 12px;
+            border-bottom: 1px solid #D6DCE0;
+        }
+        .dots { display: flex; gap: 6px; flex: none; }
+        .dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+        .dots i:nth-child(1) { background: #FF5F57; } .dots i:nth-child(2) { background: #FEBC2E; } .dots i:nth-child(3) { background: #28C840; }
+        .url {
+            flex: 1; min-width: 0; background: #fff; border-radius: 6px; height: 26px; display: flex; align-items: center; gap: 7px;
+            padding: 0 10px; font-size: 13px; color: #44515A; white-space: nowrap; overflow: hidden;
+        }
+        .url svg { flex: none; width: 12px; height: 12px; }
+        .url .caret { display: inline-block; width: 1px; height: 14px; background: #333; margin-left: 1px; animation: blink 1s steps(1) infinite; vertical-align: -2px; }
+
+        .viewport { position: relative; overflow: hidden; aspect-ratio: 16 / 10; background: #DDE3E7; }
+        .layer { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+        .layer.anim { transition: transform 1.4s cubic-bezier(0.65, 0, 0.25, 1); }
+        .layer img.page { display: block; width: 1440px; height: auto; user-select: none; -webkit-user-drag: none; }
+        .layer .html-page { width: 1440px; }
+
+        .ring {
+            position: absolute; border: 5px solid var(--orange); border-radius: 14px; pointer-events: none;
+            box-shadow: 0 0 0 9999px rgba(15, 31, 41, 0.42), 0 0 24px rgba(151, 137, 180, 0.95);
+            opacity: 0; transition: opacity 0.5s ease, left 1.4s cubic-bezier(0.65, 0, 0.25, 1), top 1.4s cubic-bezier(0.65, 0, 0.25, 1), width 1.4s cubic-bezier(0.65, 0, 0.25, 1), height 1.4s cubic-bezier(0.65, 0, 0.25, 1);
+        }
+        .ring.on { opacity: 1; animation: pulse 1.8s ease-in-out infinite 1.4s; }
+        @keyframes pulse { 50% { box-shadow: 0 0 0 9999px rgba(15, 31, 41, 0.42), 0 0 44px rgba(151, 137, 180, 1); } }
+
+        .cursor {
+            position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 5; pointer-events: none;
+            transition: transform 1.2s cubic-bezier(0.65, 0, 0.25, 1); filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35));
+        }
+        .click {
+            position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; z-index: 4;
+            border: 3px solid var(--orange); opacity: 0; pointer-events: none;
+        }
+        .click.go { animation: ripple 0.7s ease-out; }
+        @keyframes ripple { from { transform: scale(0.3); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+
+        .loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; background: #fff; z-index: 3; transition: opacity 0.3s; }
+        .loading.hide { opacity: 0; pointer-events: none; }
+
+        /* Caption panel */
+        .panel { display: flex; flex-direction: column; padding: 26px 26px 20px; border-left: 1px solid var(--rule); }
+        .panel .chap { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; }
+        .panel h2 { font-size: 27px; line-height: 1.15; font-weight: 600; color: var(--navy); margin: 6px 0 12px; }
+        .panel .body { font-size: 16px; color: #34424A; flex: 1; }
+        .panel .body ul { margin: 8px 0 0 18px; }
+        .panel .body li { margin-bottom: 3px; }
+        .panel .spec { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+        .panel .spec span { background: #F2EFF8; color: #4A3D75; font-size: 13px; font-weight: 500; padding: 3px 9px; border-radius: 4px; }
+        .panel .fade { animation: fadeUp 0.5s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+        .progress { display: flex; gap: 4px; margin: 18px 0 14px; }
+        .progress i { flex: 1; height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; position: relative; }
+        .progress i.done { background: var(--orange); }
+        .progress i.now::after { content: ""; position: absolute; inset: 0; background: var(--orange); transform-origin: left; animation: fill var(--dur, 7s) linear forwards; }
+        .progress.paused i.now::after { animation-play-state: paused; }
+        @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+        .ctrl { display: flex; align-items: center; gap: 8px; }
+        .ctrl button {
+            border: 0; cursor: pointer; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            background: #EEF2F4; color: var(--navy);
+        }
+        .ctrl button.play { width: 50px; height: 50px; background: var(--navy); color: #fff; }
+        .ctrl button svg { width: 18px; height: 18px; }
+        .ctrl { flex-wrap: wrap; row-gap: 12px; }
+        .ctrl button { flex: none; }
+        .ctrl .count { flex: 1 0 auto; margin-left: 0; white-space: nowrap; }
+        .ctrl button.sound { width: auto; height: 42px; border-radius: 21px; padding: 0 14px 0 12px; gap: 6px; font: inherit; font-size: 14px; font-weight: 600; }
+        .ctrl button.sound[aria-pressed="true"] { background: var(--orange); color: var(--navy); }
+        .ctrl button.sound:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+        .ctrl .count { margin-left: auto; font-size: 13px; color: var(--muted); }
+        .ctrl .open { font-size: 13px; margin-left: 10px; white-space: nowrap; }
+
+        /* ── REFERENCE SECTION ──────────────────────────── */
+        .ref { max-width: 1240px; margin: 70px auto 0; padding: 0 24px; }
+        .ref > h2 { font-size: 32px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+        .ref > p { color: var(--muted); margin-bottom: 26px; max-width: 700px; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+        .card {
+            background: #fff; border-radius: 10px; padding: 22px 22px 18px; border-top: 4px solid var(--orange);
+            box-shadow: 0 2px 8px rgba(27, 51, 66, 0.06);
+        }
+        .card h3 { font-size: 20px; font-weight: 600; color: var(--navy); line-height: 1.2; }
+        .card .ex { font-size: 13px; color: var(--muted); margin: 2px 0 12px; word-break: break-word; }
+        .card .ex a { color: var(--orange-dk); }
+        .card dl { font-size: 15px; }
+        .card dt { font-weight: 600; color: var(--navy); margin-top: 10px; }
+        .card dd { color: #3A4850; }
+        .card ul { margin: 4px 0 0 18px; font-size: 15px; color: #3A4850; }
+        .card button.watch {
+            margin-top: 14px; border: 0; background: none; color: var(--orange-dk); font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; padding: 0;
+        }
+
+
+        /* ── STEP BY STEP ───────────────────────────────── */
+        .howto { display: flex; flex-direction: column; gap: 16px; }
+        .stepcard {
+            background: #fff; border-radius: 10px; padding: 24px 26px 20px 84px; position: relative;
+            box-shadow: 0 2px 8px rgba(27, 51, 66, 0.06); border-left: 4px solid var(--orange);
+        }
+        .stepcard .num {
+            position: absolute; left: 24px; top: 22px; width: 42px; height: 42px; border-radius: 50%;
+            background: var(--navy); color: var(--orange); font-weight: 700; font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .stepcard h3 { font-size: 22px; font-weight: 600; color: var(--navy); line-height: 1.2; margin-bottom: 8px; }
+        .stepcard h4 { font-size: 17px; font-weight: 600; color: var(--navy); margin: 18px 0 6px; }
+        .stepcard p, .stepcard li { font-size: 16px; color: #34424A; }
+        .stepcard p { margin-bottom: 8px; }
+        .stepcard ol { margin: 6px 0 4px 20px; }
+        .stepcard li { margin-bottom: 5px; padding-left: 2px; }
+        .stepcard ol.tips li { margin-bottom: 8px; }
+        .stepcard .tip {
+            margin-top: 12px; background: #FFF3E3; border-radius: 6px; padding: 12px 14px; font-size: 15px; color: #5A3A10;
+        }
+        .stepcard table.ex { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 15px; }
+        .stepcard table.ex th, .stepcard table.ex td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+        .stepcard table.ex thead th { color: var(--navy); font-weight: 600; }
+        .stepcard table.ex tbody th { color: var(--navy); font-weight: 600; width: 22%; }
+        .stepcard table.ex td:nth-child(2) { color: #8A4B4B; }
+        .stepcard table.ex td:nth-child(3) { color: #2F5D3A; }
+        .stepcard button.watch {
+            margin-top: 12px; border: 0; background: none; color: var(--orange-dk); font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; padding: 0;
+        }
+        .help { margin-top: 26px; background: var(--navy); color: #D5E0E6; border-radius: 10px; padding: 24px 26px; }
+        .help h3 { color: #fff; font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+        .help p { margin-bottom: 8px; } .help a { color: var(--orange); } .help strong { color: #fff; }
+        @media (max-width: 600px) {
+            .stepcard { padding: 20px 18px 16px; }
+            .stepcard .num { position: static; margin-bottom: 10px; width: 36px; height: 36px; font-size: 17px; }
+            .stepcard table.ex { font-size: 14px; }
+            .stepcard table.ex tbody th { width: auto; }
+        }
+
+        .site-foot { margin-top: 80px; background: var(--navy); color: #C9D6DE; padding: 40px 24px; text-align: center; font-size: 15px; }
+        .site-foot img { height: 30px; width: auto; margin-bottom: 14px; }
+        .site-foot a { color: #fff; text-decoration: none; }
+        .site-foot .sep { opacity: 0.4; margin: 0 10px; }
+
+        /* ── RESPONSIVE ─────────────────────────────────── */
+        @media (max-width: 980px) {
+            .player { grid-template-columns: 1fr; }
+            .panel { border-left: 0; border-top: 1px solid var(--rule); }
+            .panel .body { min-height: 150px; }
+        }
+        @media (max-width: 600px) {
+            .site-head { padding: 18px 16px 56px; }
+            .site-head .brand { margin-bottom: 30px; }
+            .site-head .brand img.rn { height: 24px; }
+            .site-head .brand img.a2b { height: 18px; }
+            .site-head h1 { font-size: 34px; }
+            .site-head p.lead { font-size: 16px; }
+            .player-wrap, .ref { padding: 0 16px; }
+            .screen { padding: 8px; }
+            .chrome { height: 32px; } .dots { display: none; }
+            .url { font-size: 11px; height: 22px; }
+            .viewport { aspect-ratio: 4 / 5; }
+            .share-badge { top: 14px; right: 14px; }
+            .panel { padding: 20px 18px 16px; }
+            .panel h2 { font-size: 23px; }
+            .cards { grid-template-columns: 1fr; }
+            .ctrl .open { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .layer.anim, .cursor, .ring { transition-duration: 0.01s !important; }
+            .ring.on, .share-badge::before { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-head">
+    <div class="brand">
+        <img class="rn" src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News">
+        <img class="a2b" src="https://a2bglobalmedia.com/wp-content/uploads/sites/5/2026/04/a2b-Global-Media-White-Logo-1.png" alt="a2b Global Media">
+    </div>
+    <div class="eyebrow">Bus-News Onboarding</div>
+    <h1>Onboarding Guide</h1>
+    <p class="lead">From your activation email to a published company page. Watch the tour, then follow the steps below.</p>
+</header>
+
+<main>
+    <section class="player-wrap" aria-label="Guided tour">
+        <nav class="chapters" id="chapters" aria-label="Tour chapters"></nav>
+        <div class="player">
+            <div class="screen">
+                <div class="share-badge" aria-hidden="true">Screen sharing</div>
+                <div class="browser">
+                    <div class="chrome">
+                        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                        <div class="url"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 5V3.5a3 3 0 0 1 6 0V5h.5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-5a.5.5 0 0 1 .5-.5H3zm1.2 0h3.6V3.5a1.8 1.8 0 0 0-3.6 0V5z" fill="#5D6B73"/></svg><span id="url"></span><span class="caret" aria-hidden="true"></span></div>
+                    </div>
+                    <div class="viewport" id="viewport">
+                        <div class="layer" id="layer"><div class="ring" id="ring"></div></div>
+                        <svg class="cursor" id="cursor" viewBox="0 0 26 26" aria-hidden="true"><path d="M5 3l15 8.2-6.6 1.6 3.9 7.4-2.9 1.5-3.9-7.4L5 19z" fill="#fff" stroke="#111" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                        <div class="click" id="click"></div>
+                        <div class="loading" id="loading">Loading page…</div>
+                    </div>
+                </div>
+            </div>
+            <aside class="panel" aria-live="polite">
+                <div class="fade" id="caption">
+                    <div class="chap" id="cap-chap"></div>
+                    <h2 id="cap-title"></h2>
+                    <div class="body" id="cap-body"></div>
+                    <div class="spec" id="cap-spec"></div>
+                </div>
+                <div class="progress" id="progress"></div>
+                <div class="ctrl">
+                    <button id="prev" aria-label="Previous step"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button id="play" class="play" aria-label="Pause"><svg viewBox="0 0 24 24" id="play-icon"></svg></button>
+                    <button id="next" aria-label="Next step"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button id="sound" class="sound" aria-pressed="false" title="Read each step aloud" hidden><svg viewBox="0 0 24 24" id="sound-icon"></svg><span>Sound</span></button>
+                    <span class="count" id="count"></span>
+                    <a class="open" id="open" href="#" target="_blank" rel="noopener">Open page ↗</a>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <section class="ref" id="steps">
+        <h2>Step by step</h2>
+        <p>Every step from the tour, with the details you need. Select “Watch this step” to see it in the tour.</p>
+        <div class="howto" id="howto"></div>
+        <div class="help">
+            <h3>Need help?</h3>
+            <p>Contact the <strong>Content Team</strong> about technical difficulties, or to send us videos, documents, press releases, banners and magazine content. Talk to your <strong>Partnership Manager</strong> about your partnership or extra services.</p>
+            <p>See where your package appears on Bus-News in the <a href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html">Visual Guide</a>, and everything your package includes in the <a href="https://a2b-global-media-content-team.github.io/client-resources/BN-welcome-pack.html">Welcome Pack</a>.</p>
+        </div>
+    </section>
+</main>
+
+<footer class="site-foot">
+    <img src="https://bus-news.com/wp-content/uploads/sites/4/2025/08/Bus-News-White-Logo-CLEAR.png" alt="Bus-News"><br>
+    <a href="https://bus-news.com/" target="_blank" rel="noopener">bus-news.com</a><span class="sep">|</span>
+    <a href="tel:+441392580002">+44 1392 580002</a><span class="sep">|</span>
+    <a href="mailto:contact@a2bglobalmedia.com">contact@a2bglobalmedia.com</a>
+</footer>
+
+<script>
+/* ──────────────────────────────────────────────────────────────
+   TOUR DATA
+   Each chapter shows one page (a full-page screenshot 1440px wide,
+   or an HTML mock-up). Each step points the "camera" at a box on
+   that page: box = [x, y, width, height] in page pixels.
+   zoom: 1 = fit page width; higher = closer.
+   ────────────────────────────────────────────────────────────── */
+const A = 'visual-guide-assets/';
+const CHAPTERS = [
+    {
+        name: 'Activation email',
+        url: 'Your inbox',
+        link: null,
+        img: 'bn-onboard-activate.jpg', h: 900,
+        alt: 'Example inbox showing the email “Activate your account to manage Your Company”',
+        guide: `<p>When your account is ready, we send you an invitation by email.</p>
+        <ol>
+            <li>Look for an email from <strong>Bus-News</strong> with the subject <strong>“Activate your account to manage <em>your company</em>”</strong>.</li>
+            <li>Click the link in the email. Please do this within one week.</li>
+            <li>Your browser opens Bus-News. You are signed in automatically and go straight to <strong>Manage My Page</strong>.</li>
+        </ol>
+        <div class="tip"><strong>Can’t find the email?</strong> Look in your spam or junk folder. Add all <strong>@a2bglobalmedia.com</strong> addresses to your contacts, so our emails reach your inbox. If you do not activate your account, we send you a reminder after 3 days and again after 7 days.</div>`,
+        steps: [
+            { title: 'Look for our invitation', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'When your account is ready, we send you an invitation by email. This tour shows you every step, from this email to your published company page.' },
+            { title: 'The subject line', box: [650, 28, 750, 36], zoom: 2.2,
+              text: 'The subject is “Activate your account to manage” followed by your company name.' },
+            { title: 'Sent by Bus-News', box: [650, 84, 750, 44], zoom: 2.4,
+              text: 'The email comes from Bus-News. Add all @a2bglobalmedia.com addresses to your contacts, so our emails do not go to spam.' },
+            { title: 'Click the activation link', box: [650, 254, 720, 24], zoom: 2.4,
+              text: 'Click the link. You are signed in automatically and Bus-News opens Manage My Page, where you build your company page.' },
+            { title: 'Activate within one week', box: [650, 292, 720, 24], zoom: 2.4,
+              text: 'Please activate your account within one week. If you have not activated it, we send you a reminder after 3 days and again after 7 days.',
+              spec: ['Activate within 1 week'] }
+        ]
+    },
+    {
+        name: 'Login details',
+        url: 'Your inbox',
+        link: null,
+        img: 'bn-onboard-login.jpg', h: 900,
+        alt: 'Example inbox showing the email “Your login details for Your Company”',
+        guide: `<p>When you activate your account, we send you a second email with your login details.</p>
+        <ol>
+            <li>Look for an email with the subject <strong>“Your login details for <em>your company</em>”</strong>.</li>
+            <li>Keep this email. It has your <strong>username</strong> and <strong>password</strong> for when you sign in again, for example on a different computer.</li>
+            <li>To go to your account, click <strong>Log in</strong> in the email.</li>
+        </ol>
+        <div class="tip"><strong>On more than one of our sites?</strong> If your company page is on more than one a2b Global Media site, the email has one link for each site. The same username and password work on each site.</div>`,
+        steps: [
+            { title: 'A second email arrives', box: [230, 0, 379, 93], zoom: 2,
+              text: 'When you activate your account, a second email arrives: “Your login details for” followed by your company name.' },
+            { title: 'Your username and password', box: [650, 254, 720, 48], zoom: 2.4,
+              text: 'Keep this email. You need these details when you sign in again, for example on a different computer.' },
+            { title: 'Log in at any time', box: [650, 316, 720, 24], zoom: 2.4,
+              text: 'The Log in link opens your Bus-News account. If your page is on more than one of our sites, the same login works on each one.' }
+        ]
+    },
+    {
+        name: 'Sign in',
+        url: 'bus-news.com/my-account/',
+        link: 'https://bus-news.com/my-account/',
+        img: 'bn-onboard-signin.jpg', h: 1400,
+        alt: 'Bus-News sign-in page',
+        guide: `<p>The activation link signs you in the first time. After that, use these steps to get back to your page.</p>
+        <ol>
+            <li>Go to <a href="https://bus-news.com/my-account/" target="_blank" rel="noopener">bus-news.com/my-account/</a>. You can also click <strong>My Account</strong> at the bottom of any Bus-News page. Bookmark the address, so you can find it easily.</li>
+            <li>Enter your email address and the password from your login details email.</li>
+            <li>Click <strong>Sign In</strong>. Your account opens on <strong>Manage My Page</strong>.</li>
+        </ol>
+        <div class="tip"><strong>Forgot your password?</strong> Click <strong>Forgot your password?</strong> under the Sign In button, and we email you a link to set a new one.</div>`,
+        steps: [
+            { title: 'Signing in again', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'The activation link signs you in the first time. Next time, go to bus-news.com/my-account/, or click My Account at the bottom of any Bus-News page.' },
+            { title: 'Enter your details', box: [110, 820, 640, 300], zoom: 1.8,
+              text: 'Enter your email address and the password from your login details email.' },
+            { title: 'Click Sign In', box: [120, 1140, 620, 56], zoom: 2,
+              text: 'Your account opens on Manage My Page.' },
+            { title: 'Forgot your password?', box: [114, 1204, 196, 32], zoom: 2.6,
+              text: 'Click this link and we email you a link to set a new password.' }
+        ]
+    },
+    {
+        name: 'Manage My Page',
+        url: 'bus-news.com/my-account/',
+        link: null,
+        img: 'bn-onboard-start.jpg', h: 1558,
+        alt: 'Manage My Page on a new account: a draft page with a checklist and six closed sections',
+        guide: `<p>Manage My Page is where you build your company page and keep it up to date. On your first visit, your page is a private <strong>draft</strong>.</p>
+        <ol>
+            <li>Look at the <strong>checklist</strong>. It shows the 10 things your page must have before it can go live.</li>
+            <li>Click any item that is not ticked. The page opens the section where you add it.</li>
+            <li>Work through the six sections: <strong>Company details</strong>, <strong>Company imagery</strong>, <strong>Company profile</strong>, <strong>Company categories</strong>, <strong>Featured categories</strong> and <strong>Company events</strong>. Click a section name to open it.</li>
+            <li>Each section has its own Save button at the bottom. Click it before you open the next section.</li>
+            <li>You do not need to do everything at once. Your work is kept, and you can come back at any time.</li>
+        </ol>
+        <div class="tip"><strong>Featured categories</strong> shows only on packages that include featured supplier positions (Essentials+, Premium and Ultra).</div>`,
+        steps: [
+            { title: 'Welcome to Manage My Page', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'This is where you build your company page and keep it up to date. On your first visit, your page is a private draft.' },
+            { title: 'Your page tools', box: [120, 326, 220, 128], zoom: 2.4,
+              text: 'Manage My Page and For Review are at the top of your account menu. The label shows the status of your page.' },
+            { title: 'Draft status', box: [370, 173, 280, 49], zoom: 2.6,
+              text: 'Draft means your page is not public yet. Only you and our team can see it.' },
+            { title: 'Your checklist', box: [370, 391, 950, 436], zoom: 1.2,
+              text: 'Your page needs these 10 things before it can go live. Click any item that is not ticked to go straight to that section.',
+              spec: ['10 required items'] },
+            { title: 'Submit when you are ready', box: [370, 838, 950, 65], zoom: 1.6,
+              text: 'When every item has a tick, you submit your page for publication here. We show you how at the end of this tour.' },
+            { title: 'Six sections', box: [370, 966, 950, 536], zoom: 1.1,
+              text: 'Click a section name to open it. Each section has its own Save button, so click Save before you open the next one.' }
+        ]
+    },
+    {
+        name: 'Company details',
+        url: 'bus-news.com/my-account/',
+        link: null,
+        img: 'bn-onboard-dashboard.jpg', h: 7173,
+        alt: 'Manage My Page with every section open and filled in for the example company',
+        guide: `<ol>
+            <li>Open <strong>Company details</strong>.</li>
+            <li>Fill in the six required fields (marked <strong>*</strong>): <strong>Company name</strong>, <strong>Contact email</strong>, <strong>Website URL</strong>, <strong>Telephone</strong>, <strong>Address</strong> and <strong>Region</strong> (then the sub-region).</li>
+            <li>Check the <strong>Contact email</strong> carefully. Enquiries from readers go to this address.</li>
+            <li>Add the addresses of your social media pages (X, Facebook, LinkedIn, Instagram, YouTube). We link to them from your page.</li>
+            <li>Optional, on Essentials+, Premium and Ultra: in the last field, add the address of the news or press release page on your website. We then pick up your new press releases automatically, so you do not need to send them to us.</li>
+            <li>Click <strong>Save details</strong>.</li>
+        </ol>
+        <div class="tip">Write your company name exactly as you want it to appear everywhere on Bus-News. Use the same name in your profile text.</div>`,
+        steps: [
+            { title: 'Company details', box: [370, 966, 950, 1517], zoom: 1,
+              text: 'The basic facts about your company. Fields marked with a red star are required.' },
+            { title: 'Required fields', box: [394, 1038, 902, 717], zoom: 1.3,
+              text: 'Company name, contact email, website URL, telephone, address, region and sub-region. Your page cannot go live without them.',
+              spec: ['6 required fields'] },
+            { title: 'Your contact email', box: [394, 1134, 902, 80], zoom: 2.2,
+              text: 'Enquiries from readers go to this address, so use an inbox that someone checks every day.' },
+            { title: 'Your social media', box: [394, 1772, 902, 465], zoom: 1.5,
+              text: 'Add the addresses of your social media pages. We link to them from your page, so readers can follow you.' },
+            { title: 'News tracking (optional)', box: [394, 2254, 902, 134], zoom: 2,
+              text: 'Add the address of the news page on your website. We then pick up each new press release automatically. Available on Essentials+, Premium and Ultra.' },
+            { title: 'Save details', box: [394, 2404, 902, 55], zoom: 2.2,
+              text: 'Click Save details before you open the next section.' }
+        ]
+    },
+    {
+        name: 'Company imagery',
+        url: 'bus-news.com/my-account/',
+        link: null,
+        img: 'bn-onboard-dashboard.jpg', h: 7173,
+        alt: 'The Company imagery section of Manage My Page',
+        guide: `<ol>
+            <li>Open <strong>Company imagery</strong>.</li>
+            <li><strong>Logo (required):</strong> click <strong>Upload logo</strong>. Drag and zoom your logo to fit the square, then click <strong>Save changes</strong>. We place it on a white square. A PNG with a transparent background works best.</li>
+            <li><strong>Hero images (at least 1, up to 20):</strong> click <strong>Upload image</strong> for each image. These are the large images at the top of your page. Use landscape photographs at least 1600 px wide. Use the arrows to change the order (the first image shows first), then click <strong>Save changes</strong>.</li>
+            <li><strong>Library images (optional, up to 30):</strong> these show in the Images section of your page. Add a short caption to each one. Captions label the image when a reader enlarges it, and help your images appear in image search. Click <strong>Save changes</strong>.</li>
+            <li>To use an image you uploaded before, click <strong>Choose logo</strong> or <strong>Choose image</strong>.</li>
+        </ol>
+        <div class="tip">Use the best-quality images you have, in JPEG or PNG format. The best images show the products, projects and people you write about in your profile.</div>`,
+        steps: [
+            { title: 'Your logo', box: [394, 2571, 902, 219], zoom: 1.8,
+              text: 'Upload your logo and fit it in the square. We place it on a white square so it looks neat across the site.',
+              spec: ['Required', 'PNG with transparent background'] },
+            { title: 'Hero images', box: [394, 2889, 902, 455], zoom: 1.5,
+              text: 'The large images at the top of your page. They rotate in the order you set. Use the arrows to change the order, and × to remove an image.',
+              spec: ['At least 1, up to 20', 'Landscape, 1600 px wide or more'] },
+            { title: 'Library images', box: [394, 3443, 902, 548], zoom: 1.4,
+              text: 'Photographs of your products, projects and team. They show in the Images section of your page.',
+              spec: ['Optional, up to 30', 'Any shape or size'] },
+            { title: 'Add captions', box: [394, 3567, 902, 269], zoom: 1.7,
+              text: 'A short caption labels the image when a reader enlarges it. A good caption also helps your images appear in image search.' }
+        ]
+    },
+    {
+        name: 'Company profile',
+        url: 'bus-news.com/my-account/',
+        link: null,
+        img: 'bn-onboard-dashboard.jpg', h: 7173,
+        alt: 'The Company profile section of Manage My Page, with the profile strength meter and four sections of text',
+        guide: `<p>Your profile text is the most important part of your page. Search engines, and AI tools such as ChatGPT and Google’s AI Overviews, read it to decide when to show your page or quote it.</p>
+        <ol>
+            <li>Open <strong>Company profile</strong>.</li>
+            <li>Write your profile in the text box.</li>
+            <li>To make a heading, click in the line, open the <strong>Paragraph</strong> menu at the left of the toolbar and choose <strong>Heading</strong>. Choose <strong>Subheading</strong> for a smaller heading inside a section.</li>
+            <li>Use the other toolbar buttons for bold text, bulleted and numbered lists, and links.</li>
+            <li>Watch the <strong>Profile strength</strong> meter. You need <strong>300 words</strong> to submit your page. The meter reaches full strength at <strong>1,000 words</strong>, with a heading, paragraphs, a link and a list.</li>
+            <li>Click <strong>Save content</strong>.</li>
+        </ol>
+        <div class="tip"><strong>Writing in Word or Google Docs?</strong> You can paste your text in. The editor removes the formatting, so add your headings, lists, bold text and links again after you paste. Please do not copy text word for word from your own or other websites: search engines penalise copied content.</div>
+        <h4>Eight tips for a profile that search engines and AI find</h4>
+        <ol class="tips">
+            <li><strong>Start with a summary that stands on its own.</strong> Two or three sentences that say who you are, what you supply, who to and where. AI tools often quote a page’s opening sentences.</li>
+            <li><strong>Give every section a heading that says what it is about.</strong> Avoid “About Us” or “Our Products”. A heading can also be a question your buyers ask.</li>
+            <li><strong>Plan your sections:</strong> an overview with your company name and what you do; one section for each application you work in; and case studies set out as the challenge, what you supplied and the result.</li>
+            <li><strong>Keep to one topic per section, in short paragraphs</strong> of two to four sentences. Each section should make sense if read on its own.</li>
+            <li><strong>Use lists</strong> for products, services, sectors, specifications and certifications.</li>
+            <li><strong>Give facts, not claims.</strong> Name the standards you meet, the projects and customers you can mention, and figures such as fleet numbers, countries or years in business.</li>
+            <li><strong>Use the words your customers search for,</strong> and use them the same way every time. “Bus passenger counting software” is better than “software”.</li>
+            <li><strong>Link to your own pages with descriptive link text,</strong> such as “our electric bus case studies”, not “click here”.</li>
+        </ol>
+        <table class="ex">
+            <thead><tr><th></th><th>Weak</th><th>Strong</th></tr></thead>
+            <tbody>
+                <tr><th>Opening sentence</th><td>We are a leading provider of innovative solutions.</td><td>Your Company is a UK manufacturer of passenger information displays for buses, supplying operators and bus manufacturers across Europe.</td></tr>
+                <tr><th>Heading</th><td>Our Products</td><td>Passenger Information Displays for Electric Buses</td></tr>
+                <tr><th>Claim</th><td>World-leading quality</td><td>Fitted to more than 5,000 buses in 25 countries</td></tr>
+                <tr><th>Link text</th><td>Click here</td><td>See our electric bus case studies</td></tr>
+            </tbody>
+        </table>`,
+        steps: [
+            { title: 'Your company profile', box: [370, 4094, 950, 1304], zoom: 0.9,
+              text: 'You write your profile in one text box, with headings to divide it into sections. We take care of the technical side, such as the page address and search settings.',
+              spec: ['300–1,000 words'] },
+            { title: 'Profile strength', box: [394, 4166, 902, 208], zoom: 1.8,
+              text: 'The meter counts your words and ticks off a heading, paragraphs, a link and a list. You need 300 words to submit. It reaches full strength at 1,000 words.' },
+            { title: 'Make a heading', box: [401, 4394, 104, 30], zoom: 2.8,
+              text: 'Click in a line, then open the Paragraph menu and choose Heading. Choose Subheading for a smaller heading inside a section.' },
+            { title: 'The formatting toolbar', box: [395, 4390, 832, 39], zoom: 2.2,
+              text: 'Make text bold, add bulleted or numbered lists, and add links. Text you paste in from Word arrives as plain text, so add your formatting after you paste.' },
+            { title: 'Start with a summary', box: [405, 4440, 816, 161], zoom: 1.7,
+              text: 'Open with a heading that has your company name and what you do. Then write two or three sentences that say who you are, what you supply, who to and where.' },
+            { title: 'Lists, facts and links', box: [405, 4601, 816, 273], zoom: 1.6,
+              text: 'Use a list for products and services. Give facts, such as the standards you meet. Link to your own pages with words that describe them, not “click here”.' },
+            { title: 'Add a case study', box: [405, 4874, 816, 194], zoom: 1.7,
+              text: 'Give it a precise heading, then set out the challenge, what you supplied and the result, with a number if you can.' },
+            { title: 'Headings as questions', box: [405, 5068, 816, 233], zoom: 1.7,
+              text: 'A heading can also be a question your buyers ask. Search engines and AI tools often match these to what people type.' },
+            { title: 'Save your text', box: [394, 5319, 902, 55], zoom: 2.2,
+              text: 'Click Save content. You can come back and improve your profile at any time.' },
+            { title: 'What to write about', box: [1244, 4389, 60, 520], zoom: 1.6,
+              text: 'Click this panel beside the editor to open our writing guidance. Close it again to give the editor more room.' }
+        ]
+    },
+    {
+        name: 'Categories',
+        url: 'bus-news.com/my-account/',
+        link: null,
+        img: 'bn-onboard-dashboard.jpg', h: 7173,
+        alt: 'The Company categories and Featured categories sections of Manage My Page',
+        guide: `<ol>
+            <li>Open <strong>Company categories</strong>.</li>
+            <li>Type a word in <strong>Add a category</strong>, for example “passenger”, then click a category in the list. You can choose up to 20 categories.</li>
+            <li>To remove a category, click its <strong>×</strong>.</li>
+            <li>Click <strong>Save categories</strong>.</li>
+            <li>If your package includes featured supplier positions, open <strong>Featured categories</strong>. Choose the categories where you want to show at the top of the page, then click <strong>Save featured categories</strong>. Essentials+ can feature up to 2, Premium up to 4 and Ultra up to 8.</li>
+        </ol>
+        <div class="tip">Choose every category your products and services fit. Buyers browse these pages to find suppliers, so each category is another way for them to find you.</div>`,
+        steps: [
+            { title: 'Company categories', box: [370, 5414, 950, 512], zoom: 1.4,
+              text: 'Choose the Products & Services categories where your company is listed. Buyers browse these pages to find suppliers.',
+              spec: ['At least 1, up to 20'] },
+            { title: 'Search and add', box: [394, 5639, 902, 192], zoom: 2,
+              text: 'Type a word, then click a category in the list. Click × on a category to remove it. Then click Save categories.' },
+            { title: 'Featured categories', box: [370, 5942, 950, 373], zoom: 1.6,
+              text: 'If your package includes featured supplier positions, choose where you show at the top of the Products & Services page.',
+              spec: ['Essentials+ 2', 'Premium 4', 'Ultra 8'] }
+        ]
+    },
+    {
+        name: 'Company events',
+        url: 'bus-news.com/my-account/',
+        link: null,
+        img: 'bn-onboard-dashboard.jpg', h: 7173,
+        alt: 'The Company events section of Manage My Page',
+        guide: `<ol>
+            <li>Open <strong>Company events</strong>.</li>
+            <li>Type the name of an event in <strong>Event</strong>, then click it in the list.</li>
+            <li>Enter your <strong>Stand number</strong>, and your <strong>Hall</strong> if you have one.</li>
+            <li>Click <strong>Save attendance</strong>. The event shows under “Events you’re attending”.</li>
+            <li>To change the stand or hall, click <strong>Edit</strong>. To remove the event, click <strong>×</strong>.</li>
+        </ol>
+        <div class="tip">You are listed as an exhibitor on the event page, and the event shows on your company page. Your next event also shows beside your enquiry form. Can’t find your event? Ask the Content Team to add it. On Premium and Ultra, we can also list your own events and webinars.</div>`,
+        steps: [
+            { title: 'Company events', box: [370, 6331, 950, 786], zoom: 1.1,
+              text: 'Add the trade shows and events you are attending, so readers know where to meet you in person.' },
+            { title: 'Choose an event', box: [394, 6450, 902, 239], zoom: 1.8,
+              text: 'Type the name of the event, then click it in the list. Events you already attend show the label Attending.' },
+            { title: 'Stand and hall', box: [394, 6705, 902, 176], zoom: 1.8,
+              text: 'Enter your stand number, and your hall if you have one. Then click Save attendance.',
+              spec: ['Stand number required', 'Hall optional'] },
+            { title: 'Events you’re attending', box: [394, 7005, 902, 80], zoom: 2.2,
+              text: 'Your events are listed here. Click Edit to change the stand or hall, or × to remove the event.' }
+        ]
+    },
+    {
+        name: 'Preview my page',
+        url: 'bus-news.com/suppliers/your-company',
+        link: null,
+        img: 'bn-onboard-preview.jpg', h: 1900,
+        alt: 'An example company page on Bus-News with the Edit this page button',
+        guide: `<ol>
+            <li>Near the top of Manage My Page, click <strong>Preview my page</strong>.</li>
+            <li>Your page opens in a new tab. While your page is a draft, only you can see it.</li>
+            <li>Check your hero images, logo, profile text, contact details and events.</li>
+            <li>To make a change, click <strong>Edit this page</strong> at the bottom right. It takes you back to Manage My Page.</li>
+            <li>Preview again after each change. Your saved changes show straight away.</li>
+        </ol>`,
+        steps: [
+            { title: 'Preview my page', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'Click Preview my page at any time to see your page as readers will see it. While your page is a draft, only you can see it. This example shows a finished page.' },
+            { title: 'Your hero images', box: [0, 62, 1440, 700], zoom: 1,
+              text: 'Your hero images rotate behind your company name at the top of the page.' },
+            { title: 'Your profile text', box: [105, 805, 880, 1100], zoom: 1.4,
+              text: 'Your profile text shows below. Check that your headings and lists look the way you want.' },
+            { title: 'Logo and contact details', box: [1005, 805, 330, 700], zoom: 2,
+              text: 'Your logo, website, social media links, address and telephone number show beside your profile.' },
+            { title: 'Edit this page', box: [1125, 778, 295, 98], zoom: 2.4,
+              text: 'Only you see this button. Click it to go back to Manage My Page. Your saved changes show the next time you preview.' }
+        ]
+    },
+    {
+        name: 'Submit for publication',
+        url: 'bus-news.com/my-account/',
+        link: null,
+        img: 'bn-onboard-submit.jpg', h: 1570,
+        alt: 'Manage My Page before and after you submit your page for publication',
+        guide: `<ol>
+            <li>Check that every item in the checklist has a tick. The heading changes to <strong>Ready to publish</strong>.</li>
+            <li>Click <strong>Submit for publication</strong>.</li>
+            <li>The status changes to <strong>In review</strong>. We email our Content Team.</li>
+            <li>Our Content Team reviews your page and publishes it. You can keep editing while it is in review.</li>
+        </ol>
+        <div class="tip">If you click Submit for publication before the checklist is complete, the page tells you what is missing.</div>`,
+        steps: [
+            { title: 'Ready to publish', box: [370, 391, 950, 436], zoom: 1.2,
+              text: 'When every item has a tick, the checklist says Ready to publish.' },
+            { title: 'Submit for publication', box: [1085, 850, 220, 41], zoom: 2.8,
+              text: 'Click Submit for publication. We email our Content Team straight away.' },
+            { title: 'In review', box: [370, 1223, 300, 49], zoom: 2.6,
+              text: 'The status changes to In review. You can still make changes while your page is in review.' },
+            { title: 'We publish your page', box: [370, 1441, 950, 51], zoom: 2,
+              text: 'Our Content Team reviews your page and publishes it. Then it is live on Bus-News for everyone to see.' }
+        ]
+    },
+    {
+        name: 'After publication',
+        url: 'bus-news.com/my-account/',
+        link: null,
+        img: 'bn-onboard-after.jpg', h: 1410,
+        alt: 'Manage My Page for a published page, and the For Review tab',
+        guide: `<ol>
+            <li>Your page stays editable after it is published. Sign in at any time to update it.</li>
+            <li>Changes you save now go live on your public page straight away.</li>
+            <li>Keep improving your profile text. The profile strength meter shows your progress.</li>
+            <li><strong>For Review:</strong> as standard, we publish the content we prepare for you straight away. If you ask to approve content first, it shows in the <strong>For Review</strong> tab. Click <strong>Preview</strong>, read it through, then approve it for publication.</li>
+            <li>Send your videos, documents, press releases, banners and magazine content to the Content Team. These are not in Manage My Page yet.</li>
+        </ol>
+        <div class="tip"><strong>Need help?</strong> Contact the Content Team about technical difficulties or what your package includes. Talk to your Partnership Manager about your partnership or extra services.</div>`,
+        steps: [
+            { title: 'Your page is live', box: [370, 173, 380, 49], zoom: 2.6,
+              text: 'The status changes to Published. Your page is now live on Bus-News.' },
+            { title: 'Keep it up to date', box: [370, 242, 950, 27], zoom: 2,
+              text: 'Your page stays editable. Changes you save now update your public page straight away.' },
+            { title: 'The For Review tab', box: [120, 987, 220, 51], zoom: 2.6,
+              text: 'If you ask to approve content before it goes live, it shows here. The number shows how many items wait for you.' },
+            { title: 'Preview and approve', box: [370, 930, 950, 119], zoom: 1.8,
+              text: 'Click Preview to read the content, then approve it for publication. As standard, we publish content straight away, so this tab is only for clients who ask for it.' }
+        ]
+    }
+];
+
+/* ── ENGINE ──────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const viewport = $('viewport'), layer = $('layer'), ring = $('ring'), cursor = $('cursor'), click = $('click');
+const STEPS = [];
+CHAPTERS.forEach((c, ci) => c.steps.forEach((s, si) => STEPS.push({ ...s, ci, si })));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let idx = 0, playing = !reduced, timer = null, pageCi = -1, typeTimer = null;
+let cursorPos = { x: 40, y: 40 };
+
+// Page elements, one per chapter, built once
+const pages = CHAPTERS.map(c => {
+    let el;
+    if (c.html) { el = document.createElement('div'); el.className = 'html-page'; el.innerHTML = c.html; }
+    else { el = new Image(); el.className = 'page'; el.alt = c.alt || ''; el.decoding = 'async'; el.loading = 'eager'; }
+    el.style.display = 'none';
+    layer.insertBefore(el, ring);
+    return el;
+});
+
+// Chapter buttons
+CHAPTERS.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.innerHTML = `<span class="n">${i + 1}</span>${c.name}`;
+    b.onclick = () => go(STEPS.findIndex(s => s.ci === i), true);
+    $('chapters').appendChild(b);
+});
+
+const icon = p => $('play-icon').innerHTML = p
+    ? '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/>'
+    : '<path d="M8 5l11 7-11 7z" fill="currentColor"/>';
+
+function typeUrl(text) {
+    clearInterval(typeTimer);
+    const el = $('url');
+    if (reduced) { el.textContent = text; return; }
+    let i = 0; el.textContent = '';
+    typeTimer = setInterval(() => { el.textContent = text.slice(0, ++i); if (i >= text.length) clearInterval(typeTimer); }, 22);
+}
+
+function showPage(ci) {
+    if (ci === pageCi) return Promise.resolve(false);
+    const c = CHAPTERS[ci], el = pages[ci];
+    pages.forEach((p, i) => p.style.display = i === ci ? 'block' : 'none');
+    pageCi = ci;
+    typeUrl(c.url);
+    $('open').href = c.link || ('https://' + c.url);
+    $('open').style.visibility = c.link === null ? 'hidden' : 'visible';
+    if (c.html) { $('loading').classList.add('hide'); return Promise.resolve(true); }
+    $('loading').classList.remove('hide');
+    return new Promise(res => {
+        const done = () => { $('loading').classList.add('hide'); res(true); };
+        if (el.src && el.complete) return done();
+        el.onload = done; el.onerror = done;
+        if (!el.src) el.src = A + c.img;
+    });
+}
+
+function pageHeight(ci) {
+    const c = CHAPTERS[ci];
+    return c.h || pages[ci].offsetHeight || 4000;
+}
+
+// Camera: fit `box` into the viewport at `zoom`, clamp to the page edges
+function camera(step, animate) {
+    const vw = viewport.clientWidth, vh = viewport.clientHeight;
+    const base = vw / 1440;
+    const [bx, by, bw, bh] = step.box || [0, 0, 1440, vh / base];
+    let s = base * (step.zoom || 1);
+    // never zoom so far that the box no longer fits
+    s = Math.min(s, (vw * 0.92) / bw, (vh * 0.86) / bh);
+    s = Math.max(s, base * 0.5);              // zoom out past full width if a tall box needs it
+    const H = pageHeight(step.ci) * s, W = 1440 * s;
+    let tx = vw / 2 - (bx + bw / 2) * s, ty = vh / 2 - (by + bh / 2) * s;
+    if (step.top) ty = -by * s + 20;
+    tx = W <= vw ? (vw - W) / 2 : Math.min(0, Math.max(vw - W, tx));
+    ty = H <= vh ? (vh - H) / 2 : Math.min(0, Math.max(vh - H, ty));
+    layer.classList.toggle('anim', animate && !reduced);
+    layer.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+
+    if (step.box && !step.noRing) {
+        Object.assign(ring.style, { left: bx - 10 + 'px', top: by - 10 + 'px', width: bw + 20 + 'px', height: bh + 20 + 'px' });
+        ring.classList.add('on');
+        // cursor goes to the lower-right part of the box, as seen on screen
+        const cx = tx + (bx + bw * 0.62) * s, cy = ty + (by + bh * 0.6) * s;
+        moveCursor(Math.min(vw - 30, Math.max(10, cx)), Math.min(vh - 30, Math.max(10, cy)), true);
+    } else {
+        ring.classList.remove('on');
+        moveCursor(vw * 0.55, vh * 0.35, false);
+    }
+}
+
+function moveCursor(x, y, doClick) {
+    cursorPos = { x, y };
+    cursor.style.transform = `translate(${x}px, ${y}px)`;
+    if (doClick && !reduced) setTimeout(() => {
+        click.style.left = x + 4 + 'px'; click.style.top = y + 4 + 'px';
+        click.classList.remove('go'); void click.offsetWidth; click.classList.add('go');
+    }, 1400);
+}
+
+function caption(step) {
+    const c = CHAPTERS[step.ci];
+    const cap = $('caption');
+    cap.classList.remove('fade'); void cap.offsetWidth; cap.classList.add('fade');
+    $('cap-chap').textContent = `${step.ci + 1}. ${c.name}`;
+    $('cap-title').textContent = step.title;
+    $('cap-body').innerHTML = step.text;
+    $('cap-spec').innerHTML = (step.spec || []).map(s => `<span>${s}</span>`).join('');
+    $('count').textContent = `Step ${idx + 1} of ${STEPS.length}`;
+    [...$('chapters').children].forEach((b, i) => b.setAttribute('aria-current', i === step.ci ? 'true' : 'false'));
+    const cur = $('chapters').children[step.ci];
+    cur.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' });
+}
+
+function progress(step) {
+    const inChap = STEPS.filter(s => s.ci === step.ci);
+    const dur = stepDur(step) + 's';
+    $('progress').innerHTML = inChap.map(s => `<i class="${s.si < step.si ? 'done' : s.si === step.si ? 'now' : ''}" style="--dur:${dur}"></i>`).join('');
+    $('progress').classList.toggle('paused', !playing);
+}
+
+async function go(i, user) {
+    idx = (i + STEPS.length) % STEPS.length;
+    const step = STEPS[idx];
+    clearTimeout(timer);
+    caption(step); progress(step); narrate(step);
+    const fresh = await showPage(step.ci);
+    if (STEPS[idx] !== step) return;          // user moved on while the page loaded
+    if (fresh) {
+        // start a new page at the top, then glide to the first focus
+        camera({ ci: step.ci }, false);
+        await new Promise(r => setTimeout(r, reduced ? 0 : 450));
+    }
+    camera(step, true);
+    schedule();
+}
+
+function schedule() {
+    clearTimeout(timer);
+    if (!playing) return;
+    // While the voice reads, its end moves the tour on; this is only a fallback.
+    const wait = soundOn && speaking ? speechSecs(STEPS[idx]) + 6 : stepDur(STEPS[idx]);
+    timer = setTimeout(() => go(idx + 1), wait * 1000);
+}
+
+/* ── NARRATION ─────────────────────────────────────────────────── */
+const synth = window.speechSynthesis;
+let soundOn = false, speaking = false, utter = null, stepT0 = 0, voice = null;
+
+function spoken(step) {
+    const d = document.createElement('div');
+    d.innerHTML = (step.title + '. ' + step.text).replace(/<\/li>/g, '. ');
+    return d.textContent.replace(/×/g, 'the cross').replace(/\(s\)/g, 's').replace(/ \/ /g, ' of ').replace(/\+(?=\s|$|,)/g, ' plus').replace(/\s+/g, ' ').trim();
+}
+const speechSecs = step => spoken(step).split(' ').length / 2.6 + 1.5;
+const stepDur = step => soundOn ? Math.max(step.dur || 7, Math.ceil(speechSecs(step))) : (step.dur || 7);
+
+function pickVoice() {
+    const all = synth.getVoices();
+    const like = ['Google UK English Female', 'Microsoft Sonia', 'Microsoft Libby', 'Serena', 'Kate', 'Martha', 'Daniel', 'Google UK English Male'];
+    voice = like.map(n => all.find(v => v.name.startsWith(n))).find(Boolean)
+        || all.find(v => v.lang === 'en-GB') || all.find(v => v.lang.startsWith('en')) || null;
+}
+
+function hush() { speaking = false; utter = null; if (synth) synth.cancel(); }
+
+function narrate(step) {
+    stepT0 = performance.now();
+    if (!soundOn || !synth) return;
+    hush();
+    const u = new SpeechSynthesisUtterance(spoken(step));
+    u.lang = 'en-GB'; if (voice) u.voice = voice;
+    u.onend = u.onerror = () => {
+        if (utter !== u) return;           // a newer step took over
+        speaking = false; utter = null;
+        if (!playing) return;
+        const left = (step.dur || 7) * 1000 - (performance.now() - stepT0);
+        clearTimeout(timer);
+        timer = setTimeout(() => go(idx + 1), Math.max(1200, left));
+    };
+    utter = u; speaking = true;
+    synth.speak(u);
+}
+
+const soundIcon = on => $('sound-icon').innerHTML = '<path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>' + (on
+    ? '<path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+    : '<path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>');
+
+if (synth) {
+    pickVoice(); synth.addEventListener?.('voiceschanged', pickVoice);
+    $('sound').hidden = false; soundIcon(false);
+    $('sound').onclick = () => {
+        soundOn = !soundOn;
+        $('sound').setAttribute('aria-pressed', soundOn);
+        $('sound').title = soundOn ? 'Stop reading aloud' : 'Read each step aloud';
+        soundIcon(soundOn);
+        if (soundOn) narrate(STEPS[idx]); else hush();
+        progress(STEPS[idx]); schedule();
+    };
+}
+
+function setPlaying(p) {
+    playing = p; icon(p);
+    if (p) narrate(STEPS[idx]); else hush();
+    $('play').setAttribute('aria-label', p ? 'Pause' : 'Play');
+    $('progress').classList.toggle('paused', !p);
+    if (p) { progress(STEPS[idx]); schedule(); } else clearTimeout(timer);
+}
+
+$('play').onclick = () => setPlaying(!playing);
+$('next').onclick = () => { go(idx + 1, true); };
+$('prev').onclick = () => { go(idx - 1, true); };
+document.addEventListener('keydown', e => {
+    if (e.target.closest('input, textarea')) return;
+    if (e.key === 'ArrowRight') go(idx + 1, true);
+    else if (e.key === 'ArrowLeft') go(idx - 1, true);
+    else if (e.key === ' ' && e.target === document.body) { e.preventDefault(); setPlaying(!playing); }
+});
+let resizeT; addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(() => camera(STEPS[idx], false), 120); });
+
+// Pause the tour while it is off screen
+new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting && playing) { clearTimeout(timer); hush(); $('progress').classList.add('paused'); }
+    else if (e.isIntersecting && playing) { progress(STEPS[idx]); narrate(STEPS[idx]); schedule(); }
+}, { threshold: 0.35 }).observe(viewport);
+
+// Step-by-step cards
+CHAPTERS.forEach((c, ci) => {
+    const card = document.createElement('article');
+    card.className = 'stepcard';
+    card.id = 'step-' + (ci + 1);
+    card.innerHTML = `<div class="num">${ci + 1}</div><h3>${c.name}</h3>${c.guide}<button class="watch">Watch this step ▸</button>`;
+    card.querySelector('.watch').onclick = () => { go(STEPS.findIndex(s => s.ci === ci), true); document.querySelector('.player-wrap').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); };
+    $('howto').appendChild(card);
+});
+
+// Preload the remaining screenshots after the first one
+icon(playing);
+go(0).then(() => CHAPTERS.forEach((c, i) => { if (!c.html && !pages[i].src) setTimeout(() => pages[i].src = A + c.img, 1500 + i * 400); }));
+</script>
+</body>
+</html>

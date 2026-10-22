@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Pack: Future Transport-News — a2b Global Media</title>
+    <meta name="description" content="Everything you need to build your Future Transport-News profile and supply your advertising materials: content submission, specifications and deadlines.">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:      #1B3342;
+            --navy-2:    #24465A;
+            --orange:    #8CC63E;
+            --orange-dk: #4A7A1E;
+            --orange-lt: #F1F8E8;
+            --light:     #F7F7F7;
+            --text:      #1F2A30;
+            --muted:     #5D6B73;
+            --rule:      #E2E8EC;
+            --white:     #FFFFFF;
+        }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+        body {
+            font-family: 'Mukta', Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: var(--light);
+            font-size: 17px;
+            line-height: 1.6;
+        }
+        a { color: var(--orange-dk); }
+        strong { font-weight: 600; }
+
+        /* ── HEADER ─────────────────────────────────────── */
+        .site-head {
+            background: var(--navy);
+            color: var(--white);
+            padding: 22px 24px 70px;
+            text-align: center;
+        }
+        .site-head .brand { display: flex; justify-content: space-between; align-items: center; max-width: 1180px; margin: 0 auto 48px; gap: 16px; }
+        .site-head .brand img.rn { height: 34px; width: auto; }
+        .site-head .brand img.a2b { height: 26px; width: auto; }
+        .eyebrow { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); font-weight: 600; }
+        .site-head h1 { font-size: 48px; line-height: 1.1; font-weight: 600; margin: 10px 0 8px; }
+        .site-head .sub { font-size: 20px; color: #C9D6DE; margin-bottom: 30px; }
+        .year { display: inline-block; background: var(--orange); color: var(--navy); font-weight: 600; font-size: 14px; letter-spacing: 1px; padding: 4px 14px 2px; border-radius: 4px; }
+
+        /* ── LAYOUT ─────────────────────────────────────── */
+        .wrap { max-width: 1180px; margin: -40px auto 0; padding: 0 24px; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 32px; align-items: start; }
+
+        nav.toc {
+            position: sticky; top: 20px; background: var(--white); border-radius: 10px; padding: 18px 0 14px;
+            box-shadow: 0 2px 10px rgba(27, 51, 66, 0.08); font-size: 15px;
+        }
+        nav.toc h2 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 0 20px 8px; }
+        nav.toc a { display: block; padding: 5px 20px 5px 17px; color: var(--navy); text-decoration: none; border-left: 3px solid transparent; }
+        nav.toc a.sub { padding-left: 32px; font-size: 14px; color: var(--muted); }
+        nav.toc a:hover { background: var(--light); }
+        nav.toc a.on { border-left-color: var(--orange); background: var(--orange-lt); font-weight: 600; }
+        nav.toc a.sub.on { color: var(--navy); }
+
+        main { min-width: 0; }
+
+        .welcome, section.block {
+            background: var(--white); border-radius: 12px; padding: 34px 38px; margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(27, 51, 66, 0.06);
+        }
+        .welcome { border-top: 5px solid var(--orange); }
+        .welcome h2 { font-size: 32px; font-weight: 600; color: var(--navy); line-height: 1.15; }
+        .welcome h2 span { color: var(--orange-dk); }
+        .welcome .sig { margin-top: 18px; font-size: 15px; color: var(--muted); }
+        .welcome .sig strong { display: block; color: var(--navy); font-size: 17px; }
+        .sisters { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--rule); }
+        .sisters h3 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+        .sisters img { width: 100%; height: auto; display: block; border-radius: 8px; }
+
+        section.block h2 { font-size: 32px; font-weight: 600; color: var(--navy); line-height: 1.15; display: flex; align-items: center; gap: 14px; }
+        section.block h2::before { content: ""; width: 5px; align-self: stretch; background: var(--orange); border-radius: 3px; }
+        section.block h3 { font-size: 22px; font-weight: 600; color: var(--navy); margin: 28px 0 8px; scroll-margin-top: 24px; }
+        section.block p { margin-bottom: 12px; }
+        section.block ul, section.block ol { margin: 6px 0 14px 22px; }
+        section.block li { margin-bottom: 5px; }
+
+        .packages { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 12px 0 20px; font-size: 14px; color: var(--muted); }
+        .packages span { background: var(--navy); color: #fff; font-weight: 500; padding: 2px 10px 1px; border-radius: 4px; font-size: 13px; }
+        .packages span.off { background: var(--rule); color: #8A979E; text-decoration: line-through; }
+
+        .note {
+            background: var(--orange-lt); border-left: 4px solid var(--orange); border-radius: 0 8px 8px 0;
+            padding: 14px 18px; margin: 16px 0; font-size: 16px;
+        }
+        .note strong { color: var(--navy); }
+
+        .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; margin: 12px 0 18px; }
+        .tile { border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; background: #FBFCFD; }
+        .tile b { display: block; color: var(--navy); font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+        .tile span { font-size: 14px; color: var(--muted); }
+
+        .guide-link {
+            display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; font-weight: 600; font-size: 15px;
+            text-decoration: none; color: var(--orange-dk);
+        }
+        .guide-link:hover { text-decoration: underline; }
+
+        /* Tabs for the targeted mail options */
+        .tabs { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+        .tabs button {
+            font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; border: 1px solid var(--rule);
+            background: var(--light); color: var(--navy); padding: 8px 16px; border-radius: 8px 8px 0 0; border-bottom: 0;
+        }
+        .tabs button[aria-selected="true"] { background: var(--navy); color: #fff; border-color: var(--navy); }
+        .tabpanel { border: 1px solid var(--rule); border-radius: 0 8px 8px 8px; padding: 16px 20px 6px; }
+        .tabpanel[hidden] { display: none; }
+
+        /* Size diagrams: magazine pages at 1px = 3mm, banners at 1:4 */
+        .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; margin: 18px 0 14px; }
+        .specs.banners { grid-template-columns: minmax(180px, 1fr) minmax(280px, 2fr); }
+        .spec { border: 1px solid var(--rule); border-radius: 10px; background: #FBFCFD; padding: 18px 16px 14px; display: flex; flex-direction: column; gap: 14px; }
+        .spec .fig { height: 132px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .spec .cap { font-size: 14px; line-height: 1.4; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 10px; }
+        .spec .cap b { display: block; color: var(--navy); font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .spread { display: flex; position: relative; }
+        .ad.spread-ad { background: linear-gradient(90deg, var(--orange-lt) calc(50% - 1px), var(--orange) calc(50% - 1px), var(--orange) calc(50% + 0px), var(--orange-lt) calc(50% + 0px)); }
+        .page {
+            position: relative; width: 70px; height: 99px; background: #fff; border: 1px solid #C9D2D8; border-radius: 2px;
+            box-shadow: 0 2px 6px rgba(27, 51, 66, 0.10);
+        }
+        .spread .page + .page { border-left: 1px dashed #C9D2D8; }
+        .page::before, .page::after { content: ""; position: absolute; left: 8px; right: 8px; height: 3px; border-radius: 2px; background: #E8EDF0; }
+        .page::before { top: 10px; }
+        .page::after { top: 18px; right: 26px; }
+        .ad {
+            position: absolute; z-index: 1; background: var(--orange-lt); border: 1.5px solid var(--orange); border-radius: 2px;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            font-size: 11px; font-weight: 600; line-height: 1.2; color: var(--orange-dk);
+        }
+        .ad.spread-ad span { background: var(--orange-lt); padding: 2px 5px; border-radius: 3px; position: relative; }
+        .ad.full { inset: -1px; }
+        .ad.half { left: 3px; right: 3px; bottom: 3px; height: 44px; }
+        .banner {
+            background: var(--orange-lt); border: 1.5px dashed var(--orange); border-radius: 4px;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            font-size: 12px; font-weight: 600; color: var(--orange-dk); line-height: 1.2;
+        }
+        @media screen and (max-width: 600px) { .specs.banners { grid-template-columns: 1fr; } }
+
+        table.cal { width: 100%; border-collapse: collapse; margin: 12px 0 10px; font-size: 16px; }
+        table.cal th { text-align: left; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; padding: 8px 10px; border-bottom: 2px solid var(--orange); }
+        table.cal td { padding: 10px; border-bottom: 1px solid var(--rule); }
+        table.cal td a { font-weight: 600; }
+        table.cal td.past { color: #8A979E; }
+        mark.tbc { background: #FFE58A; color: #1F2A30; padding: 0 4px; border-radius: 3px; font-weight: 600; }
+
+        /* Package comparison */
+        .table-scroll { overflow-x: auto; margin: 12px 0 10px; }
+        table.pkg { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 15px; }
+        table.pkg th { font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; padding: 8px 10px; border-bottom: 2px solid var(--orange); text-align: center; }
+        table.pkg th:first-child { text-align: left; }
+        table.pkg td { padding: 8px 10px; border-bottom: 1px solid var(--rule); text-align: center; }
+        table.pkg td:first-child { text-align: left; color: var(--navy); }
+        table.pkg tr.group td { background: var(--light); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); font-weight: 600; text-align: left; }
+        table.pkg .no { color: #B5C0C6; }
+
+        /* Getting-started steps */
+        ol.steps { list-style: none; counter-reset: step; margin: 14px 0 18px; padding: 0; }
+        ol.steps > li { counter-increment: step; position: relative; padding: 0 0 16px 50px; margin: 0; }
+        ol.steps > li::before {
+            content: counter(step); position: absolute; left: 0; top: 0; width: 34px; height: 34px; border-radius: 50%;
+            background: var(--navy); color: #fff; font-weight: 600; display: flex; align-items: center; justify-content: center;
+        }
+        ol.steps > li b { display: block; color: var(--navy); font-size: 18px; font-weight: 600; }
+        ul.check { list-style: none; margin: 8px 0 14px; padding: 0; columns: 2 220px; }
+        ul.check li { padding-left: 26px; position: relative; break-inside: avoid; }
+        ul.check li::before { content: "✓"; position: absolute; left: 4px; color: var(--orange-dk); font-weight: 700; }
+
+        .site-foot { margin-top: 60px; background: var(--navy); color: #C9D6DE; padding: 40px 24px; text-align: center; font-size: 15px; }
+        .site-foot img { height: 30px; width: auto; margin-bottom: 14px; }
+        .site-foot a { color: #fff; text-decoration: none; }
+        .site-foot .sep { opacity: 0.4; margin: 0 10px; }
+
+        /* ── RESPONSIVE ─────────────────────────────────── */
+        @media screen and (max-width: 900px) {
+            .wrap { grid-template-columns: 1fr; }
+            nav.toc { position: static; display: none; }
+        }
+        @media screen and (max-width: 600px) {
+            body { font-size: 16px; }
+            .site-head { padding: 18px 16px 60px; }
+            .site-head .brand { margin-bottom: 32px; }
+            .site-head .brand img.rn { height: 24px; }
+            .site-head .brand img.a2b { height: 18px; }
+            .site-head h1 { font-size: 36px; }
+            .site-head .sub { font-size: 17px; }
+            .wrap { padding: 0 16px; }
+            .welcome, section.block { padding: 24px 20px; }
+            section.block h2, .welcome h2 { font-size: 26px; }
+            table.cal { font-size: 14px; }
+            table.cal th, table.cal td { padding: 8px 6px; }
+        }
+        /* PDF / print: A4 portrait, one column, desktop layout inside it.
+           Chrome: Print > Save as PDF (Background graphics on). */
+        @page { size: A4; margin: 12mm 12mm 14mm; }
+        @media print {
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            html { scroll-behavior: auto; }
+            body { background: #fff; font-size: 15px; }
+            nav.toc, .guide-link { display: none; }
+            .site-head { padding: 18px 24px 34px; }
+            .site-head .brand { margin-bottom: 26px; }
+            .wrap { display: block; max-width: none; margin: 0; padding: 0; }
+            .welcome, section.block { box-shadow: none; border: 1px solid var(--rule); margin: 14px 0 0; padding: 24px 26px; break-inside: auto; }
+            section.block h2, section.block h3, h4 { break-after: avoid; }
+            .tile, .spec, .note, tr, ol.steps > li, ul.check li, .packages, .sisters { break-inside: avoid; }
+            .table-scroll { overflow: visible; }
+            table.pkg { min-width: 0; }
+            /* Show both targeted mail options instead of tabs */
+            .tabs { display: none; }
+            .tabpanel, .tabpanel[hidden] { display: block !important; border-radius: 8px; margin-bottom: 10px; break-inside: avoid; }
+            #panel-own::before { content: "If you design your own email"; }
+            #panel-ours::before { content: "If you would like us to design it"; }
+            #panel-own::before, #panel-ours::before { display: block; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+            .site-foot { margin-top: 20px; break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-head">
+    <div class="brand">
+        <img class="rn" src="https://futuretransport-news.com/wp-content/uploads/sites/3/2025/08/Future-Transport-News-White-Logo-CLEAR.png" alt="Future Transport-News">
+        <img class="a2b" src="https://a2bglobalmedia.com/wp-content/uploads/sites/5/2026/04/a2b-Global-Media-White-Logo-1.png" alt="a2b Global Media">
+    </div>
+    <div class="eyebrow">Future Transport-News</div>
+    <h1>Welcome Pack</h1>
+    <p class="sub">Content Submission &amp; Support</p>
+    <span class="year">2026/27 WELCOME PACK</span>
+</header>
+
+<div class="wrap">
+    <nav class="toc" id="toc" aria-label="Contents">
+        <h2>Contents</h2>
+        <a href="#welcome">Welcome</a>
+        <a href="#package">Your Package</a>
+        <a href="#getting-started">Getting Started</a>
+        <a href="#dashboard">Your Client Dashboard</a>
+        <a href="#profile">Company Profile</a>
+        <a class="sub" href="#details">Company Details</a>
+        <a class="sub" href="#imagery">Company Imagery</a>
+        <a class="sub" href="#profile-text">Profile Text</a>
+        <a class="sub" href="#events">Company Events</a>
+        <a class="sub" href="#videos">Videos &amp; Documents</a>
+        <a class="sub" href="#press">Press Releases</a>
+        <a class="sub" href="#social">Social Media</a>
+        <a href="#products">Products &amp; Services</a>
+        <a href="#newsletter">Newsletter</a>
+        <a href="#targeted">AI-Targeted Mail</a>
+        <a href="#content-writing">Content Writing</a>
+        <a href="#banners">Banner Adverts</a>
+        <a href="#extras">Additional Services</a>
+    </nav>
+
+    <main>
+        <!-- ═══ WELCOME ═══════════════════════════════════════ -->
+        <div class="welcome" id="welcome">
+            <div class="eyebrow">Hello</div>
+            <h2>Welcome to <span>Future Transport-News</span></h2>
+            <p style="margin-top:10px;">An a2b Global Media brand.</p>
+            <p style="margin-top:12px;">This Welcome Pack tells you everything you need to know about building your company page, and gives the technical specifications for all advertising materials on Future Transport-News, so we can promote you in the best possible way.</p>
+            <p style="margin-top:12px;">Every subscription is a fully managed service. Your <strong>Partnership Manager</strong> looks after you from start to finish, and our <strong>Content Team</strong> is on hand whenever you need it. Each quarter we send you a statistics report and book a check-in call to review your activity and plan your next steps.</p>
+            <p style="margin-top:12px;">Want to see where everything appears? Take the <a href="https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html">Future Transport-News Visual Guide</a>.</p>
+            <div class="sig"><strong>Andrew Lush</strong>Director at a2b Global Media</div>
+            <div class="sisters">
+                <h3>Our sister brands</h3>
+                <img src="https://railway-news.com/wp-content/uploads/2026/10/a2b-Global-Media-network-logos-banner.png" alt="The a2b Global Media network: Railway-News, Aviation Industry-News, Future Transport-News, Future Transport-News and Maritime Industry-News" width="1200" height="80">
+            </div>
+        </div>
+
+        <!-- ═══ YOUR PACKAGE ══════════════════════════════════ -->
+        <section class="block" id="package">
+            <h2>Your Package</h2>
+            <p>What each subscription includes. Each section of this pack shows which packages it applies to.</p>
+            <div class="table-scroll">
+                <table class="pkg">
+                    <thead><tr><th>Included</th><th>Essentials</th><th>Essentials+</th><th>Premium</th><th>Ultra</th></tr></thead>
+                    <tbody>
+                        <tr class="group"><td colspan="5">Your profile</td></tr>
+                        <tr><td>Company profile with your news, videos, images and documents</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                        <tr><td>News hosting</td><td>Up to 6 items</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+                        <tr><td>Products &amp; Services listing and Supplier A–Z</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                        <tr><td>Newsletter and social media coverage</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                        <tr><td>Quarterly statistics report and check-in call</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                        <tr><td>Onboarding call</td><td class="no">—</td><td class="no">—</td><td>✓</td><td>✓</td></tr>
+                        <tr class="group"><td colspan="5">Lead generation</td></tr>
+                        <tr><td>AI-Targeted Mail campaigns</td><td class="no">—</td><td>1</td><td>2</td><td>3</td></tr>
+                        <tr><td>Targeted LinkedIn campaign with statistics report</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td>✓</td></tr>
+                        <tr class="group"><td colspan="5">Brand awareness</td></tr>
+                        <tr><td>News pages banner</td><td class="no">—</td><td class="no">—</td><td>6 months</td><td>12 months</td></tr>
+                        <tr><td>Homepage banner</td><td class="no">—</td><td>4 weeks, below the fold</td><td>6 months, above the fold</td><td>12 months, above the fold</td></tr>
+                        <tr><td>Social media banner posts</td><td class="no">—</td><td>2</td><td>4</td><td>4</td></tr>
+                        <tr><td>Newsletter banners</td><td class="no">—</td><td>4</td><td>6 (every other month)</td><td>12 (monthly)</td></tr>
+                        <tr><td>Products &amp; Services page banners</td><td class="no">—</td><td>1</td><td>2</td><td>4</td></tr>
+                        <tr><td>Products &amp; Services featured supplier positions</td><td class="no">—</td><td>Up to 2</td><td>Up to 4</td><td>Up to 8</td></tr>
+                        <tr><td>Your events and webinars on our Events page and in the newsletter</td><td class="no">—</td><td class="no">—</td><td>✓</td><td>✓</td></tr>
+                        <tr class="group"><td colspan="5">Thought leadership</td></tr>
+                        <tr><td>Content writing (4 articles)</td><td class="no">—</td><td class="no">—</td><td>✓</td><td>✓</td></tr>
+                        <tr class="group"><td colspan="5">Design</td></tr>
+                        <tr><td>Design of a 300 × 250 banner and a 1024 × 512 banner</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td>✓</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:15px;color:var(--muted);">Not sure what your package includes? Ask the Content Team.</p>
+        </section>
+
+        <!-- ═══ GETTING STARTED ═══════════════════════════════ -->
+        <section class="block" id="getting-started">
+            <h2>Getting Started</h2>
+            <div class="note">
+                <strong>Important:</strong> To make sure our emails reach you, please add all <strong>@a2bglobalmedia.com</strong> addresses to your address book or contact list. Not sure you are receiving our emails? Please get in touch.
+            </div>
+            <p>You build and update your company page yourself, in <strong>Manage My Page</strong> on your Future Transport-News account.</p>
+            <ol class="steps">
+                <li><b>Activate your account</b>We email you an invitation with the subject “Activate your account to manage <em>your company</em>”. Click the link within a week. You are signed straight in.</li>
+                <li><b>Keep your login details</b>A second email, “Your login details for <em>your company</em>”, gives your username and password. Keep it for when you next sign in. If your page appears on more than one of our sites, the same login works on each.</li>
+                <li><b>Build your page</b>Go to <strong>My Account › Manage My Page</strong> and work through the sections: Company details, Company imagery, Company profile, Company categories and Company events. Click the Save button at the end of each section before you open the next one. Your page stays a private draft until it is published.</li>
+                <li><b>Submit for publication</b>When the checklist below is complete, click <strong>Submit for publication</strong>. Our Content Team reviews your page and publishes it.</li>
+            </ol>
+            <h3>Before you can submit</h3>
+            <ul class="check">
+                <li>Company name</li>
+                <li>Contact email</li>
+                <li>Website URL</li>
+                <li>Telephone</li>
+                <li>Address</li>
+                <li>Region</li>
+                <li>Logo</li>
+                <li>At least one hero image</li>
+                <li>Company profile of at least 300 words</li>
+                <li>At least one category</li>
+            </ul>
+            <p>Your page stays editable after it is published, so you can keep improving it. If you are on a Premium or Ultra package, we also book an onboarding call with you.</p>
+            <p>Some things are not in Manage My Page yet: videos, documents, press releases and banners. Send these to the Content Team. For large files, use a transfer service such as:</p>
+            <div class="tiles">
+                <div class="tile"><b>WeTransfer</b><span>Large files, no account needed</span></div>
+                <div class="tile"><b>Dropbox</b><span>Share a folder or file link</span></div>
+                <div class="tile"><b>Google Drive</b><span>Share a folder or file link</span></div>
+            </div>
+            <p>Having technical or other difficulties? Contact the Content Team.</p>
+        </section>
+
+        <!-- ═══ CLIENT DASHBOARD ══════════════════════════════ -->
+        <section class="block" id="dashboard">
+            <h2>Your Client Dashboard</h2>
+            <div class="packages">Packages: <span>Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
+            <p>Every client has their own online dashboard. It shows what your package includes, what you have used, what is booked and what is still to come, with the detail behind every item, so you always know where your subscription stands.</p>
+            <p>The Content Team sends you the link to your dashboard: once your profile is live if you are a new client, or at the start of each new subscription period if you are renewing.</p>
+
+            <h3>Your package at a glance</h3>
+            <p>The first page counts every feature in your package for your contract period, and shows the percentage of your package you have used so far.</p>
+            <div class="table-scroll">
+                <table class="pkg">
+                    <thead><tr><th>Feature (example)</th><th>In contract</th><th>Booked</th><th>Used</th><th>Remaining</th></tr></thead>
+                    <tbody>
+                        <tr><td>Newsletter banners</td><td>6</td><td>1</td><td>3</td><td>2</td></tr>
+                        <tr><td>Products &amp; Services featured supplier positions</td><td>4</td><td class="no">—</td><td>4</td><td>0</td></tr>
+                        <tr><td>AI-Targeted Mail</td><td>2</td><td>1</td><td>0</td><td>1</td></tr>
+                        <tr><td>Content writing</td><td>4</td><td>1</td><td>2</td><td>1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:15px;color:var(--muted);">Example figures only. Your dashboard lists every feature in your own package.</p>
+
+            <h3>What you can see</h3>
+            <div class="tiles" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+                <div class="tile"><b>Overview</b><span>Your package at a glance, the percentage you have used, any extras added to your package, and quick links to submit and book.</span></div>
+                <div class="tile"><b>Your details and upcoming calls</b><span>Your contract runtime, the contacts we send materials to, your enquiry email address and the news page we track for you, plus the dates of your upcoming quarterly review and renewal calls with your Partnership Manager.</span></div>
+                <div class="tile"><b>Banners and targeted mail</b><span>Every banner we have run for you, with the date, the link and the newsletter issue it appeared in, the Products &amp; Services pages your banners and featured positions are on, and your targeted mails.</span></div>
+                <div class="tile"><b>Content writing</b><span>The articles we have written for you, and the ones still to come.</span></div>
+                <div class="tile"><b>Your profile</b><span>Your Products &amp; Services categories, and the news, documents and videos we have published on your profile, with their publication dates.</span></div>
+                <div class="tile"><b>Newsletter and social media</b><span>Each time your news has appeared in our newsletter or on our social media, with links.</span></div>
+            </div>
+
+            <h3>Quick links</h3>
+            <p>Your dashboard also has buttons to submit content and assets, book features such as a targeted mail, social media banner post or homepage banner, book a call with your content writer or Partnership Manager and view your profile. If you are on more than one of our sites, you can switch between your dashboards.</p>
+            <div class="note">If you carried features over from a previous contract, your dashboard may show them as used in this contract period. You still get your full package for this period.</div>
+        </section>
+
+        <!-- ═══ COMPANY PROFILE ═══════════════════════════════ -->
+        <section class="block" id="profile">
+            <h2>Company Profile</h2>
+            <div class="packages">Packages: <span>Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
+            <ul>
+                <li>300–1,000 words of text, written by you, with our advice on making it easy for search engines and AI search to find. We take care of the technical side, such as the page address and meta description</li>
+                <li>Featuring your images, news, videos and documents</li>
+                <li>The events you are attending, with your stand numbers</li>
+                <li>Links to your social media accounts, so readers can follow you</li>
+                <li>An enquiry form, so readers can contact you directly</li>
+                <li>Your company listed in our Products &amp; Services section</li>
+            </ul>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html">See a live profile in the Visual Guide ▸</a>
+
+            <h3 id="details">Company Details</h3>
+            <p>Please give us your company name, contact email, website URL, telephone number, address and region. The contact email matters most: it is where enquiries from readers go.</p>
+            <p>If your company publishes news on its own website, add the address of your news, blog or press release page. We track it and are notified when you publish something new, even if you forget to send it to us.</p>
+            <p>News tracking is not part of Essentials packages, which include up to 6 news items. On Essentials, please email your news to our Content Team.</p>
+
+            <h3 id="imagery">Company Imagery</h3>
+            <ul>
+                <li><strong>Logo (required):</strong> upload it and position it in the square crop. We place it on a white square so it sits neatly across the site. A PNG with a transparent background works best.</li>
+                <li><strong>Hero images (at least one, up to 20):</strong> these rotate at the top of your page, in the order you set. Landscape photographs at least 1600px wide look best.</li>
+                <li><strong>Library images (optional, up to 30):</strong> your products, projects and team. Give each one a caption if you would like it labelled when a visitor enlarges it. A good caption also helps your images appear in image search.</li>
+            </ul>
+            <p>Use the best-quality images you have, in JPEG or PNG format. The best images reflect the key points of your text.</p>
+
+            <h3 id="profile-text">Profile Text</h3>
+            <p><strong>300–1,000 words.</strong> You write your profile, and we take care of the technical side, such as the page address, meta description and other search settings. A profile strength meter shows your word count and ticks off a heading, paragraphs, a link and a list as you add them. You need 300 words to submit, and the meter reaches full strength at 1,000.</p>
+            <p>Search engines, and AI tools such as ChatGPT and Google’s AI Overviews, read your profile to decide when to show it or quote it. These eight tips help them understand what you do, and help your readers too.</p>
+            <div class="note"><strong>Important:</strong> Your content can be similar to what already exists elsewhere on the web, but please do not copy it word for word. Search engines penalise copied content.</div>
+
+            <ol class="steps">
+                <li><b>Start with a summary that stands on its own</b>Open with two or three sentences that say who you are, what you supply, who to and where. AI tools often quote a page’s opening sentences, so they need to make sense on their own.</li>
+                <li><b>Give every section a heading that says what it is about</b>Your profile is one text box. To make a heading, click in the line and choose <strong>Heading</strong> from the <strong>Paragraph</strong> menu in the toolbar (choose <strong>Subheading</strong> for a smaller one). Each heading appears as a main heading on your page, and search engines rely on these headings to understand it. Avoid “About Us” or “Our Products”. You can also write a heading as a question your buyers ask, such as “How does Company ABC cut depot maintenance time?”</li>
+                <li><b>Plan your sections</b>
+                    <ul style="margin-top:4px;">
+                        <li><strong>Overview:</strong> the heading includes your company name and what you do, for example “Company ABC – EV Charging Systems for Fleets and Car Parks”.</li>
+                        <li><strong>Applications:</strong> one section for each application you work in, for example “Fleet Depot Charging” (not just “Charging”) or “Public Charging Hubs”. Describe the products you supply for each one.</li>
+                        <li><strong>Case studies:</strong> give each one a precise heading, such as “Case Study: Overnight Charging for a 60-Van Delivery Fleet”, then set out the challenge, what you supplied, and the result, with a number if you can.</li>
+                    </ul>
+                </li>
+                <li><b>Keep to one topic per section, in short paragraphs</b>Aim for two to four sentences per paragraph. Search engines and AI tools often pick out a single passage rather than the whole page, so each section should make sense if read on its own.</li>
+                <li><b>Use lists for anything that is naturally a list</b>Products, services, sectors, technical specifications and certifications are all easier to scan as a bulleted list, and AI tools reuse lists readily.</li>
+                <li><b>Give facts, not claims</b>Name the standards you meet (for example OCPP 2.0.1 or ISO 15118), the projects and customers you can mention, and figures such as fleet numbers, countries or years in business. Words like “world-leading” and “innovative” add nothing unless a fact backs them up.</li>
+                <li><b>Use the words your customers search for, and use them consistently</b>Be precise rather than vague: “EV fleet charging software” is better than just “software”. Write your company name exactly as it appears in Company details, and spell product names the same way every time, so search engines recognise them.</li>
+                <li><b>Link to your own pages with descriptive link text</b>Link to the relevant product pages or case studies on your website. Use words that describe the page, such as “our fleet charging case studies”, rather than “click here”.</li>
+            </ol>
+
+            <h4 style="font-size:18px;color:var(--navy);margin:8px 0 4px;">Weak and strong examples</h4>
+            <div class="table-scroll">
+                <table class="cal">
+                    <thead><tr><th></th><th>Weak</th><th>Strong</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Opening sentence</strong></td><td>We are a leading provider of innovative solutions.</td><td>Company ABC is a UK manufacturer of smart EV charging systems, supplying fleet operators and car park owners across Europe.</td></tr>
+                        <tr><td><strong>Heading</strong></td><td>Our Products</td><td>Smart Charging for Electric Fleets</td></tr>
+                        <tr><td><strong>Claim</strong></td><td>World-leading quality</td><td>Over 8,000 charge points installed in 18 countries</td></tr>
+                        <tr><td><strong>Link text</strong></td><td>Click here</td><td>See our fleet charging case studies</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4 style="font-size:18px;color:var(--navy);margin:20px 0 4px;">Before you submit, check that your profile has</h4>
+            <ul class="check">
+                <li>An opening summary that stands on its own</li>
+                <li>A clear heading on every section</li>
+                <li>One topic per section, in short paragraphs</li>
+                <li>At least one list</li>
+                <li>Specific facts and figures</li>
+                <li>A case study, if you have one</li>
+                <li>A link to your own website</li>
+                <li>No text copied word for word</li>
+            </ul>
+
+            <h3 id="events">Company Events</h3>
+            <p>Choose the trade shows and events you are attending from our events list, and add your stand number and hall. You are listed as an exhibitor on the event, the events appear on your profile, and your next event shows beside your enquiry form so readers know where to meet you in person.</p>
+            <p>On a Premium or Ultra package, we can also list your own events and webinars on our Events page and in the Upcoming Events section of our newsletter. Send the details to the Content Team.</p>
+
+            <h3 id="videos">Videos &amp; Documents</h3>
+            <p>Send your company and product videos to the Content Team. We prefer <strong>YouTube or Vimeo links</strong>. Please give each video a descriptive title. Every video you send us features on the Future Transport-News homepage and in our newsletter. Newsletter space is shared fairly between clients, so if you send several videos at once, we spread them across newsletter issues rather than including them all in one.</p>
+            <p>We can also host your white papers, brochures and other PDFs on your profile. Please name them clearly.</p>
+
+            <h3 id="press">Press Releases</h3>
+            <p>We place each press release on your profile, our homepage and our supplier news page, include it in our newsletter and share it on our LinkedIn page. How it reaches us depends on your package:</p>
+            <ul>
+                <li><strong>Essentials+, Premium and Ultra:</strong> unlimited news hosting. Opt into automatic news tracking by adding your news page address in <a href="#details">Company details</a>, and we pick up each new press release from your website, so you don’t need to send it in. If you prefer not to opt in, email your press releases to the Content Team.</li>
+                <li><strong>Essentials:</strong> hosting for up to 6 news items, without news tracking. Email each press release to the Content Team.</li>
+            </ul>
+
+            <h3 id="social">Social Media</h3>
+            <p>Add your company’s social media accounts in Company details. We link them from your profile and share your news on the Future Transport-News LinkedIn page.</p>
+
+            <h3>For Review</h3>
+            <p>As standard, we publish the content we prepare for you, such as your press releases, straight away. If you would prefer to approve content before it goes live, ask the Content Team. It then appears in the <strong>For Review</strong> tab of your account for you to read through and approve for publication.</p>
+        </section>
+
+        <!-- ═══ PRODUCTS & SERVICES ═══════════════════════════ -->
+        <section class="block" id="products">
+            <h2>Products &amp; Services</h2>
+            <div class="packages">Packages: <span>Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
+            <p>In <strong>Company categories</strong>, choose up to 20 Products &amp; Services categories for your listing. Pick the ones relevant to what you do. Be specific rather than general: that way, relevant readers find you on our site and on Google and other search engines.</p>
+            <p>On Essentials+, Premium and Ultra packages, use <strong>Featured categories</strong> to choose which of your categories put you in a featured supplier position, at the top of that category’s page. Essentials+ includes up to 2, Premium up to 4 and Ultra up to 8.</p>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html">See the Products &amp; Services pages in the Visual Guide ▸</a>
+        </section>
+
+        <!-- ═══ NEWSLETTER ════════════════════════════════════ -->
+        <section class="block" id="newsletter">
+            <h2>Future Transport-News Newsletter</h2>
+            <div class="packages">Packages: <span>Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
+            <p>Our newsletter goes out <strong>once a week, every Wednesday</strong>. You are included automatically every time you have new content on our site, such as a new press release or a new video.</p>
+            <h3>Newsletter Banners</h3>
+            <div class="packages">Packages: <span class="off">Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
+            <p>Depending on your package, your 300 × 250 px banner also appears in the newsletter, linking to your website:</p>
+            <ul>
+                <li><strong>Essentials+:</strong> 4 newsletter banners</li>
+                <li><strong>Premium:</strong> 6 newsletter banners, one every other month</li>
+                <li><strong>Ultra:</strong> 12 newsletter banners, one every month</li>
+            </ul>
+            <p>See <a href="#banners">Banner Adverts</a> for specifications and how to send your banners.</p>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html">See the newsletter in the Visual Guide ▸</a>
+        </section>
+
+        <!-- ═══ TARGETED MAIL ═════════════════════════════════ -->
+        <section class="block" id="targeted">
+            <h2>AI-Targeted Mail Campaign</h2>
+            <div class="packages">Packages: <span class="off">Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
+            <p>A single email, sent from Future Transport-News to the subscribers who work in your sector. Our AI software selects the audience from what subscribers actually read on Future Transport-News. You can also give us parameters that matter to you, for example a European audience only.</p>
+            <p>Essentials+ includes one campaign, Premium two and Ultra three. The content can be anything within reason: press releases, videos, brochures, webinars and more. Every link points to your own website, and we report back on delivery, opens and clicks. Just tell the Content Team what you would like to push and when.</p>
+
+            <h3>Process &amp; Submission Deadline</h3>
+            <div class="note"><strong>Deadline:</strong> please send your content at least <strong>one week</strong> before you would like us to send your email. We send you a preview for approval first.</div>
+            <div class="tabs" role="tablist">
+                <button role="tab" id="tab-own" aria-selected="true" aria-controls="panel-own">I will design my own email</button>
+                <button role="tab" id="tab-ours" aria-selected="false" aria-controls="panel-ours">Please design it for me</button>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="panel-own" aria-labelledby="tab-own">
+                <p>Please send us:</p>
+                <ul>
+                    <li>Subject line (about 65 characters)</li>
+                    <li>The designed email (text and images in HTML format)</li>
+                    <li>Valid URLs that your content links to</li>
+                </ul>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="panel-ours" aria-labelledby="tab-ours" hidden>
+                <p>Our design team designs your email. Please send us:</p>
+                <ul>
+                    <li>Subject line (about 65 characters)</li>
+                    <li>Email text as a Word document</li>
+                    <li>High-resolution images (separate from the Word document)</li>
+                    <li>Valid URLs that your content links to</li>
+                    <li>Optional: a design brief, if you have an idea of how you would like your email to look</li>
+                </ul>
+            </div>
+            <p style="margin-top:16px;">Read our <a href="https://a2b-global-media-content-team.github.io/client-resources/targeted-mail-guidelines.html">Targeted Mail guidelines</a> for full details.</p>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html">See an example targeted mail in the Visual Guide ▸</a>
+        </section>
+
+        <!-- ═══ CONTENT WRITING ═══════════════════════════════ -->
+        <section class="block" id="content-writing">
+            <h2>Content Writing</h2>
+            <div class="packages">Packages: <span class="off">Essentials</span><span class="off">Essentials+</span><span>Premium</span><span>Ultra</span></div>
+            <p>Four long-form articles a year, written for you by your own dedicated content writer.</p>
+            <p>At the start of your subscription, we introduce you to your content writer, who then gets in touch with you to plan and write your articles. Each article can start from:</p>
+            <ul>
+                <li><strong>Material you already have,</strong> such as white papers or technical papers, which your writer turns into an article</li>
+                <li><strong>An interview</strong> with you or one of your experts</li>
+            </ul>
+            <p>Every article is published on Future Transport-News as a web article and included in our newsletter.</p>
+        </section>
+
+
+        <!-- ═══ BANNERS ═══════════════════════════════════════ -->
+        <section class="block" id="banners">
+            <h2>Banner Adverts on Future Transport-News</h2>
+            <div class="packages">Packages: <span class="off">Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
+            <p>Depending on your package, your banners appear on our news pages, our homepage, our Products &amp; Services pages, in our newsletter and on our LinkedIn page. See <a href="#package">Your Package</a> for the positions you have.</p>
+
+            <div class="specs banners" aria-label="Banner sizes, drawn to the same scale">
+                <div class="spec"><div class="fig"><div class="banner" style="width:75px;height:63px;">300 × 250</div></div><div class="cap"><b>News pages, Products &amp; Services pages and newsletter</b>300 × 250 px · JPEG, PNG or GIF</div></div>
+                <div class="spec"><div class="fig"><div class="banner" style="width:256px;height:128px;">1024 × 512</div></div><div class="cap"><b>Homepage and social media</b>1024 × 512 px · JPEG, PNG or GIF</div></div>
+            </div>
+
+            <p>Please send your banners to the Content Team, with a file transfer service if they are large. Please also send:</p>
+            <ul>
+                <li>The URL each banner should link to</li>
+                <li>For social media banners: your preferred text and hashtags</li>
+            </ul>
+            <div class="note"><strong>Design service:</strong> our design team can design your banners. It is included in Ultra packages, and available for other packages as an additional service. Please send the images, logo and text, and a design brief if you have one.</div>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html">See every banner position in the Visual Guide ▸</a>
+        </section>
+
+        <!-- ═══ ADDITIONAL SERVICES ═══════════════════════════ -->
+        <section class="block" id="extras">
+            <h2>Additional Services</h2>
+            <p>Want to do more? Any of these can be added to your subscription. Ask your Partnership Manager for details.</p>
+            <div class="tiles" style="grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));">
+                <div class="tile"><b>Content writing</b><span>Long-form articles written by our journalists, and case studies.</span></div>
+                <div class="tile"><b>AI-Targeted Mail</b><span>Extra campaigns to the subscribers in your sector.</span></div>
+                <div class="tile"><b>Boosted LinkedIn campaigns</b><span>We boost your posts to a LinkedIn audience chosen by industry, location and job role, and report on the results.</span></div>
+                <div class="tile"><b>Graphic design</b><span>Banners, brochures and datasheets.</span></div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<footer class="site-foot">
+    <img src="https://futuretransport-news.com/wp-content/uploads/sites/3/2025/08/Future-Transport-News-White-Logo-CLEAR.png" alt="Future Transport-News"><br>
+    <a href="https://futuretransport-news.com/" target="_blank" rel="noopener">futuretransport-news.com</a><span class="sep">|</span>
+    <a href="tel:+441392580002">+44 1392 580002</a><span class="sep">|</span>
+    <a href="mailto:contact@a2bglobalmedia.com">contact@a2bglobalmedia.com</a>
+</footer>
+
+<script>
+// Tabs (targeted mail)
+const tabs = [...document.querySelectorAll('[role="tab"]')];
+tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(o => {
+        const on = o === t;
+        o.setAttribute('aria-selected', on);
+        document.getElementById(o.getAttribute('aria-controls')).hidden = !on;
+    });
+}));
+
+// Contents highlight
+const links = [...document.querySelectorAll('#toc a')];
+const targets = links.map(a => document.querySelector(a.getAttribute('href')));
+function spy() {
+    let cur = 0;
+    targets.forEach((t, i) => { if (t && t.getBoundingClientRect().top < 140) cur = i; });
+    links.forEach((a, i) => a.classList.toggle('on', i === cur));
+}
+addEventListener('scroll', spy, { passive: true });
+spy();
+</script>
+</body>
+</html>

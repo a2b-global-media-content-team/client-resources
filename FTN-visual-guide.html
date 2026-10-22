@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Guide: Future Transport-News — a2b Global Media</title>
+    <meta name="description" content="A guided tour of where your Future Transport-News package appears: company profile, products & services, newsletter, targeted mail, social media and homepage.">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:      #1B3342;
+            --navy-2:    #24465A;
+            --orange:    #8CC63E;
+            --orange-dk: #4A7A1E;
+            --light:     #F7F7F7;
+            --text:      #1F2A30;
+            --muted:     #5D6B73;
+            --rule:      #E2E8EC;
+            --white:     #FFFFFF;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Mukta', Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: var(--light);
+            font-size: 16px;
+            line-height: 1.55;
+        }
+        a { color: var(--orange-dk); }
+
+        /* ── HEADER ─────────────────────────────────────── */
+        .site-head {
+            background: var(--navy);
+            color: var(--white);
+            padding: 22px 24px 64px;
+            text-align: center;
+        }
+        .site-head .brand { display: flex; justify-content: space-between; align-items: center; max-width: 1240px; margin: 0 auto 46px; gap: 16px; }
+        .site-head .brand img.rn { height: 34px; width: auto; }
+        .site-head .brand img.a2b { height: 26px; width: auto; }
+        .eyebrow { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); font-weight: 600; }
+        .site-head h1 { font-size: 46px; line-height: 1.1; font-weight: 600; margin: 10px 0 14px; }
+        .site-head p.lead { max-width: 640px; margin: 0 auto; color: #C9D6DE; font-size: 18px; }
+
+        /* ── PLAYER ─────────────────────────────────────── */
+        .player-wrap { max-width: 1240px; margin: -36px auto 0; padding: 0 24px; }
+        .chapters {
+            display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin;
+        }
+        .chapters button {
+            flex: none; border: 0; cursor: pointer; font: inherit; font-size: 14px; font-weight: 500;
+            background: var(--navy-2); color: #D5E0E6; padding: 8px 14px; border-radius: 6px;
+            display: flex; align-items: center; gap: 8px; white-space: nowrap;
+        }
+        .chapters button .n { font-size: 12px; opacity: 0.7; }
+        .chapters button[aria-current="true"] { background: var(--orange); color: var(--navy); }
+        .chapters button:focus-visible, .ctrl button:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+        .player {
+            display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 0;
+            background: var(--white); border-radius: 12px; overflow: hidden;
+            box-shadow: 0 18px 50px rgba(27, 51, 66, 0.22);
+        }
+
+        /* Screen-share window */
+        .screen { background: #0F1F29; padding: 14px; position: relative; }
+        .share-badge {
+            position: absolute; top: 22px; right: 26px; z-index: 6;
+            background: rgba(229, 57, 53, 0.95); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+            padding: 3px 9px 2px; border-radius: 20px; display: flex; align-items: center; gap: 6px;
+        }
+        .share-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: blink 1.4s infinite; }
+        @keyframes blink { 50% { opacity: 0.25; } }
+
+        .browser { background: #fff; border-radius: 8px; overflow: hidden; }
+        .chrome {
+            height: 40px; background: #E9EDF0; display: flex; align-items: center; gap: 12px; padding: 0 12px;
+            border-bottom: 1px solid #D6DCE0;
+        }
+        .dots { display: flex; gap: 6px; flex: none; }
+        .dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+        .dots i:nth-child(1) { background: #FF5F57; } .dots i:nth-child(2) { background: #FEBC2E; } .dots i:nth-child(3) { background: #28C840; }
+        .url {
+            flex: 1; min-width: 0; background: #fff; border-radius: 6px; height: 26px; display: flex; align-items: center; gap: 7px;
+            padding: 0 10px; font-size: 13px; color: #44515A; white-space: nowrap; overflow: hidden;
+        }
+        .url svg { flex: none; width: 12px; height: 12px; }
+        .url .caret { display: inline-block; width: 1px; height: 14px; background: #333; margin-left: 1px; animation: blink 1s steps(1) infinite; vertical-align: -2px; }
+
+        .viewport { position: relative; overflow: hidden; aspect-ratio: 16 / 10; background: #DDE3E7; }
+        .layer { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+        .layer.anim { transition: transform 1.4s cubic-bezier(0.65, 0, 0.25, 1); }
+        .layer img.page { display: block; width: 1440px; height: auto; user-select: none; -webkit-user-drag: none; }
+        .layer .html-page { width: 1440px; }
+
+        .ring {
+            position: absolute; border: 5px solid var(--orange); border-radius: 14px; pointer-events: none;
+            box-shadow: 0 0 0 9999px rgba(15, 31, 41, 0.42), 0 0 24px rgba(140, 198, 62, 0.95);
+            opacity: 0; transition: opacity 0.5s ease, left 1.4s cubic-bezier(0.65, 0, 0.25, 1), top 1.4s cubic-bezier(0.65, 0, 0.25, 1), width 1.4s cubic-bezier(0.65, 0, 0.25, 1), height 1.4s cubic-bezier(0.65, 0, 0.25, 1);
+        }
+        .ring.on { opacity: 1; animation: pulse 1.8s ease-in-out infinite 1.4s; }
+        @keyframes pulse { 50% { box-shadow: 0 0 0 9999px rgba(15, 31, 41, 0.42), 0 0 44px rgba(140, 198, 62, 1); } }
+
+        .cursor {
+            position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 5; pointer-events: none;
+            transition: transform 1.2s cubic-bezier(0.65, 0, 0.25, 1); filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35));
+        }
+        .click {
+            position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; z-index: 4;
+            border: 3px solid var(--orange); opacity: 0; pointer-events: none;
+        }
+        .click.go { animation: ripple 0.7s ease-out; }
+        @keyframes ripple { from { transform: scale(0.3); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+
+        .loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; background: #fff; z-index: 3; transition: opacity 0.3s; }
+        .loading.hide { opacity: 0; pointer-events: none; }
+
+        /* Caption panel */
+        .panel { display: flex; flex-direction: column; padding: 26px 26px 20px; border-left: 1px solid var(--rule); }
+        .panel .chap { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; }
+        .panel h2 { font-size: 27px; line-height: 1.15; font-weight: 600; color: var(--navy); margin: 6px 0 12px; }
+        .panel .body { font-size: 16px; color: #34424A; flex: 1; }
+        .panel .body ul { margin: 8px 0 0 18px; }
+        .panel .body li { margin-bottom: 3px; }
+        .panel .spec { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+        .panel .spec span { background: #F1F8E8; color: #3D6418; font-size: 13px; font-weight: 500; padding: 3px 9px; border-radius: 4px; }
+        .panel .fade { animation: fadeUp 0.5s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+        .progress { display: flex; gap: 4px; margin: 18px 0 14px; }
+        .progress i { flex: 1; height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; position: relative; }
+        .progress i.done { background: var(--orange); }
+        .progress i.now::after { content: ""; position: absolute; inset: 0; background: var(--orange); transform-origin: left; animation: fill var(--dur, 7s) linear forwards; }
+        .progress.paused i.now::after { animation-play-state: paused; }
+        @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+        .ctrl { display: flex; align-items: center; gap: 8px; }
+        .ctrl button {
+            border: 0; cursor: pointer; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            background: #EEF2F4; color: var(--navy);
+        }
+        .ctrl button.play { width: 50px; height: 50px; background: var(--navy); color: #fff; }
+        .ctrl button svg { width: 18px; height: 18px; }
+        .ctrl { flex-wrap: wrap; row-gap: 12px; }
+        .ctrl button { flex: none; }
+        .ctrl .count { flex: 1 0 auto; margin-left: 0; white-space: nowrap; }
+        .ctrl button.sound { width: auto; height: 42px; border-radius: 21px; padding: 0 14px 0 12px; gap: 6px; font: inherit; font-size: 14px; font-weight: 600; }
+        .ctrl button.sound[aria-pressed="true"] { background: var(--orange); color: var(--navy); }
+        .ctrl button.sound:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+        .ctrl .count { margin-left: auto; font-size: 13px; color: var(--muted); }
+        .ctrl .open { font-size: 13px; margin-left: 10px; white-space: nowrap; }
+
+        /* ── REFERENCE SECTION ──────────────────────────── */
+        .ref { max-width: 1240px; margin: 70px auto 0; padding: 0 24px; }
+        .ref > h2 { font-size: 32px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+        .ref > p { color: var(--muted); margin-bottom: 26px; max-width: 700px; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+        .card {
+            background: #fff; border-radius: 10px; padding: 22px 22px 18px; border-top: 4px solid var(--orange);
+            box-shadow: 0 2px 8px rgba(27, 51, 66, 0.06);
+        }
+        .card h3 { font-size: 20px; font-weight: 600; color: var(--navy); line-height: 1.2; }
+        .card .ex { font-size: 13px; color: var(--muted); margin: 2px 0 12px; word-break: break-word; }
+        .card .ex a { color: var(--orange-dk); }
+        .card dl { font-size: 15px; }
+        .card dt { font-weight: 600; color: var(--navy); margin-top: 10px; }
+        .card dd { color: #3A4850; }
+        .card ul { margin: 4px 0 0 18px; font-size: 15px; color: #3A4850; }
+        .card button.watch {
+            margin-top: 14px; border: 0; background: none; color: var(--orange-dk); font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; padding: 0;
+        }
+
+        .site-foot { margin-top: 80px; background: var(--navy); color: #C9D6DE; padding: 40px 24px; text-align: center; font-size: 15px; }
+        .site-foot img { height: 30px; width: auto; margin-bottom: 14px; }
+        .site-foot a { color: #fff; text-decoration: none; }
+        .site-foot .sep { opacity: 0.4; margin: 0 10px; }
+
+        /* ── RESPONSIVE ─────────────────────────────────── */
+        @media (max-width: 980px) {
+            .player { grid-template-columns: 1fr; }
+            .panel { border-left: 0; border-top: 1px solid var(--rule); }
+            .panel .body { min-height: 150px; }
+        }
+        @media (max-width: 600px) {
+            .site-head { padding: 18px 16px 56px; }
+            .site-head .brand { margin-bottom: 30px; }
+            .site-head .brand img.rn { height: 24px; }
+            .site-head .brand img.a2b { height: 18px; }
+            .site-head h1 { font-size: 34px; }
+            .site-head p.lead { font-size: 16px; }
+            .player-wrap, .ref { padding: 0 16px; }
+            .screen { padding: 8px; }
+            .chrome { height: 32px; } .dots { display: none; }
+            .url { font-size: 11px; height: 22px; }
+            .viewport { aspect-ratio: 4 / 5; }
+            .share-badge { top: 14px; right: 14px; }
+            .panel { padding: 20px 18px 16px; }
+            .panel h2 { font-size: 23px; }
+            .cards { grid-template-columns: 1fr; }
+            .ctrl .open { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .layer.anim, .cursor, .ring { transition-duration: 0.01s !important; }
+            .ring.on, .share-badge::before { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-head">
+    <div class="brand">
+        <img class="rn" src="https://futuretransport-news.com/wp-content/uploads/sites/3/2025/08/Future-Transport-News-White-Logo-CLEAR.png" alt="Future Transport-News">
+        <img class="a2b" src="https://a2bglobalmedia.com/wp-content/uploads/sites/5/2026/04/a2b-Global-Media-White-Logo-1.png" alt="a2b Global Media">
+    </div>
+    <div class="eyebrow">Future Transport-News Packages</div>
+    <h1>Visual Guide</h1>
+    <p class="lead">Take a guided tour of Future Transport-News and see exactly where each part of your package appears.</p>
+</header>
+
+<main>
+    <section class="player-wrap" aria-label="Guided tour">
+        <nav class="chapters" id="chapters" aria-label="Tour chapters"></nav>
+        <div class="player">
+            <div class="screen">
+                <div class="share-badge" aria-hidden="true">Screen sharing</div>
+                <div class="browser">
+                    <div class="chrome">
+                        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                        <div class="url"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 5V3.5a3 3 0 0 1 6 0V5h.5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-5a.5.5 0 0 1 .5-.5H3zm1.2 0h3.6V3.5a1.8 1.8 0 0 0-3.6 0V5z" fill="#5D6B73"/></svg><span id="url"></span><span class="caret" aria-hidden="true"></span></div>
+                    </div>
+                    <div class="viewport" id="viewport">
+                        <div class="layer" id="layer"><div class="ring" id="ring"></div></div>
+                        <svg class="cursor" id="cursor" viewBox="0 0 26 26" aria-hidden="true"><path d="M5 3l15 8.2-6.6 1.6 3.9 7.4-2.9 1.5-3.9-7.4L5 19z" fill="#fff" stroke="#111" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                        <div class="click" id="click"></div>
+                        <div class="loading" id="loading">Loading page…</div>
+                    </div>
+                </div>
+            </div>
+            <aside class="panel" aria-live="polite">
+                <div class="fade" id="caption">
+                    <div class="chap" id="cap-chap"></div>
+                    <h2 id="cap-title"></h2>
+                    <div class="body" id="cap-body"></div>
+                    <div class="spec" id="cap-spec"></div>
+                </div>
+                <div class="progress" id="progress"></div>
+                <div class="ctrl">
+                    <button id="prev" aria-label="Previous step"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button id="play" class="play" aria-label="Pause"><svg viewBox="0 0 24 24" id="play-icon"></svg></button>
+                    <button id="next" aria-label="Next step"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button id="sound" class="sound" aria-pressed="false" title="Read each step aloud" hidden><svg viewBox="0 0 24 24" id="sound-icon"></svg><span>Sound</span></button>
+                    <span class="count" id="count"></span>
+                    <a class="open" id="open" href="#" target="_blank" rel="noopener">Open page ↗</a>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <section class="ref" id="reference">
+        <h2>Package features at a glance</h2>
+        <p>Every feature from the tour, with the formats and details we need from you. Select “Watch in the tour” on any card to jump straight to it.</p>
+        <div class="cards" id="cards"></div>
+    </section>
+</main>
+
+<footer class="site-foot">
+    <img src="https://futuretransport-news.com/wp-content/uploads/sites/3/2025/08/Future-Transport-News-White-Logo-CLEAR.png" alt="Future Transport-News"><br>
+    <a href="https://futuretransport-news.com/" target="_blank" rel="noopener">futuretransport-news.com</a><span class="sep">|</span>
+    <a href="tel:+441392580002">+44 1392 580002</a><span class="sep">|</span>
+    <a href="mailto:contact@a2bglobalmedia.com">contact@a2bglobalmedia.com</a>
+</footer>
+
+<script>
+/* ──────────────────────────────────────────────────────────────
+   TOUR DATA
+   Each chapter shows one page (a full-page screenshot 1440px wide,
+   or an HTML mock-up). Each step points the "camera" at a box on
+   that page: box = [x, y, width, height] in page pixels.
+   zoom: 1 = fit page width; higher = closer.
+   ────────────────────────────────────────────────────────────── */
+const A = 'visual-guide-assets/';
+const CHAPTERS = [
+    {
+        name: 'Company Profile',
+        url: 'futuretransport-news.com/suppliers/geotab-fleet-management',
+        img: 'ftn-profile.jpg', h: 6560,
+        alt: 'Future Transport-News company profile page for Geotab',
+        ref: `<dl>
+            <dt>Hero image</dt><dd>A showcase image behind your company name.</dd>
+            <dt>Profile text</dt><dd>300+ words, written with key phrases that help search engines send traffic to your page.</dd>
+            <dt>Logo, links and contact details</dt><dd>Your logo, website and social media links, address and telephone number.</dd>
+            <dt>Events</dt><dd>The events you are attending, with dates and stand numbers. Your next event also shows beside your enquiry form.</dd>
+            <dt>News, videos, documents and images</dt><dd>Your own news feed, video gallery, downloadable PDFs and image gallery. Add new content at any time.</dd>
+            <dt>Enquiry form</dt><dd>Readers can contact you directly from your profile.</dd>
+        </dl>`,
+        steps: [
+            { title: 'Your company profile', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'Your profile is your home on Future Transport-News. It brings together everything about your company in one place, and it is where readers land from your news, banners and listings.' },
+            { title: 'Hero image', box: [0, 62, 1440, 700], zoom: 1,
+              text: 'A large showcase image runs behind your company name at the top of the page. Choose an image that shows your products or people at their best.',
+              spec: ['Landscape image', 'High resolution'] },
+            { title: 'Logo, links and contact details', box: [1005, 805, 330, 690], zoom: 2,
+              text: 'Your logo sits beside your profile, with links to your website and social media, your address and a telephone button. Readers can also save you as a favourite.' },
+            { title: 'Profile text', box: [105, 805, 880, 1100], zoom: 1.5,
+              text: '300+ words about your company, enriched with key phrases so search engines send relevant traffic to your profile. You can add your products and services too.',
+              spec: ['300+ words'] },
+            { title: 'Latest news, right beside your profile', box: [1005, 1665, 330, 900], zoom: 1.7,
+              text: 'Your most recent news items show in the sidebar, with a link to all your supplier news.' },
+            { title: 'Video gallery', box: [105, 2800, 1230, 380], zoom: 1.3,
+              text: 'Host your videos on your profile and add new ones at any time. Your videos also feature on our homepage and in our newsletter.' },
+            { title: 'News feed', box: [105, 3430, 1230, 530], zoom: 1.2,
+              text: 'Every press release you send us appears in your own news feed. Your news also features on the homepage, in our newsletter and on our LinkedIn page.' },
+            { title: 'Documents', box: [105, 4210, 620, 540], zoom: 1.6,
+              text: 'Host brochures, case studies and white papers as PDFs on your profile. Each document is optimised for search engines, so buyers can find it.',
+              spec: ['PDF'] },
+            { title: 'Image gallery', box: [105, 4970, 1230, 380], zoom: 1.3,
+              text: 'Add as many images as you like. Captions help search engines find your images.',
+              spec: ['Unlimited images'] },
+            { title: 'Events and enquiry form', box: [120, 5560, 1200, 950], zoom: 1.1,
+              text: 'Readers can contact you directly with the enquiry form at the bottom of your profile. Enquiries go straight to your inbox. When you add the events you are attending, your next event and stand number show beside the form too.',
+              spec: ['Event dates', 'Stand numbers'] }
+        ]
+    },
+    {
+        name: 'Products & Services',
+        url: 'futuretransport-news.com/products-services/electric-vehicle-charging',
+        img: 'ftn-products-services.jpg', h: 1560,
+        alt: 'Future Transport-News Products & Services page for Electric Vehicle Charging',
+        ref: `<dl>
+            <dt>Products &amp; Services banner</dt><dd>A banner on the Products &amp; Services page(s) of your choice, with a link to your website.</dd>
+            <dt>Featured supplier</dt><dd>Your company listed at the top of the Products &amp; Services page(s) of your choice, with a link to your profile.</dd>
+            <dt>Listings</dt><dd>Your profile appears in every relevant Products &amp; Services section across the site.</dd>
+        </dl>`,
+        steps: [
+            { title: 'Products & Services pages', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'Buyers browse our Products & Services pages to find suppliers by category. Your package puts you in front of them in three ways.' },
+            { title: 'Products & Services banner', box: [1016, 136, 320, 258], zoom: 2.4,
+              text: 'A banner at the top of the Products & Services page(s) of your choice, with a link to your website. Until a client books it, this position shows our own advert.',
+              spec: ['300 × 250 px', 'JPEG, PNG or GIF'] },
+            { title: 'Featured supplier', box: [105, 510, 1230, 210], zoom: 1.5,
+              text: 'Your company is listed at the top of the page, above all other suppliers, with your logo, a short description and a link to your company profile.' },
+            { title: 'Listings', box: [105, 885, 1230, 600], zoom: 1.1,
+              text: 'Your profile also appears in every relevant Products & Services section across the site, with a link to your company profile.' }
+        ]
+    },
+    {
+        name: 'Digital Newsletter',
+        url: 'mailchi.mp/futuretransport-news.com/future-transport-news-week-43-2026',
+        link: 'https://mailchi.mp/futuretransport-news.com/future-transport-news-week-43-2026',
+        img: 'ftn-newsletter.jpg', h: 2321,
+        alt: 'Future Transport-News newsletter, week 43 2026',
+        ref: `<dl>
+            <dt>Your news in our newsletter</dt><dd>Your latest news listed in our newsletter, with a link to the full article on Future Transport-News. Maximum one item per newsletter.</dd>
+            <dt>Newsletter banners</dt><dd>A 300 × 250 px banner in our newsletter(s) with a link to your website. We use your Products &amp; Services banner unless you send us a different one.</dd>
+            <dt>Your videos and events</dt><dd>Your videos can feature in our newsletter. On Premium and Ultra, your own events can appear under Upcoming Events.</dd>
+        </dl>`,
+        steps: [
+            { title: 'Our digital newsletter', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'Our weekly newsletter goes out every Wednesday, with the latest future transport news and news from our suppliers.' },
+            { title: 'Your news in our newsletter', box: [420, 1280, 600, 400], zoom: 1.6,
+              text: 'Your latest news is listed under “Latest Supplier News”, with a link to the full article on Future Transport-News. Maximum one item per newsletter.' },
+            { title: 'Newsletter banners', box: [420, 1280, 600, 400], noRing: true,
+              text: 'A banner in our newsletter with a link to your website. We use your Products & Services banner, unless you send us a different one.',
+              spec: ['300 × 250 px', 'JPEG, PNG or GIF'] },
+            { title: 'Upcoming events', box: [420, 1720, 600, 330], zoom: 1.6,
+              text: 'On a Premium or Ultra package, your own events and webinars can appear in the Upcoming Events section of the newsletter.' }
+        ]
+    },
+    {
+        name: 'Targeted Mail',
+        url: 'Example targeted mail',
+        link: null,
+        img: 'ftn-targeted-mail.jpg', h: 1389,
+        alt: 'Example Future Transport-News targeted mail for a made-up company',
+        ref: `<p style="font-size:15px;color:#3A4850">An email with only your content, sent to your most relevant audience, chosen by our AI software, with optional parameters (for example, region) from you.</p>
+        <dl><dt>Process</dt><dd>Send your content one week before the agreed send date. We send you a preview to approve, then send your email at the agreed date and time.</dd>
+        <dt>We need</dt><dd>A subject line (about 65 characters), the content (text and images, as PDF or HTML), valid links, and your preferred audience parameters.</dd>
+        <dt>Design service</dt><dd>We can design your campaign for you. Ask us for details.</dd></dl>`,
+        steps: [
+            { title: 'AI-targeted mail', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'An email campaign with only your content: press releases, videos, brochures, webinars or event invitations. This example is for a made-up company.' },
+            { title: 'Sent by Future Transport-News', box: [418, 18, 604, 60], zoom: 2.6,
+              text: 'Your email is sent from Future Transport-News, a sender our readers know and trust, which helps it reach the inbox and get opened.' },
+            { title: 'Your content, your audience', box: [418, 76, 604, 1095], zoom: 1,
+              text: 'Your mail goes to your most relevant audience, chosen by our AI software, with optional parameters (for example, region) from you.' },
+            { title: 'Your call to action', box: [458, 862, 524, 178], zoom: 2,
+              text: 'Each mail leads to a clear next step, such as a link to your website, a demo request or your stand at an event.' },
+            { title: 'How it works', box: [418, 0, 604, 1389], noRing: true,
+              text: '<ul><li>Send your content one week before the agreed send date</li><li>We send you a preview to approve</li><li>We send your email at the agreed date and time</li></ul>',
+              spec: ['Subject line ≈ 65 characters', 'PDF or HTML', 'Valid links'] }
+        ]
+    },
+    {
+        name: 'Social Media Banners',
+        url: 'linkedin.com/feed/update/urn:li:activity:7240283119415701505',
+        link: 'https://www.linkedin.com/feed/update/urn:li:activity:7240283119415701505/',
+        img: 'ftn-social-linkedin.jpg', h: 1055,
+        alt: 'Future Transport-News LinkedIn post with a Stertil-Koni banner advert',
+        ref: `<dl>
+            <dt>Banner adverts on our social platforms</dt><dd>A dedicated social media banner advert, with only your content, posted to our followers on LinkedIn.</dd>
+            <dt>Format</dt><dd>JPEG, PNG, GIF or PDF, 1024 × 512 px.</dd>
+            <dt>Design service</dt><dd>We can design your social media banner for you. Ask us for details.</dd>
+        </dl>`,
+        steps: [
+            { title: 'Social media banner adverts', box: [440, 86, 562, 616], zoom: 1.1,
+              text: 'A dedicated post with only your content, shared with our followers on LinkedIn.' },
+            { title: 'Posted by Future Transport-News', box: [440, 88, 560, 72], zoom: 2.6,
+              text: 'Your post comes from the Future Transport-News page. We tag your company page, so readers can click straight through to you.' },
+            { title: 'Your banner', box: [440, 312, 560, 286], zoom: 2,
+              text: 'Your banner advert is the centrepiece of the post, with a link to your website. We can design it for you.',
+              spec: ['1024 × 512 px', 'JPEG, PNG, GIF or PDF'] },
+            { title: 'Reach and engagement', box: [440, 600, 560, 98], zoom: 2.2,
+              text: 'Followers can like, comment on and share your post, which takes it to their own networks too. We report views, interactions and clicks in your stats report.' }
+        ]
+    },
+    {
+        name: 'Homepage',
+        isPage: true,
+        url: 'futuretransport-news.com',
+        img: 'ftn-homepage.jpg', h: 4300,
+        alt: 'Future Transport-News homepage',
+        ref: `<dl>
+            <dt>Homepage featured supplier position</dt><dd>A banner advert in the Featured Suppliers section of our homepage, linking to your website. Depending on your package, it shows for 4 weeks or for your whole contract.</dd>
+            <dt>Format</dt><dd>JPEG, PNG or GIF, 1024 × 512 px.</dd>
+            <dt>Latest News banner</dt><dd>A second banner position in the Latest News grid near the top of the homepage, linking to your website.</dd>
+            <dt>Your news and videos on the homepage</dt><dd>Your press releases appear in the Supplier News section, and your videos in Video Highlights.</dd>
+            <dt>Design service</dt><dd>We can design your homepage banner for you. Ask us for details.</dd>
+        </dl>`,
+        steps: [
+            { title: 'The Future Transport-News homepage', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'The homepage is the busiest page on Future Transport-News, with the latest future transport news, events and videos.' },
+            { title: 'Banner in the latest news', box: [975, 1311, 303, 252], zoom: 2.4,
+              text: 'A banner position sits in the Latest News grid near the top of the homepage, right beside the newest headlines, with a link to your website. Until a client books it, it shows our own advert.' },
+            { title: 'Your news on the homepage', box: [110, 1985, 1220, 990], zoom: 1.1,
+              text: 'Your press releases appear in the Supplier News section of the homepage, as well as on your profile.' },
+            { title: 'Featured Suppliers', box: [110, 3200, 1220, 130], zoom: 1.6,
+              text: 'The homepage featured supplier position puts your banner advert in the Featured Suppliers section, with a link to your website. Depending on your package, it shows for 4 weeks or for your whole contract.',
+              spec: ['1024 × 512 px', 'JPEG, PNG or GIF'] },
+            { title: 'Your videos on the homepage', box: [110, 3480, 1220, 700], zoom: 1.2,
+              text: 'Every video you send us features in Video Highlights on the homepage.' }
+        ]
+    }
+];
+
+/* ── ENGINE ──────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const viewport = $('viewport'), layer = $('layer'), ring = $('ring'), cursor = $('cursor'), click = $('click');
+const STEPS = [];
+CHAPTERS.forEach((c, ci) => c.steps.forEach((s, si) => STEPS.push({ ...s, ci, si })));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let idx = 0, playing = !reduced, timer = null, pageCi = -1, typeTimer = null;
+let cursorPos = { x: 40, y: 40 };
+
+// Page elements, one per chapter, built once
+const pages = CHAPTERS.map(c => {
+    let el;
+    if (c.html) { el = document.createElement('div'); el.className = 'html-page'; el.innerHTML = c.html; }
+    else { el = new Image(); el.className = 'page'; el.alt = c.alt || ''; el.decoding = 'async'; el.loading = 'eager'; }
+    el.style.display = 'none';
+    layer.insertBefore(el, ring);
+    return el;
+});
+
+// Chapter buttons
+CHAPTERS.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.innerHTML = `<span class="n">${i + 1}</span>${c.name}`;
+    b.onclick = () => go(STEPS.findIndex(s => s.ci === i), true);
+    $('chapters').appendChild(b);
+});
+
+const icon = p => $('play-icon').innerHTML = p
+    ? '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/>'
+    : '<path d="M8 5l11 7-11 7z" fill="currentColor"/>';
+
+function typeUrl(text) {
+    clearInterval(typeTimer);
+    const el = $('url');
+    if (reduced) { el.textContent = text; return; }
+    let i = 0; el.textContent = '';
+    typeTimer = setInterval(() => { el.textContent = text.slice(0, ++i); if (i >= text.length) clearInterval(typeTimer); }, 22);
+}
+
+function showPage(ci) {
+    if (ci === pageCi) return Promise.resolve(false);
+    const c = CHAPTERS[ci], el = pages[ci];
+    pages.forEach((p, i) => p.style.display = i === ci ? 'block' : 'none');
+    pageCi = ci;
+    typeUrl(c.url);
+    $('open').href = c.link || ('https://' + c.url);
+    $('open').style.visibility = c.link === null ? 'hidden' : 'visible';
+    if (c.html) { $('loading').classList.add('hide'); return Promise.resolve(true); }
+    $('loading').classList.remove('hide');
+    return new Promise(res => {
+        const done = () => { $('loading').classList.add('hide'); res(true); };
+        if (el.src && el.complete) return done();
+        el.onload = done; el.onerror = done;
+        if (!el.src) el.src = A + c.img;
+    });
+}
+
+function pageHeight(ci) {
+    const c = CHAPTERS[ci];
+    return c.h || pages[ci].offsetHeight || 4000;
+}
+
+// Camera: fit `box` into the viewport at `zoom`, clamp to the page edges
+function camera(step, animate) {
+    const vw = viewport.clientWidth, vh = viewport.clientHeight;
+    const base = vw / 1440;
+    const [bx, by, bw, bh] = step.box || [0, 0, 1440, vh / base];
+    let s = base * (step.zoom || 1);
+    // never zoom so far that the box no longer fits
+    s = Math.min(s, (vw * 0.92) / bw, (vh * 0.86) / bh);
+    s = Math.max(s, base * 0.5);              // zoom out past full width if a tall box needs it
+    const H = pageHeight(step.ci) * s, W = 1440 * s;
+    let tx = vw / 2 - (bx + bw / 2) * s, ty = vh / 2 - (by + bh / 2) * s;
+    if (step.top) ty = -by * s + 20;
+    tx = W <= vw ? (vw - W) / 2 : Math.min(0, Math.max(vw - W, tx));
+    ty = H <= vh ? (vh - H) / 2 : Math.min(0, Math.max(vh - H, ty));
+    layer.classList.toggle('anim', animate && !reduced);
+    layer.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+
+    if (step.box && !step.noRing) {
+        Object.assign(ring.style, { left: bx - 10 + 'px', top: by - 10 + 'px', width: bw + 20 + 'px', height: bh + 20 + 'px' });
+        ring.classList.add('on');
+        // cursor goes to the lower-right part of the box, as seen on screen
+        const cx = tx + (bx + bw * 0.62) * s, cy = ty + (by + bh * 0.6) * s;
+        moveCursor(Math.min(vw - 30, Math.max(10, cx)), Math.min(vh - 30, Math.max(10, cy)), true);
+    } else {
+        ring.classList.remove('on');
+        moveCursor(vw * 0.55, vh * 0.35, false);
+    }
+}
+
+function moveCursor(x, y, doClick) {
+    cursorPos = { x, y };
+    cursor.style.transform = `translate(${x}px, ${y}px)`;
+    if (doClick && !reduced) setTimeout(() => {
+        click.style.left = x + 4 + 'px'; click.style.top = y + 4 + 'px';
+        click.classList.remove('go'); void click.offsetWidth; click.classList.add('go');
+    }, 1400);
+}
+
+function caption(step) {
+    const c = CHAPTERS[step.ci];
+    const cap = $('caption');
+    cap.classList.remove('fade'); void cap.offsetWidth; cap.classList.add('fade');
+    $('cap-chap').textContent = `${step.ci + 1}. ${c.name}`;
+    $('cap-title').textContent = step.title;
+    $('cap-body').innerHTML = step.text;
+    $('cap-spec').innerHTML = (step.spec || []).map(s => `<span>${s}</span>`).join('');
+    $('count').textContent = `Step ${idx + 1} of ${STEPS.length}`;
+    [...$('chapters').children].forEach((b, i) => b.setAttribute('aria-current', i === step.ci ? 'true' : 'false'));
+    const cur = $('chapters').children[step.ci];
+    cur.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' });
+}
+
+function progress(step) {
+    const inChap = STEPS.filter(s => s.ci === step.ci);
+    const dur = stepDur(step) + 's';
+    $('progress').innerHTML = inChap.map(s => `<i class="${s.si < step.si ? 'done' : s.si === step.si ? 'now' : ''}" style="--dur:${dur}"></i>`).join('');
+    $('progress').classList.toggle('paused', !playing);
+}
+
+async function go(i, user) {
+    idx = (i + STEPS.length) % STEPS.length;
+    const step = STEPS[idx];
+    clearTimeout(timer);
+    caption(step); progress(step); narrate(step);
+    const fresh = await showPage(step.ci);
+    if (STEPS[idx] !== step) return;          // user moved on while the page loaded
+    if (fresh) {
+        // start a new page at the top, then glide to the first focus
+        camera({ ci: step.ci }, false);
+        await new Promise(r => setTimeout(r, reduced ? 0 : 450));
+    }
+    camera(step, true);
+    schedule();
+}
+
+function schedule() {
+    clearTimeout(timer);
+    if (!playing) return;
+    // While the voice reads, its end moves the tour on; this is only a fallback.
+    const wait = soundOn && speaking ? speechSecs(STEPS[idx]) + 6 : stepDur(STEPS[idx]);
+    timer = setTimeout(() => go(idx + 1), wait * 1000);
+}
+
+/* ── NARRATION ─────────────────────────────────────────────────── */
+const synth = window.speechSynthesis;
+let soundOn = false, speaking = false, utter = null, stepT0 = 0, voice = null;
+
+function spoken(step) {
+    const d = document.createElement('div');
+    d.innerHTML = (step.title + '. ' + step.text).replace(/<\/li>/g, '. ');
+    return d.textContent.replace(/×/g, 'the cross').replace(/\(s\)/g, 's').replace(/ \/ /g, ' of ').replace(/\+(?=\s|$|,)/g, ' plus').replace(/\s+/g, ' ').trim();
+}
+const speechSecs = step => spoken(step).split(' ').length / 2.6 + 1.5;
+const stepDur = step => soundOn ? Math.max(step.dur || 7, Math.ceil(speechSecs(step))) : (step.dur || 7);
+
+function pickVoice() {
+    const all = synth.getVoices();
+    const like = ['Google UK English Female', 'Microsoft Sonia', 'Microsoft Libby', 'Serena', 'Kate', 'Martha', 'Daniel', 'Google UK English Male'];
+    voice = like.map(n => all.find(v => v.name.startsWith(n))).find(Boolean)
+        || all.find(v => v.lang === 'en-GB') || all.find(v => v.lang.startsWith('en')) || null;
+}
+
+function hush() { speaking = false; utter = null; if (synth) synth.cancel(); }
+
+function narrate(step) {
+    stepT0 = performance.now();
+    if (!soundOn || !synth) return;
+    hush();
+    const u = new SpeechSynthesisUtterance(spoken(step));
+    u.lang = 'en-GB'; if (voice) u.voice = voice;
+    u.onend = u.onerror = () => {
+        if (utter !== u) return;           // a newer step took over
+        speaking = false; utter = null;
+        if (!playing) return;
+        const left = (step.dur || 7) * 1000 - (performance.now() - stepT0);
+        clearTimeout(timer);
+        timer = setTimeout(() => go(idx + 1), Math.max(1200, left));
+    };
+    utter = u; speaking = true;
+    synth.speak(u);
+}
+
+const soundIcon = on => $('sound-icon').innerHTML = '<path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>' + (on
+    ? '<path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+    : '<path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>');
+
+if (synth) {
+    pickVoice(); synth.addEventListener?.('voiceschanged', pickVoice);
+    $('sound').hidden = false; soundIcon(false);
+    $('sound').onclick = () => {
+        soundOn = !soundOn;
+        $('sound').setAttribute('aria-pressed', soundOn);
+        $('sound').title = soundOn ? 'Stop reading aloud' : 'Read each step aloud';
+        soundIcon(soundOn);
+        if (soundOn) narrate(STEPS[idx]); else hush();
+        progress(STEPS[idx]); schedule();
+    };
+}
+
+function setPlaying(p) {
+    playing = p; icon(p);
+    if (p) narrate(STEPS[idx]); else hush();
+    $('play').setAttribute('aria-label', p ? 'Pause' : 'Play');
+    $('progress').classList.toggle('paused', !p);
+    if (p) { progress(STEPS[idx]); schedule(); } else clearTimeout(timer);
+}
+
+$('play').onclick = () => setPlaying(!playing);
+$('next').onclick = () => { go(idx + 1, true); };
+$('prev').onclick = () => { go(idx - 1, true); };
+document.addEventListener('keydown', e => {
+    if (e.target.closest('input, textarea')) return;
+    if (e.key === 'ArrowRight') go(idx + 1, true);
+    else if (e.key === 'ArrowLeft') go(idx - 1, true);
+    else if (e.key === ' ' && e.target === document.body) { e.preventDefault(); setPlaying(!playing); }
+});
+let resizeT; addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(() => camera(STEPS[idx], false), 120); });
+
+// Pause the tour while it is off screen
+new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting && playing) { clearTimeout(timer); hush(); $('progress').classList.add('paused'); }
+    else if (e.isIntersecting && playing) { progress(STEPS[idx]); narrate(STEPS[idx]); schedule(); }
+}, { threshold: 0.35 }).observe(viewport);
+
+// Reference cards
+CHAPTERS.forEach((c, ci) => {
+    const card = document.createElement('article');
+    card.className = 'card';
+    const href = c.link || ('https://' + c.url);
+    card.innerHTML = `<h3>${c.name}</h3><div class="ex">${c.isPage ? '' : 'Example: '}<a href="${href}" target="_blank" rel="noopener">${c.url}</a></div>${c.ref}<button class="watch">Watch in the tour ▸</button>`;
+    card.querySelector('.watch').onclick = () => { go(STEPS.findIndex(s => s.ci === ci), true); document.querySelector('.player-wrap').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); };
+    $('cards').appendChild(card);
+});
+
+// Preload the remaining screenshots after the first one
+icon(playing);
+go(0).then(() => CHAPTERS.forEach((c, i) => { if (!c.html && !pages[i].src) setTimeout(() => pages[i].src = A + c.img, 1500 + i * 400); }));
+</script>
+</body>
+</html>
