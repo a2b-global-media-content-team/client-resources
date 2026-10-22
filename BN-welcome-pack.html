@@ -145,7 +145,7 @@
             display: flex; align-items: center; justify-content: center; text-align: center;
             font-size: 12px; font-weight: 600; color: var(--orange-dk); line-height: 1.2;
         }
-        @media (max-width: 600px) { .specs.banners { grid-template-columns: 1fr; } }
+        @media screen and (max-width: 600px) { .specs.banners { grid-template-columns: 1fr; } }
 
         table.cal { width: 100%; border-collapse: collapse; margin: 12px 0 10px; font-size: 16px; }
         table.cal th { text-align: left; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; padding: 8px 10px; border-bottom: 2px solid var(--orange); }
@@ -182,11 +182,11 @@
         .site-foot .sep { opacity: 0.4; margin: 0 10px; }
 
         /* ── RESPONSIVE ─────────────────────────────────── */
-        @media (max-width: 900px) {
+        @media screen and (max-width: 900px) {
             .wrap { grid-template-columns: 1fr; }
             nav.toc { position: static; display: none; }
         }
-        @media (max-width: 600px) {
+        @media screen and (max-width: 600px) {
             body { font-size: 16px; }
             .site-head { padding: 18px 16px 60px; }
             .site-head .brand { margin-bottom: 32px; }
@@ -200,11 +200,29 @@
             table.cal { font-size: 14px; }
             table.cal th, table.cal td { padding: 8px 6px; }
         }
+        /* PDF / print: A4 portrait, one column, desktop layout inside it.
+           Chrome: Print > Save as PDF (Background graphics on). */
+        @page { size: A4; margin: 12mm 12mm 14mm; }
         @media print {
-            body { background: #fff; }
-            nav.toc { display: none; }
-            .wrap { display: block; margin-top: 0; }
-            .welcome, section.block { box-shadow: none; break-inside: avoid-page; }
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            html { scroll-behavior: auto; }
+            body { background: #fff; font-size: 15px; }
+            nav.toc, .guide-link { display: none; }
+            .site-head { padding: 18px 24px 34px; }
+            .site-head .brand { margin-bottom: 26px; }
+            .wrap { display: block; max-width: none; margin: 0; padding: 0; }
+            .welcome, section.block { box-shadow: none; border: 1px solid var(--rule); margin: 14px 0 0; padding: 24px 26px; break-inside: auto; }
+            section.block h2, section.block h3, h4 { break-after: avoid; }
+            .tile, .spec, .note, tr, ol.steps > li, ul.check li, .packages, .sisters { break-inside: avoid; }
+            .table-scroll { overflow: visible; }
+            table.pkg { min-width: 0; }
+            /* Show both targeted mail options instead of tabs */
+            .tabs { display: none; }
+            .tabpanel, .tabpanel[hidden] { display: block !important; border-radius: 8px; margin-bottom: 10px; break-inside: avoid; }
+            #panel-own::before { content: "If you design your own email"; }
+            #panel-ours::before { content: "If you would like us to design it"; }
+            #panel-own::before, #panel-ours::before { display: block; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+            .site-foot { margin-top: 20px; break-inside: avoid; }
         }
     </style>
 </head>
@@ -255,7 +273,7 @@
             <p style="margin-top:10px;">An a2b Global Media brand.</p>
             <p style="margin-top:12px;">This Welcome Pack tells you everything you need to know about building your company page, and gives the technical specifications for all advertising materials on Bus-News, so we can promote you in the best possible way.</p>
             <p style="margin-top:12px;">Every subscription is a fully managed service. Your <strong>Partnership Manager</strong> looks after you from start to finish, and our <strong>Content Team</strong> is on hand whenever you need it. Each quarter we send you a statistics report and book a check-in call to review your activity and plan your next steps.</p>
-            <p style="margin-top:12px;">Want to see where everything appears? Take the <a href="BN-visual-guide.html">Bus-News Visual Guide</a>.</p>
+            <p style="margin-top:12px;">Want to see where everything appears? Take the <a href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html">Bus-News Visual Guide</a>.</p>
             <div class="sig"><strong>Andrew Lush</strong>Director at a2b Global Media</div>
             <div class="sisters">
                 <h3>Our sister brands</h3>
@@ -386,7 +404,7 @@
                 <li>An enquiry form, so readers can contact you directly</li>
                 <li>Your company listed in our Products &amp; Services section</li>
             </ul>
-            <a class="guide-link" href="BN-visual-guide.html">See a live profile in the Visual Guide ▸</a>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html">See a live profile in the Visual Guide ▸</a>
 
             <h3 id="details">Company Details</h3>
             <p>Please give us your company name, contact email, website URL, telephone number, address and region. The contact email matters most: it is where enquiries from readers go.</p>
@@ -476,7 +494,7 @@
             <div class="packages">Packages: <span>Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
             <p>In <strong>Company categories</strong>, choose up to 20 Products &amp; Services categories for your listing. Pick the ones relevant to what you do. Be specific rather than general: that way, relevant readers find you on our site and on Google and other search engines.</p>
             <p>On Essentials+, Premium and Ultra packages, use <strong>Featured categories</strong> to choose which of your categories put you in a featured supplier position, at the top of that category’s page. Essentials+ includes up to 2, Premium up to 4 and Ultra up to 8.</p>
-            <a class="guide-link" href="BN-visual-guide.html">See the Products &amp; Services pages in the Visual Guide ▸</a>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html">See the Products &amp; Services pages in the Visual Guide ▸</a>
         </section>
 
         <!-- ═══ NEWSLETTER ════════════════════════════════════ -->
@@ -493,7 +511,7 @@
                 <li><strong>Ultra:</strong> 12 newsletter banners, one every month</li>
             </ul>
             <p>See <a href="#banners">Banner Adverts</a> for specifications and how to send your banners.</p>
-            <a class="guide-link" href="BN-visual-guide.html">See the newsletter in the Visual Guide ▸</a>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html">See the newsletter in the Visual Guide ▸</a>
         </section>
 
         <!-- ═══ TARGETED MAIL ═════════════════════════════════ -->
@@ -527,8 +545,8 @@
                     <li>Optional: a design brief, if you have an idea of how you would like your email to look</li>
                 </ul>
             </div>
-            <p style="margin-top:16px;">Read our <a href="targeted-mail-guidelines.html">Targeted Mail guidelines</a> for full details.</p>
-            <a class="guide-link" href="BN-visual-guide.html">See a client targeted mail in the Visual Guide ▸</a>
+            <p style="margin-top:16px;">Read our <a href="https://a2b-global-media-content-team.github.io/client-resources/targeted-mail-guidelines.html">Targeted Mail guidelines</a> for full details.</p>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html">See a client targeted mail in the Visual Guide ▸</a>
         </section>
 
         <!-- ═══ CONTENT WRITING ═══════════════════════════════ -->
@@ -581,7 +599,7 @@
                 </div>
             </div>
             <div class="note">Please check your package for your page allowance.</div>
-            <a class="guide-link" href="BN-visual-guide.html">See an advertorial in the Visual Guide ▸</a>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html">See an advertorial in the Visual Guide ▸</a>
 
             <h3 id="calendar">Editorial Calendar</h3>
             <p>We often build our magazines around major industry shows. Content must reach us by the content deadline. If you would like us to write your content, please book it by the content writing booking deadline.</p>
@@ -614,7 +632,7 @@
                 <li>For social media banners: your preferred text and hashtags</li>
             </ul>
             <div class="note"><strong>Design service:</strong> our design team can design your banners. It is included in Ultra packages, and available for other packages as an additional service. Please send the images, logo and text, and a design brief if you have one.</div>
-            <a class="guide-link" href="BN-visual-guide.html">See every banner position in the Visual Guide ▸</a>
+            <a class="guide-link" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html">See every banner position in the Visual Guide ▸</a>
         </section>
 
         <!-- ═══ ADDITIONAL SERVICES ═══════════════════════════ -->
