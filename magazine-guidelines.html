@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Magazine: Client Guidelines — a2b Global Media</title>
+    <meta name="description" content="Up to three A4 pages in our interactive e-magazine, split between adverts and advertorial as you choose, and published as a PDF on your profile too.">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --primary:        #E25E7A;   /* a2b pink — main accent    */
+            --primary-tint:   #FDF0F3;   /* light pink tint            */
+            --secondary:      #49B7BE;   /* a2b teal                   */
+            --secondary-tint: #EDF8F9;   /* light teal tint            */
+            --grey:           #696A6D;   /* a2b grey                   */
+            --text:           #2E2E2E;
+            --border:         #E2E8F0;
+            --bg:             #F7F9FA;
+            --white:          #FFFFFF;
+            --dark:           #1B3342;   /* hero background            */
+            --dark-alt:       #1B3342;   /* header / footer background */
+        }
+
+        body {
+            font-family: 'Mukta', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        /* ── HEADER ─────────────────────────────────────── */
+        header {
+            background: var(--dark-alt);
+            padding: 30px 60px 26px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .header-logo {
+            height: 44px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-tagline {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            margin-top: 10px;
+        }
+
+        /* ── HERO ────────────────────────────────────────── */
+        .hero {
+            background: var(--dark);
+            padding: 56px 60px 48px;
+            text-align: center;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .hero-pill {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 5px 13px;
+            border-radius: 3px;
+            margin-bottom: 18px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.08;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 16.5px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.8);
+            max-width: 580px;
+            line-height: 1.7;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── MAIN ────────────────────────────────────────── */
+        main {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 52px 60px 20px;
+        }
+
+        section { margin-bottom: 52px; }
+
+        /* Section header */
+        .sh {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .sh-num {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .sh-num.accent {
+            background: var(--primary);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .sh h2 {
+            font-size: 23px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* Typography */
+        p { margin-bottom: 14px; font-size: 15.5px; line-height: 1.7; }
+
+        h3 {
+            font-size: 16.5px;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 22px 0 10px;
+        }
+
+        /* ── CHECKLIST ───────────────────────────────────── */
+        .checklist {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px 20px;
+            margin: 16px 0 4px;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14.5px;
+            line-height: 1.55;
+        }
+
+        .checklist li::before {
+            content: '';
+            min-width: 17px;
+            height: 17px;
+            margin-top: 2px;
+            border-radius: 3px;
+            background-color: var(--primary);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+            background-size: 11px;
+            background-repeat: no-repeat;
+            background-position: center;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .checklist li em {
+            font-style: normal;
+            color: var(--grey);
+            font-size: 13.5px;
+        }
+
+        /* ── ARROW LIST ──────────────────────────────────── */
+        ul.arrowlist {
+            list-style: none;
+            margin-bottom: 14px;
+        }
+
+        ul.arrowlist li {
+            padding: 10px 0 10px 22px;
+            position: relative;
+            font-size: 15px;
+            line-height: 1.6;
+            border-bottom: 1px solid var(--border);
+        }
+
+        ul.arrowlist li:last-child { border-bottom: none; }
+
+        ul.arrowlist li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* ── CALLOUT BOX ─────────────────────────────────── */
+        .callout {
+            border-left: 4px solid var(--primary);
+            background: var(--primary-tint);
+            border-radius: 0 6px 6px 0;
+            padding: 16px 20px;
+            margin: 20px 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .callout.teal-callout {
+            border-left-color: var(--secondary);
+            background: var(--secondary-tint);
+        }
+
+        .callout strong {
+            display: block;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .callout p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.65;
+        }
+
+        /* ── PROCESS GRID ────────────────────────────────── */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .process-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 18px;
+        }
+
+        .process-step {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .process-card h4 {
+            font-size: 15.5px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .process-card p {
+            font-size: 13.5px;
+            color: var(--grey);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ── TIMELINE ────────────────────────────────────── */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 8px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .tl-item {
+            position: relative;
+            margin-bottom: 26px;
+        }
+
+        .tl-item:last-child { margin-bottom: 0; }
+
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--bg);
+            box-shadow: 0 0 0 2px var(--primary);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .tl-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .tl-item h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 3px;
+        }
+
+        .tl-item p {
+            font-size: 14px;
+            color: var(--grey);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* ── FAQ ─────────────────────────────────────────── */
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .faq-q {
+            padding: 15px 20px;
+            background: var(--white);
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--dark);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.5;
+        }
+
+        .faq-q::before {
+            content: 'Q';
+            min-width: 25px;
+            height: 25px;
+            background: var(--secondary);
+            color: #fff;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 1px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .faq-a {
+            padding: 12px 20px 15px 57px;
+            background: #F8FAFC;
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── FOOTER ──────────────────────────────────────── */
+        footer {
+            background: var(--dark-alt);
+            padding: 26px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .footer-logo-img {
+            height: 28px;
+            width: auto;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .footer-meta {
+            font-family: 'Mukta', sans-serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .footer-right {
+            text-align: right;
+            font-family: 'Mukta', sans-serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.9;
+        }
+
+        /* ── PRINT ───────────────────────────────────────── */
+        @media print {
+            body { background: #fff; }
+
+            header { padding: 22px 44px; }
+            .hero  { padding: 40px 44px 36px; }
+            main   { padding: 38px 44px 10px; max-width: none; }
+            footer { padding: 20px 44px; }
+
+            .hero h1 { font-size: 34px; }
+
+            section       { break-inside: avoid; margin-bottom: 38px; }
+            .process-grid { break-inside: avoid; }
+            .checklist    { break-inside: avoid; }
+            .faq-item     { break-inside: avoid; }
+            .tl-item      { break-inside: avoid; }
+            .callout      { break-inside: avoid; }
+        }
+
+        @page { margin: 0; }
+
+        /* ── ADDED FOR THE GUIDELINE SET ─────────────────── */
+        .tbc { background: #FFF4C2; border-bottom: 2px dashed #D9A400; padding: 0 3px; }
+        .tbc::after { content: 'To confirm'; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+                      color: #8A6A00; background: #FFE58A; border-radius: 3px; padding: 1px 5px; margin-left: 6px; vertical-align: 2px; }
+        table.grid { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: 14.5px; background: var(--white); }
+        table.grid th, table.grid td { border: 1px solid var(--border); padding: 9px 12px; text-align: left; vertical-align: top; }
+        table.grid thead th { background: var(--dark); color: #fff; font-weight: 600; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        table.grid td.no { color: #A0A8AE; }
+        .spec-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 16px; }
+        .spec { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; min-width: 150px; }
+        .spec b { display: block; font-size: 20px; color: var(--dark); line-height: 1.2; }
+        .spec span { font-size: 13px; color: var(--grey); }
+        .more { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin-top: 8px; }
+        .more a { display: block; background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px;
+                  color: var(--dark); text-decoration: none; font-weight: 600; font-size: 14.5px; }
+        .more a:hover { border-color: var(--primary); color: var(--primary); }
+        .more a.here { border-color: var(--primary); background: var(--primary-tint); }
+        a { color: #C2405D; }
+        @media (max-width: 700px) {
+            header, .hero, main, footer { padding-left: 16px; padding-right: 16px; }
+            .hero h1 { font-size: 32px; }
+            .checklist, .process-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .footer-right { text-align: left; }
+            table.grid { font-size: 13px; }
+        }
+        @media print { .more { display: none; } .tbc::after { content: 'To confirm'; } }
+    
+        /* ── ADDED FOR THE GUIDELINE SET ─────────────────── */
+        .tbc { background: #FFF4C2; border-bottom: 2px dashed #D9A400; padding: 0 3px; }
+        .tbc::after { content: 'To confirm'; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+                      color: #8A6A00; background: #FFE58A; border-radius: 3px; padding: 1px 5px; margin-left: 6px; vertical-align: 2px; }
+        .tscroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table.grid { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: 14.5px; background: var(--white); }
+        table.grid th, table.grid td { border: 1px solid var(--border); padding: 9px 12px; text-align: left; vertical-align: top; }
+        table.grid thead th { background: var(--dark); color: #fff; font-weight: 600; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        table.grid td.no { color: #A0A8AE; }
+        .spec-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 16px; }
+        .spec { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; min-width: 150px; }
+        .spec b { display: block; font-size: 20px; color: var(--dark); line-height: 1.2; }
+        .spec span { font-size: 13px; color: var(--grey); }
+        .more { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin-top: 8px; }
+        .more a { display: block; background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px;
+                  color: var(--dark); text-decoration: none; font-weight: 600; font-size: 14.5px; }
+        .more a:hover { border-color: var(--primary); color: var(--primary); }
+        .more a.here { border-color: var(--primary); background: var(--primary-tint); }
+        a { color: #C2405D; }
+        @media (max-width: 700px) {
+            header, .hero, main, footer { padding-left: 16px; padding-right: 16px; }
+            .hero h1 { font-size: 32px; }
+            .checklist, .process-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .footer-right { text-align: left; }
+            table.grid { font-size: 13px; }
+        }
+        @media print { .more { display: none; } .tbc::after { content: 'To confirm'; } }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <img src="https://a2bglobalmedia.com/wp-content/themes/globala2bmedia/graphics/a2bglobalmedia-footer.svg"
+         alt="a2b Global Media" class="header-logo">
+    <div class="logo-tagline">Digital Magazine Guidelines</div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-pill">Digital Magazine</div>
+    <h1>Your pages in<br>our <em>magazine</em></h1>
+    <p>Up to three A4 pages in our interactive e-magazine, split between adverts and advertorial as you choose, and published as a PDF on your profile too.</p>
+</div>
+
+<main>
+
+    <section>
+        <div class="sh">
+            <div class="sh-num">1</div>
+            <h2>What You Get</h2>
+        </div>
+        <div class="tscroll"><table class="grid"><thead><tr><th>Site</th><th>Issues a year</th><th>Essentials+</th><th>Premium</th><th>Ultra</th></tr></thead><tbody><tr><td>Railway-News</td><td>3</td><td>1 issue</td><td>1 issue</td><td>2 issues</td></tr><tr><td>Aviation Industry-News</td><td>1</td><td>1 issue</td><td>1 issue</td><td>1 issue</td></tr><tr><td>Bus-News</td><td>2</td><td>1 issue</td><td>1 issue</td><td>2 issues</td></tr><tr><td>Future Transport-News</td><td>No magazine</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr></tbody></table></div>
+        <p>Each issue gives you <strong>three A4 pages</strong>. A popular choice is a one-page advert with a two-page advertorial. Your pages also appear as a stand-alone PDF on your company profile, so readers can download them.</p>
+
+    </section>
+
+    <section>
+        <div class="sh">
+            <div class="sh-num">2</div>
+            <h2>Sizes and Specifications</h2>
+        </div>
+        <div class="spec-row"><div class="spec"><b>210 × 297 mm</b><span>Full page · 2480 × 3508 px</span></div><div class="spec"><b>420 × 297 mm</b><span>Double page · 4961 × 3508 px</span></div><div class="spec"><b>190 × 131 mm</b><span>Half page · 2244 × 1547 px</span></div></div>
+        <p>All adverts at <strong>300 dpi</strong>.</p>
+        <h3>For an advertorial, please supply</h3>
+        <ul class="checklist">
+            <li><span>300–400 words per page, final text only, in an editable format such as Word</span></li>
+            <li><span>1 high-resolution image per page (tell us the order if you send more)</span></li>
+            <li><span>Your company logo</span></li>
+            <li><span>Contact details, usually for a salesperson</span></li>
+            <li><span>Optional: a YouTube or Vimeo link <em>(takes the space of about 200 words)</em></span></li>
+            <li><span>Optional: details for a QR code</span></li>
+        </ul>
+        <h3>For an advert, please supply</h3>
+        <ul class="checklist">
+            <li><span>Your designed advert, final version</span></li>
+            <li><span>At the sizes above, 300 dpi</span></li>
+        </ul>
+
+    </section>
+
+    <section>
+        <div class="sh">
+            <div class="sh-num">3</div>
+            <h2>How to Submit</h2>
+        </div>
+        <p>Submit your magazine content with the form for your site:</p>
+        <ul class="arrowlist">
+            <li><a href="https://form.jotform.com/213121865059353">Railway-News magazine form</a></li>
+            <li><a href="https://form.jotform.com/222503646676359">Aviation Industry-News magazine form</a></li>
+            <li><a href="https://form.jotform.com/222503242260340">Bus-News magazine form</a></li>
+        </ul>
+        <p>Each site's Welcome Pack has the editorial calendar with the content deadlines.</p>
+
+    </section>
+
+    <section>
+        <div class="sh">
+            <div class="sh-num">4</div>
+            <h2>Timeline and Deadlines</h2>
+        </div>
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-label">Content writing booking deadline</div>
+                <h4>Book your writer</h4>
+                <p>If you want us to write your advertorial, make sure your content writer has your material or interview time by this date.</p>
+            </div>
+            <div class="tl-item">
+                <div class="tl-label">Before the content deadline</div>
+                <h4>Reminder</h4>
+                <p>We contact you before the deadline to remind you to send your content.</p>
+            </div>
+            <div class="tl-item">
+                <div class="tl-label">Content deadline</div>
+                <h4>All content received</h4>
+                <p>Your text, images, logo, contact details and adverts must reach us by this date.</p>
+            </div>
+            <div class="tl-item">
+                <div class="tl-label">Publication date</div>
+                <h4>Your pages go live</h4>
+                <p>The issue is published, and your pages are added to your profile as a PDF.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section>
+        <div class="sh">
+            <div class="sh-num accent">5</div>
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Can you write my advertorial?</div>
+            <div class="faq-a">Yes. If your package includes <a href="https://a2b-global-media-content-team.github.io/client-resources/content-writing-guidelines.html">content writing</a>, it is used for your magazine pages first. Content writing is also available as an additional service.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Can you design my advert?</div>
+            <div class="faq-a">Yes. Design of one A4 advert is included in Ultra packages, and available as an additional service for other packages.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Can I add a video?</div>
+            <div class="faq-a">Yes. Send a YouTube or Vimeo link. It takes the space of about 200 words on the page.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">What if I miss the content deadline?</div>
+            <div class="faq-a">Please contact us as early as possible. We may not be able to include your pages in that issue.</div>
+        </div>
+
+    </section>
+
+    <section>
+        <div class="sh"><div class="sh-num accent">+</div><h2>More Client Guidelines</h2></div>
+        <p>Guidelines for every part of your package. Your Welcome Pack lists what your own package includes.</p>
+        <div class="more"><a href="https://a2b-global-media-content-team.github.io/client-resources/social-media-banner-guidelines.html">Social Media Banner Posts</a><a href="https://a2b-global-media-content-team.github.io/client-resources/homepage-banner-guidelines.html">Homepage Banners</a><a href="https://a2b-global-media-content-team.github.io/client-resources/newsletter-banner-guidelines.html">Newsletter Banners</a><a href="https://a2b-global-media-content-team.github.io/client-resources/products-services-banner-guidelines.html">Products & Services Banners</a><a href="https://a2b-global-media-content-team.github.io/client-resources/featured-supplier-guidelines.html">Featured Supplier Positions</a><a href="https://a2b-global-media-content-team.github.io/client-resources/targeted-mail-guidelines.html">Targeted Mail</a><a href="https://a2b-global-media-content-team.github.io/client-resources/magazine-guidelines.html" class="here">Digital Magazine</a><a href="https://a2b-global-media-content-team.github.io/client-resources/content-writing-guidelines.html">Content Writing</a><a href="https://a2b-global-media-content-team.github.io/client-resources/interview-guidelines.html">Interviews</a><a href="https://a2b-global-media-content-team.github.io/client-resources/press-release-guidelines.html">Supplier Press Releases</a><a href="https://a2b-global-media-content-team.github.io/client-resources/document-guidelines.html">Documents</a><a href="https://a2b-global-media-content-team.github.io/client-resources/video-guidelines.html">Videos</a></div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div>
+        <img src="https://a2bglobalmedia.com/wp-content/themes/globala2bmedia/graphics/a2bglobalmedia-footer.svg"
+             alt="a2b Global Media" class="footer-logo-img">
+        <div class="footer-meta">Digital Magazine Client Guidelines &nbsp;·&nbsp; October 2026</div>
+    </div>
+    <div class="footer-right">
+        a2b Global Media Ltd<br>
+        a2bglobalmedia.com
+    </div>
+</footer>
+
+</body>
+</html>

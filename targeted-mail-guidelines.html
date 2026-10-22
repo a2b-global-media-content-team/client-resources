@@ -453,6 +453,34 @@
         }
 
         @page { margin: 0; }
+
+        /* ── ADDED FOR THE GUIDELINE SET ─────────────────── */
+        .tbc { background: #FFF4C2; border-bottom: 2px dashed #D9A400; padding: 0 3px; }
+        .tbc::after { content: 'To confirm'; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+                      color: #8A6A00; background: #FFE58A; border-radius: 3px; padding: 1px 5px; margin-left: 6px; vertical-align: 2px; }
+        table.grid { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: 14.5px; background: var(--white); }
+        table.grid th, table.grid td { border: 1px solid var(--border); padding: 9px 12px; text-align: left; vertical-align: top; }
+        table.grid thead th { background: var(--dark); color: #fff; font-weight: 600; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        table.grid td.no { color: #A0A8AE; }
+        .spec-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 16px; }
+        .spec { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; min-width: 150px; }
+        .spec b { display: block; font-size: 20px; color: var(--dark); line-height: 1.2; }
+        .spec span { font-size: 13px; color: var(--grey); }
+        .more { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin-top: 8px; }
+        .more a { display: block; background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px;
+                  color: var(--dark); text-decoration: none; font-weight: 600; font-size: 14.5px; }
+        .more a:hover { border-color: var(--primary); color: var(--primary); }
+        .more a.here { border-color: var(--primary); background: var(--primary-tint); }
+        a { color: #C2405D; }
+        @media (max-width: 700px) {
+            header, .hero, main, footer { padding-left: 16px; padding-right: 16px; }
+            .hero h1 { font-size: 32px; }
+            .checklist, .process-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .footer-right { text-align: left; }
+            table.grid { font-size: 13px; }
+        }
+        @media print { .more { display: none; } .tbc::after { content: 'To confirm'; } }
     </style>
 </head>
 <body>
@@ -680,6 +708,12 @@
             <div class="faq-a">Please send all assets to our <strong>Content Team</strong>. If helpful, include a brief note with your booking reference or company name so we can assign your campaign correctly.</div>
         </div>
 
+    </section>
+
+    <section>
+        <div class="sh"><div class="sh-num accent">+</div><h2>More Client Guidelines</h2></div>
+        <p>Guidelines for every part of your package. Your Welcome Pack lists what your own package includes.</p>
+        <div class="more"><a href="https://a2b-global-media-content-team.github.io/client-resources/social-media-banner-guidelines.html">Social Media Banner Posts</a><a href="https://a2b-global-media-content-team.github.io/client-resources/homepage-banner-guidelines.html">Homepage Banners</a><a href="https://a2b-global-media-content-team.github.io/client-resources/newsletter-banner-guidelines.html">Newsletter Banners</a><a href="https://a2b-global-media-content-team.github.io/client-resources/products-services-banner-guidelines.html">Products & Services Banners</a><a href="https://a2b-global-media-content-team.github.io/client-resources/featured-supplier-guidelines.html">Featured Supplier Positions</a><a href="https://a2b-global-media-content-team.github.io/client-resources/targeted-mail-guidelines.html" class="here">Targeted Mail</a><a href="https://a2b-global-media-content-team.github.io/client-resources/magazine-guidelines.html">Digital Magazine</a><a href="https://a2b-global-media-content-team.github.io/client-resources/content-writing-guidelines.html">Content Writing</a><a href="https://a2b-global-media-content-team.github.io/client-resources/interview-guidelines.html">Interviews</a><a href="https://a2b-global-media-content-team.github.io/client-resources/press-release-guidelines.html">Supplier Press Releases</a><a href="https://a2b-global-media-content-team.github.io/client-resources/document-guidelines.html">Documents</a><a href="https://a2b-global-media-content-team.github.io/client-resources/video-guidelines.html">Videos</a></div>
     </section>
 
 </main>
