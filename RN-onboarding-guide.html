@@ -832,7 +832,7 @@ let soundOn = false, speaking = false, utter = null, stepT0 = 0, voice = null;
 function spoken(step) {
     const d = document.createElement('div');
     d.innerHTML = (step.title + '. ' + step.text).replace(/<\/li>/g, '. ');
-    return d.textContent.replace(/×/g, 'the cross').replace(/\+(?=\s|$|,)/g, ' plus').replace(/\s+/g, ' ').trim();
+    return d.textContent.replace(/×/g, 'the cross').replace(/\(s\)/g, 's').replace(/ \/ /g, ' of ').replace(/\+(?=\s|$|,)/g, ' plus').replace(/\s+/g, ' ').trim();
 }
 const speechSecs = step => spoken(step).split(' ').length / 2.6 + 1.5;
 const stepDur = step => soundOn ? Math.max(step.dur || 7, Math.ceil(speechSecs(step))) : (step.dur || 7);

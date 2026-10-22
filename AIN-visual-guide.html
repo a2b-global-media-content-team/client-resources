@@ -144,6 +144,12 @@
         }
         .ctrl button.play { width: 50px; height: 50px; background: var(--navy); color: #fff; }
         .ctrl button svg { width: 18px; height: 18px; }
+        .ctrl { flex-wrap: wrap; row-gap: 12px; }
+        .ctrl button { flex: none; }
+        .ctrl .count { flex: 1 0 auto; margin-left: 0; white-space: nowrap; }
+        .ctrl button.sound { width: auto; height: 42px; border-radius: 21px; padding: 0 14px 0 12px; gap: 6px; font: inherit; font-size: 14px; font-weight: 600; }
+        .ctrl button.sound[aria-pressed="true"] { background: var(--orange); color: var(--navy); }
+        .ctrl button.sound:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
         .ctrl .count { margin-left: auto; font-size: 13px; color: var(--muted); }
         .ctrl .open { font-size: 13px; margin-left: 10px; white-space: nowrap; }
 
@@ -245,6 +251,7 @@
                     <button id="prev" aria-label="Previous step"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                     <button id="play" class="play" aria-label="Pause"><svg viewBox="0 0 24 24" id="play-icon"></svg></button>
                     <button id="next" aria-label="Next step"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button id="sound" class="sound" aria-pressed="false" title="Read each step aloud" hidden><svg viewBox="0 0 24 24" id="sound-icon"></svg><span>Sound</span></button>
                     <span class="count" id="count"></span>
                     <a class="open" id="open" href="#" target="_blank" rel="noopener">Open page ↗</a>
                 </div>
@@ -577,7 +584,7 @@ function caption(step) {
 
 function progress(step) {
     const inChap = STEPS.filter(s => s.ci === step.ci);
-    const dur = (step.dur || 7) + 's';
+    const dur = stepDur(step) + 's';
     $('progress').innerHTML = inChap.map(s => `<i class="${s.si < step.si ? 'done' : s.si === step.si ? 'now' : ''}" style="--dur:${dur}"></i>`).join('');
     $('progress').classList.toggle('paused', !playing);
 }
@@ -586,7 +593,7 @@ async function go(i, user) {
     idx = (i + STEPS.length) % STEPS.length;
     const step = STEPS[idx];
     clearTimeout(timer);
-    caption(step); progress(step);
+    caption(step); progress(step); narrate(step);
     const fresh = await showPage(step.ci);
     if (STEPS[idx] !== step) return;          // user moved on while the page loaded
     if (fresh) {
@@ -601,11 +608,70 @@ async function go(i, user) {
 function schedule() {
     clearTimeout(timer);
     if (!playing) return;
-    timer = setTimeout(() => go(idx + 1), (STEPS[idx].dur || 7) * 1000);
+    // While the voice reads, its end moves the tour on; this is only a fallback.
+    const wait = soundOn && speaking ? speechSecs(STEPS[idx]) + 6 : stepDur(STEPS[idx]);
+    timer = setTimeout(() => go(idx + 1), wait * 1000);
+}
+
+/* ── NARRATION ─────────────────────────────────────────────────── */
+const synth = window.speechSynthesis;
+let soundOn = false, speaking = false, utter = null, stepT0 = 0, voice = null;
+
+function spoken(step) {
+    const d = document.createElement('div');
+    d.innerHTML = (step.title + '. ' + step.text).replace(/<\/li>/g, '. ');
+    return d.textContent.replace(/×/g, 'the cross').replace(/\(s\)/g, 's').replace(/ \/ /g, ' of ').replace(/\+(?=\s|$|,)/g, ' plus').replace(/\s+/g, ' ').trim();
+}
+const speechSecs = step => spoken(step).split(' ').length / 2.6 + 1.5;
+const stepDur = step => soundOn ? Math.max(step.dur || 7, Math.ceil(speechSecs(step))) : (step.dur || 7);
+
+function pickVoice() {
+    const all = synth.getVoices();
+    const like = ['Google UK English Female', 'Microsoft Sonia', 'Microsoft Libby', 'Serena', 'Kate', 'Martha', 'Daniel', 'Google UK English Male'];
+    voice = like.map(n => all.find(v => v.name.startsWith(n))).find(Boolean)
+        || all.find(v => v.lang === 'en-GB') || all.find(v => v.lang.startsWith('en')) || null;
+}
+
+function hush() { speaking = false; utter = null; if (synth) synth.cancel(); }
+
+function narrate(step) {
+    stepT0 = performance.now();
+    if (!soundOn || !synth) return;
+    hush();
+    const u = new SpeechSynthesisUtterance(spoken(step));
+    u.lang = 'en-GB'; if (voice) u.voice = voice;
+    u.onend = u.onerror = () => {
+        if (utter !== u) return;           // a newer step took over
+        speaking = false; utter = null;
+        if (!playing) return;
+        const left = (step.dur || 7) * 1000 - (performance.now() - stepT0);
+        clearTimeout(timer);
+        timer = setTimeout(() => go(idx + 1), Math.max(1200, left));
+    };
+    utter = u; speaking = true;
+    synth.speak(u);
+}
+
+const soundIcon = on => $('sound-icon').innerHTML = '<path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>' + (on
+    ? '<path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+    : '<path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>');
+
+if (synth) {
+    pickVoice(); synth.addEventListener?.('voiceschanged', pickVoice);
+    $('sound').hidden = false; soundIcon(false);
+    $('sound').onclick = () => {
+        soundOn = !soundOn;
+        $('sound').setAttribute('aria-pressed', soundOn);
+        $('sound').title = soundOn ? 'Stop reading aloud' : 'Read each step aloud';
+        soundIcon(soundOn);
+        if (soundOn) narrate(STEPS[idx]); else hush();
+        progress(STEPS[idx]); schedule();
+    };
 }
 
 function setPlaying(p) {
     playing = p; icon(p);
+    if (p) narrate(STEPS[idx]); else hush();
     $('play').setAttribute('aria-label', p ? 'Pause' : 'Play');
     $('progress').classList.toggle('paused', !p);
     if (p) { progress(STEPS[idx]); schedule(); } else clearTimeout(timer);
@@ -624,8 +690,8 @@ let resizeT; addEventListener('resize', () => { clearTimeout(resizeT); resizeT =
 
 // Pause the tour while it is off screen
 new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting && playing) { clearTimeout(timer); $('progress').classList.add('paused'); }
-    else if (e.isIntersecting && playing) { progress(STEPS[idx]); schedule(); }
+    if (!e.isIntersecting && playing) { clearTimeout(timer); hush(); $('progress').classList.add('paused'); }
+    else if (e.isIntersecting && playing) { progress(STEPS[idx]); narrate(STEPS[idx]); schedule(); }
 }, { threshold: 0.35 }).observe(viewport);
 
 // Reference cards
