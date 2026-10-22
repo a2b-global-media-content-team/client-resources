@@ -290,7 +290,7 @@
         }
 
         /* ── RESPONSIVE ─────────────────────────────────── */
-        @media (max-width: 800px) {
+        @media screen and (max-width: 800px) {
             .grid { grid-template-columns: 1fr !important; gap: 16px !important; margin-left: 0 !important; }
             .grid > * { grid-column: auto !important; }
             .tm-preview { max-width: 100%; }
@@ -300,7 +300,7 @@
             .covers figure { border: 0; }
             .hide-sm { display: none; }
         }
-        @media (max-width: 560px) {
+        @media screen and (max-width: 560px) {
             .page, .note { margin-left: 0; margin-right: 0; }
             .note { border-radius: 0; }
             .bar img { height: 18px; }
@@ -314,11 +314,17 @@
             .tbl th { font-size: 10px; padding: 5px 4px; overflow-wrap: anywhere; }
             .tbl td { padding: 6px 4px; }
         }
+        /* PDF layout: one PDF page per report page, at full desktop width.
+           Applied when printing, and by sizePagesForPdf() (see the script). */
         @media print {
             body { background: var(--white); }
-            .note { display: none; }
+            .note, .page-foot { display: none; }
             .page { box-shadow: none; margin: 0 auto; break-after: page; }
         }
+        html.pdf, html.pdf body { width: 1000px; margin: 0; padding: 0; background: var(--white); }
+        html.pdf .note, html.pdf .page-foot { display: none; }
+        html.pdf .page { width: 1000px; max-width: none; margin: 0; box-shadow: none; break-after: page; break-inside: avoid; }
+        html.pdf * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     </style>
 </head>
 <body>
@@ -516,7 +522,7 @@
                     <div class="card"><div class="label">Recipients</div><div class="value" id="tm-rec"></div></div>
                 </div>
                 <div class="tm-preview">
-                    <iframe src="2026-05-RN-dummy-email.html" title="Targeted mail preview" loading="lazy" tabindex="-1"></iframe>
+                    <iframe src="2026-05-RN-dummy-email.html" title="Targeted mail preview" tabindex="-1"></iframe>
                     <a href="2026-05-RN-dummy-email.html" target="_blank" rel="noopener" aria-label="Open the targeted mail"></a>
                 </div>
             </div>
@@ -809,6 +815,26 @@ $('b-np').textContent = fmt(BANNERS.np);
 table('t-bloc', [['Banner Locations', '100%', 'sorted']], BANNER_LOCATIONS.map(r => [link(r[1], r[0])]));
 table('t-psdate', [['P&S Banner Live Date', '100%', 'sorted-up']], [[BANNERS.psLive]]);
 table('t-hpdate', [['Homepage Banner Live Date', '100%', 'sorted-up']], [[BANNERS.hpLive]]);
+/* ──────────────────────────────────────────────────────────────
+   PDF export: give each report page its own PDF page, sized to fit.
+   Runs before printing (Chrome: Print → Save as PDF) and on load when
+   the URL ends in ?pdf (used for headless Chrome --print-to-pdf).
+   ────────────────────────────────────────────────────────────── */
+function sizePagesForPdf() {
+    document.documentElement.classList.add('pdf');
+    let css = '';
+    document.querySelectorAll('section.page').forEach((page, i) => {
+        const h = Math.ceil(page.getBoundingClientRect().height) + 1;
+        page.style.page = 'report-p' + i;
+        css += '@page report-p' + i + ' { size: 1000px ' + h + 'px; margin: 0; }\n';
+    });
+    let style = document.getElementById('pdf-pages');
+    if (!style) { style = document.createElement('style'); style.id = 'pdf-pages'; document.head.appendChild(style); }
+    style.textContent = css;
+}
+addEventListener('beforeprint', sizePagesForPdf);
+addEventListener('afterprint', () => { if (!/[?&]pdf\b/.test(location.search)) document.documentElement.classList.remove('pdf'); });
+if (/[?&]pdf\b/.test(location.search)) addEventListener('load', () => document.fonts.ready.then(sizePagesForPdf));
 </script>
 </body>
 </html>
