@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Client Dashboard: Railway-News — a2b Global Media</title>
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Matches the Data Studio "Railway-News Client Dashboard" (V18) that clients get. */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:      #1B3342;   /* header and footer bars          */
+            --orange:    #FE9E2B;   /* left strip, gauge                */
+            --gold:      #D1882E;   /* headings, labels, box borders    */
+            --peach:     #FEF2E3;   /* buttons, labels, table headers   */
+            --grey-cell: #EFEFEF;   /* label and "Used" cells           */
+            --red:       #FF7043;   /* remaining > 0 or < 0             */
+            --lime:      #CDDC39;   /* remaining = 0                    */
+            --pending:   #FFD54F;   /* "Booked and pending" calls       */
+            --booked:    #FF9800;   /* booked magazine row              */
+            --text:      #1F1F1F;
+            --muted:     #6B6B6B;
+            --rule:      #CFCFCF;
+            --page-bg:   #F7F7F7;
+            --white:     #FFFFFF;
+        }
+
+        html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { font-family: 'Roboto', Arial, Helvetica, sans-serif; color: var(--text); background: var(--page-bg); font-size: 13px; line-height: 1.35; }
+        a { color: var(--text); }
+
+        /* ── APP FRAME (Data Studio viewer) ─────────────── */
+        .appbar { background: #F1F3F4; border-bottom: 1px solid #DADCE0; display: flex; align-items: center; gap: 12px; padding: 10px 18px; font-size: 17px; color: #202124; }
+        .appbar .dot { width: 26px; height: 26px; border-radius: 50%; background: var(--orange); flex: none; }
+        .appbar .title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .note { max-width: 1268px; margin: 14px auto 0; padding: 10px 16px; background: var(--white); border: 1px dashed var(--orange); border-radius: 6px; font-size: 13px; color: var(--muted); }
+        .note strong { color: var(--text); }
+        .frame { max-width: 1268px; margin: 14px auto 40px; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 18px; }
+        main { min-width: 0; }
+        nav.pages { background: var(--white); border-radius: 0 20px 20px 0; padding: 10px 0; align-self: start; position: sticky; top: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        nav.pages button { display: block; width: calc(100% - 12px); text-align: left; font: inherit; font-size: 14px; font-weight: 500; color: #3C4043; background: none; border: 0; padding: 12px 20px; border-radius: 0 24px 24px 0; cursor: pointer; }
+        nav.pages button:hover { background: #F1F3F4; }
+        nav.pages button[aria-current="page"] { background: #D3E3FD; color: #0B57D0; }
+
+        /* ── REPORT PAGE ────────────────────────────────── */
+        .page { width: 1000px; max-width: 100%; background: var(--white); box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; }
+        .page[hidden] { display: none; }
+        .bar { background: var(--navy); height: 66px; display: flex; align-items: center; gap: 20px; padding: 0 12px 0 14px; }
+        .bar img { height: 40px; width: auto; display: block; margin-right: auto; }
+        .pkgname { color: #fff; font-size: 17px; border-bottom: 1px solid #fff; padding: 0 30px 3px 6px; min-width: 175px; }
+        .runtime { color: #fff; font-size: 17px; white-space: nowrap; }
+        .datebox { background: #fff; color: #333; font-size: 12px; width: 230px; height: 42px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px 0 22px; white-space: nowrap; }
+        .datebox::after { content: ""; border: 4px solid transparent; border-top-color: #333; margin-top: 4px; }
+        .body { border-left: 8px solid var(--orange); padding: 10px 8px 14px 8px; }
+        .footbar { background: var(--navy); padding: 12px 0; text-align: center; }
+        .footbar img { width: 100%; max-width: 1000px; height: auto; display: block; margin: 0 auto; }
+        .updated { font-size: 11px; color: var(--muted); padding: 6px 16px 8px; background: var(--white); }
+
+        /* Buttons, labels */
+        .btn { display: block; text-align: center; font-size: 12.5px; color: var(--gold); background: var(--peach); border-radius: 8px; padding: 9px 8px; box-shadow: 0 2px 3px rgba(0,0,0,0.22); }
+        button.btn { font-family: inherit; border: 0; cursor: pointer; width: 100%; }
+        .lbl { background: var(--peach); color: var(--gold); font-weight: 700; font-size: 12px; padding: 4px 8px; border-radius: 4px 4px 0 0; }
+        .lbl::after { content: " ▾"; font-size: 10px; }
+        .val { font-size: 12px; padding: 6px 8px 7px; border-bottom: 1px solid var(--rule); word-break: break-word; }
+
+        /* Section headings (pages 2–5) */
+        .sec { position: relative; border-bottom: 1.5px solid var(--gold); text-align: center; padding: 10px 0 7px; margin: 0 -8px; }
+        .sec h2 { color: var(--gold); font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2px; }
+        .navrow { display: flex; gap: 8px; position: absolute; left: 14px; right: 14px; top: 8px; pointer-events: none; }
+        .navrow .btn { width: 140px; padding: 7px; pointer-events: auto; }
+        .navrow .right { margin-left: auto; }
+        .sec.withnav { padding-top: 34px; }
+
+        .block { display: grid; grid-template-columns: minmax(0, 1fr) 110px; gap: 18px; padding: 18px 6px 14px 8px; min-height: 150px; }
+        .counts { text-align: right; padding-top: 12px; }
+        .counts div { margin-bottom: 12px; }
+        .counts span { display: block; font-size: 11px; color: var(--muted); }
+        .counts b { display: block; font-size: 24px; font-weight: 400; color: var(--navy); line-height: 1.1; }
+        .used-title { font-size: 16px; margin: 6px 0 8px; }
+        .used-title em { font-style: normal; color: var(--gold); }
+
+        /* Tables */
+        table.tbl { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: 11px; }
+        table.tbl th { background: var(--peach); color: var(--gold); font-weight: 700; text-align: left; padding: 5px 6px; }
+        table.tbl th:first-child { border-radius: 4px 0 0 4px; }
+        table.tbl th:last-child { border-radius: 0 4px 4px 0; }
+        table.tbl th.sort::after { content: " ▾"; font-size: 9px; }
+        table.tbl th.sortup::after { content: " ▴"; font-size: 9px; }
+        table.tbl td { padding: 5px 6px; border-bottom: 1px solid var(--rule); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        table.tbl .num { text-align: right; }
+        table.tbl tr.nodata td { text-align: center; border-bottom: 0; }
+        table.tbl td.pending { background: var(--pending); }
+        table.tbl tr.booked td { background: var(--booked); }
+        .two-tables { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+
+        /* Dummy client banner (300 × 250) */
+        .banner { width: 210px; aspect-ratio: 300 / 250; background: linear-gradient(135deg, #0F5C6E 0%, #12808F 60%, #E7F4F5 60%); color: #fff; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; font-weight: 700; border-bottom: 1px solid var(--rule); }
+        .banner .h { font-size: 18px; line-height: 1.05; font-style: italic; text-transform: uppercase; }
+        .banner .cta { align-self: flex-start; background: #1F1F1F; font-size: 9px; padding: 4px 6px; letter-spacing: 0.4px; }
+        .banner .co { color: #0F5C6E; font-size: 11px; align-self: flex-end; }
+        .banner.mini { width: 46px; padding: 3px; }
+        .banner.mini .h { font-size: 5px; }
+        .banner.mini .cta, .banner.mini .co { display: none; }
+
+        /* ── PAGE 1 LAYOUT ──────────────────────────────── */
+        .p1-top { display: grid; grid-template-columns: 178px 300px minmax(0, 1fr) 170px; gap: 8px; padding: 4px 0 0 4px; }
+        .p1-top .btns .btn { margin-bottom: 11px; }
+        .p1-top .info > div { margin-bottom: 10px; }
+        .gauge { text-align: center; padding-top: 18px; }
+        .gauge svg { width: 260px; max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        .clientlogo { border-bottom: 1px solid var(--rule); height: 170px; display: flex; align-items: center; justify-content: center; }
+        .clientlogo .mark { width: 120px; text-align: center; font-weight: 700; color: var(--navy); font-size: 16px; line-height: 1.1; letter-spacing: 1px; }
+        .clientlogo .mark::before { content: ""; display: block; width: 48px; height: 48px; margin: 0 auto 8px; border-radius: 50%; background: conic-gradient(var(--navy) 0 25%, #12808F 0 50%, var(--navy) 0 75%, #12808F 0); }
+        .clientlogo .mark small { display: block; font-size: 8px; font-weight: 500; letter-spacing: 0.5px; margin-top: 4px; }
+
+        .p1-mid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; padding: 6px 0 0 4px; }
+        .todo h3 { text-align: center; color: var(--gold); font-size: 16px; font-weight: 700; margin: 26px 0 12px; }
+        .todo .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 6px 0 120px; }
+        .todo .grid .wide { grid-column: 1 / -1; }
+
+        .glance-h { color: var(--gold); font-size: 16px; font-weight: 700; text-transform: uppercase; text-align: center; padding: 18px 0 10px; }
+        .box { border: 1.5px solid var(--gold); padding: 8px 8px 10px; position: relative; }
+        .box .more { width: 96px; margin: 0 0 6px auto; padding: 6px; font-size: 12px; }
+        table.gl { width: 100%; border-collapse: separate; border-spacing: 0 6px; font-size: 12px; }
+        table.gl th { font-weight: 400; font-size: 12px; text-align: center; padding: 2px 4px; }
+        table.gl td { text-align: center; font-size: 18px; padding: 0 4px; height: 40px; }
+        table.gl td.name { background: var(--grey-cell); border-radius: 6px; font-size: 11.5px; width: 128px; line-height: 1.2; }
+        table.gl td.used { background: var(--grey-cell); border-radius: 6px; }
+        table.gl td .pill { display: inline-block; min-width: 58px; border-radius: 6px; padding: 5px 6px; }
+        table.gl td .pill.red { background: var(--red); }
+        table.gl td .pill.lime { background: var(--lime); }
+        .right-boxes { display: grid; gap: 8px; }
+        .profile-grid { display: grid; grid-template-columns: 120px 70px 120px 1fr; align-items: center; gap: 8px 10px; padding: 4px 4px 6px; }
+        .profile-grid .name { background: var(--grey-cell); border-radius: 6px; text-align: center; font-size: 11.5px; padding: 12px 4px; }
+        .profile-grid .n { text-align: center; font-size: 18px; }
+        .dots { display: flex; gap: 10px; justify-content: center; }
+        .dots a { width: 28px; height: 28px; border-radius: 50%; color: #fff; font-size: 6.5px; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+        .dots a:hover { outline: 2px solid var(--navy); outline-offset: 1px; }
+        .disclaimer { border: 1px solid var(--rule); font-size: 10.5px; padding: 8px 10px; margin: 10px 0 0 4px; }
+
+        /* Page 3 magazine cover */
+        .cover { width: 130px; height: auto; display: block; border: 1px solid var(--rule); }
+        .cal-row { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 10px; align-items: start; }
+        .submit-mag { width: 175px; margin: 30px 0 0 auto; }
+        .li-icon { width: 22px; height: auto; margin-top: 2px; }
+
+        /* ── RESPONSIVE (screen only) ───────────────────── */
+        @media screen and (max-width: 1100px) {
+            .frame { grid-template-columns: 1fr; padding: 0 16px; }
+            nav.pages { position: static; display: flex; overflow-x: auto; border-radius: 8px; padding: 6px; }
+            nav.pages button { width: auto; white-space: nowrap; border-radius: 20px; padding: 8px 14px; }
+            .page { width: 100%; }
+        }
+        @media screen and (max-width: 860px) {
+            .p1-top { grid-template-columns: 1fr 1fr; }
+            .p1-mid { grid-template-columns: 1fr; }
+            .todo .grid { padding: 0; }
+        }
+        @media screen and (max-width: 600px) {
+            .bar { height: auto; flex-wrap: wrap; padding: 10px; gap: 8px; }
+            .bar img { height: 30px; }
+            .pkgname, .runtime { font-size: 13px; }
+            .datebox { width: auto; height: 34px; }
+            .p1-top { grid-template-columns: 1fr; }
+            .block { grid-template-columns: 1fr; }
+            .counts { text-align: left; display: flex; gap: 22px; padding-top: 0; }
+            .two-tables, .cal-row { grid-template-columns: 1fr !important; }
+            .profile-grid { grid-template-columns: 1fr 50px; }
+            .navrow { position: static; padding: 0 6px 6px; }
+            .sec.withnav { padding-top: 10px; }
+            .navrow .btn { width: auto; flex: 1; }
+            table.gl td.name { width: auto; }
+            table.gl td { font-size: 15px; }
+            table.gl td .pill { min-width: 34px; }
+        }
+
+        /* ── PDF / PRINT: one PDF page per dashboard page ─ */
+        @media print {
+            body { background: var(--white); }
+            .appbar, .note, nav.pages { display: none; }
+            .frame { display: block; margin: 0; max-width: none; }
+            .page, .page[hidden] { display: block; box-shadow: none; width: 1000px; break-after: page; }
+        }
+        html.pdf, html.pdf body { width: 1000px; margin: 0; background: var(--white); }
+        html.pdf .appbar, html.pdf .note, html.pdf nav.pages { display: none; }
+        html.pdf .frame { display: block; margin: 0; max-width: none; padding: 0; }
+        html.pdf .page, html.pdf .page[hidden] { display: block; box-shadow: none; width: 1000px; max-width: none; break-after: page; break-inside: avoid; }
+    </style>
+</head>
+<body>
+
+<div class="appbar"><span class="dot" aria-hidden="true"></span><span class="title">Railway-News Client Dashboard | Your Company 2026-12-31 (Example)</span></div>
+
+<div class="note">
+    <strong>Example dashboard.</strong> Every client gets their own dashboard like this one. All figures, names and links on this page are dummy examples for a made-up client, "Your Company", on a Railway-News Premium package, as of 30 September 2026. Use the page list to move between pages. In a real dashboard the buttons open our forms and your pages; here only Home, Previous, Next and More work.
+</div>
+
+<div class="frame">
+    <nav class="pages" aria-label="Dashboard pages">
+        <button type="button" data-go="1" aria-current="page">Overview - Page 1</button>
+        <button type="button" data-go="2">Package features in detail - Page 2</button>
+        <button type="button" data-go="3">Package features in detail - Page 3</button>
+        <button type="button" data-go="4">Your profile - Page 4</button>
+        <button type="button" data-go="5">Social media activity - Page 5</button>
+    </nav>
+
+    <main>
+        <!-- ═══ PAGE 1: OVERVIEW ════════════════════════════ -->
+        <section class="page" id="page-1" aria-label="Overview">
+            <div class="bar">
+                <img src="https://railway-news.com/wp-content/uploads/2025/08/Railway-News-White-Logo-CLEAR.png" alt="Railway-News">
+                <span class="pkgname" id="v-pkg"></span>
+                <span class="runtime">Contract runtime:</span><span class="datebox" data-range></span>
+            </div>
+            <div class="body">
+                <div class="p1-top">
+                    <div class="btns">
+                        <span class="btn">Your Documents</span>
+                        <span class="btn">Resources</span>
+                        <span class="btn">Email Us</span>
+                        <span class="btn">Subscribe!</span>
+                    </div>
+                    <div class="info">
+                        <div><div class="lbl">Point(s) of Contact for Materials</div><div class="val" id="v-contacts"></div></div>
+                        <div><div class="lbl">Enquiry Email Address</div><div class="val" id="v-enquiry"></div></div>
+                        <div><div class="lbl">The News Page We Track for You</div><div class="val" id="v-newspage"></div></div>
+                    </div>
+                    <div class="gauge" id="gauge"></div>
+                    <div class="clientlogo"><div class="mark">YOUR<br>COMPANY<small>YOUR LOGO HERE</small></div></div>
+                </div>
+
+                <div class="p1-mid">
+                    <div>
+                        <table class="tbl" id="t-calls"></table>
+                        <div style="margin-top:22px"><div class="lbl">Additional Package Extras</div><div class="val" id="v-extras"></div></div>
+                    </div>
+                    <div>
+                        <div class="lbl">Client Notes</div><div class="val" id="v-notes" style="border-bottom:0"></div>
+                        <div class="todo">
+                            <h3>What would you like to do?</h3>
+                            <div class="grid">
+                                <span class="btn wide">Book in Features: Targeted Mail | Social Media Banner Post | Homepage Banner</span>
+                                <span class="btn">View Your Profile</span>
+                                <span class="btn">Submit Content | Assets</span>
+                                <span class="btn">Book with Your Manager</span>
+                                <span class="btn">Book with Your Content Writer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p1-mid">
+                    <div>
+                        <div class="glance-h">Your package at a glance</div>
+                        <div class="box">
+                            <button type="button" class="btn more" data-go="2">Page 2: More</button>
+                            <table class="gl" id="t-glance"></table>
+                        </div>
+                    </div>
+                    <div class="right-boxes" style="padding-top:48px">
+                        <div class="box">
+                            <button type="button" class="btn more" data-go="4">Page 4: More</button>
+                            <div class="profile-grid">
+                                <div class="name">Your News</div><div class="n" id="v-n-news"></div>
+                                <div class="name">Your Other Dashboards</div>
+                                <div class="dots" id="v-dots" aria-label="Your other dashboards"></div>
+                                <div class="name">Your PDFs</div><div class="n" id="v-n-docs"></div>
+                                <div class="name">Your Videos</div><div class="n" id="v-n-videos"></div>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <button type="button" class="btn more" data-go="3">Page 3: More</button>
+                            <table class="gl" id="t-glance2"></table>
+                        </div>
+                    </div>
+                </div>
+                <p class="disclaimer">*Disclaimer: your 'used' features may be roll-over features from your previous contract (features from your previous contract used in this contract period). You will still get all your full package features for this contract period.</p>
+            </div>
+            <div class="footbar"><img src="stats-report-assets/dashboard-footer-logos.png" alt="Railway-News, Airport Industry-News, a2b Global Media, Bus-News, Future Transport-News" width="1205" height="80"></div>
+            <div class="updated" data-updated></div>
+        </section>
+
+        <!-- ═══ PAGE 2: PACKAGE FEATURES IN DETAIL ══════════ -->
+        <section class="page" id="page-2" aria-label="Package features in detail" hidden>
+            <div class="bar">
+                <img src="https://railway-news.com/wp-content/uploads/2025/08/Railway-News-White-Logo-CLEAR.png" alt="Railway-News">
+                <span class="runtime">Contract runtime:</span><span class="datebox" data-range></span>
+            </div>
+            <div class="body">
+                <div class="sec withnav"><div class="navrow"><button type="button" class="btn" data-go="1">Home</button><button type="button" class="btn right" data-go="3">Next</button></div><h2>Targeted Mails</h2></div>
+                <div class="block"><div><p class="used-title">Your used targeted mails:</p>
+                    <div class="two-tables"><table class="tbl" id="t-tm"></table><table class="tbl" id="t-tm-booked"></table></div></div>
+                    <div class="counts" data-counts="tm" data-first="Targeted Mails"></div></div>
+
+                <div class="sec"><h2>Social Media Banners</h2></div>
+                <div class="block"><div><p class="used-title">Your used social media banner posts:</p>
+                    <div class="two-tables"><table class="tbl" id="t-social"></table><table class="tbl" id="t-social-booked"></table></div></div>
+                    <div class="counts" data-counts="social"></div></div>
+
+                <div class="sec"><h2>Homepage Banner</h2></div>
+                <div class="block"><div id="hp-area"></div><div class="counts" data-counts="homepage"></div></div>
+
+                <div class="sec"><h2>Newsletter Banners</h2></div>
+                <div class="block"><div class="two-tables">
+                        <div><p class="used-title">Your used newsletter banners:</p><table class="tbl" id="t-nl-used"></table></div>
+                        <div><p class="used-title">Your banner bookings:</p><table class="tbl" id="t-nl-booked"></table></div>
+                    </div><div class="counts" data-counts="newsletter"></div></div>
+
+                <div class="sec"><h2>Products &amp; Services Banners</h2></div>
+                <div class="block"><div class="cal-row" style="grid-template-columns: 220px minmax(0,1fr)">
+                        <div class="banner"><span class="h">Smarter Depot Lifting</span><span class="cta">EXPLORE MORE</span><span class="co">YOUR COMPANY</span></div>
+                        <div><p class="used-title" style="text-align:center">Your used products &amp; services banners:</p><table class="tbl" id="t-ps"></table></div>
+                    </div><div class="counts" data-counts="ps" data-nobook></div></div>
+
+                <div class="sec"><h2>News Pages Banner</h2></div>
+                <div class="block"><div><div class="banner"><span class="h">Smarter Depot Lifting</span><span class="cta">EXPLORE MORE</span><span class="co">YOUR COMPANY</span></div></div>
+                    <div class="counts" data-counts="newspages" data-nobook></div></div>
+
+                <div class="sec"><h2>Featured Supplier Positions</h2></div>
+                <div class="block"><div><p class="used-title">Your used featured supplier positions:</p><table class="tbl" id="t-fs"></table></div>
+                    <div class="counts" data-counts="featured" data-nobook></div></div>
+
+                <div class="sec"><h2>Graphic Design</h2></div>
+                <div class="block"><div><p class="used-title">Your used graphic designs:</p><table class="tbl" id="t-design"></table></div>
+                    <div class="counts" data-counts="design"></div></div>
+            </div>
+            <div class="footbar"><img src="stats-report-assets/dashboard-footer-logos.png" alt="Railway-News, Airport Industry-News, a2b Global Media, Bus-News, Future Transport-News" width="1205" height="80"></div>
+            <div class="updated" data-updated></div>
+        </section>
+
+        <!-- ═══ PAGE 3: PACKAGE FEATURES IN DETAIL ══════════ -->
+        <section class="page" id="page-3" aria-label="Package features in detail: magazines and content writing" hidden>
+            <div class="bar">
+                <img src="https://railway-news.com/wp-content/uploads/2025/08/Railway-News-White-Logo-CLEAR.png" alt="Railway-News">
+                <span class="runtime">Contract runtime:</span><span class="datebox" data-range></span>
+            </div>
+            <div class="body">
+                <div class="sec withnav"><div class="navrow"><button type="button" class="btn" data-go="1">Home</button><button type="button" class="btn" data-go="2">Previous</button><button type="button" class="btn right" data-go="4">Next</button></div><h2>Editorial Calendar</h2></div>
+                <div class="block" style="grid-template-columns: 1fr"><div>
+                    <p class="used-title">Magazines we're publishing during your contract period:</p>
+                    <div class="cal-row"><img class="cover" src="stats-report-assets/magazine-cover-1.jpg" alt="Railway-News Magazine cover"><table class="tbl" id="t-calendar"></table></div>
+                    <span class="btn submit-mag">Submit Magazine Content</span>
+                </div></div>
+
+                <div class="sec"><h2>Magazines</h2></div>
+                <div class="block"><div class="two-tables" style="grid-template-columns: minmax(0,1fr) minmax(0,1.3fr)">
+                        <div><p class="used-title">Your magazine appearances:</p><table class="tbl" id="t-mag-used"></table></div>
+                        <div><p class="used-title">You are <em>booked into</em> these upcoming magazines:</p><table class="tbl" id="t-mag-booked"></table></div>
+                    </div><div class="counts" data-counts="magazine"></div></div>
+
+                <div class="sec"><h2>Inside Front Cover</h2></div>
+                <div class="block"><div style="max-width:420px;padding-top:40px"><table class="tbl" id="t-ifc"></table></div><div class="counts" data-counts="ifc"></div></div>
+
+                <div class="sec"><h2>Content Writing</h2></div>
+                <div class="block"><div><p class="used-title">Your used content writing:</p><table class="tbl" id="t-writing"></table></div><div class="counts" data-counts="writing"></div></div>
+
+                <div class="sec"><h2>Interviews</h2></div>
+                <div class="block"><div><p class="used-title">Your used interviews:</p><table class="tbl" id="t-interviews"></table></div><div class="counts" data-counts="interviews"></div></div>
+            </div>
+            <div class="footbar"><img src="stats-report-assets/dashboard-footer-logos.png" alt="Railway-News, Airport Industry-News, a2b Global Media, Bus-News, Future Transport-News" width="1205" height="80"></div>
+            <div class="updated" data-updated></div>
+        </section>
+
+        <!-- ═══ PAGE 4: YOUR PROFILE ════════════════════════ -->
+        <section class="page" id="page-4" aria-label="Your profile" hidden>
+            <div class="bar">
+                <img src="https://railway-news.com/wp-content/uploads/2025/08/Railway-News-White-Logo-CLEAR.png" alt="Railway-News">
+                <span class="runtime">Contract runtime:</span><span class="datebox" data-range></span>
+            </div>
+            <div class="body">
+                <div class="sec withnav"><div class="navrow"><button type="button" class="btn" data-go="1">Home</button><button type="button" class="btn" data-go="3">Previous</button><button type="button" class="btn right" data-go="5">Next</button></div><h2>Website Activity Feed</h2></div>
+                <div class="block" style="grid-template-columns: 1fr"><div>
+                    <div style="display:flex;align-items:flex-end;gap:12px"><p class="used-title" style="margin-right:auto">Your supplier news activity feed:</p><span class="btn" style="width:130px;margin-bottom:8px">Your Profile</span></div>
+                    <table class="tbl" id="t-news"></table>
+                    <div class="two-tables" style="grid-template-columns:1fr 1fr;margin-top:40px">
+                        <div><p class="used-title">Your documents:</p><table class="tbl" id="t-docs"></table></div>
+                        <div><p class="used-title">Your videos:</p><table class="tbl" id="t-videos"></table></div>
+                    </div>
+                </div></div>
+
+                <div class="sec"><h2>All Your Products &amp; Services Categories</h2></div>
+                <div class="block"><div style="padding-top:20px"><table class="tbl" id="t-cats"></table></div><div class="counts"><div><span>Count</span><b id="v-cat-count"></b></div></div></div>
+            </div>
+            <div class="footbar"><img src="stats-report-assets/dashboard-footer-logos.png" alt="Railway-News, Airport Industry-News, a2b Global Media, Bus-News, Future Transport-News" width="1205" height="80"></div>
+            <div class="updated" data-updated></div>
+        </section>
+
+        <!-- ═══ PAGE 5: SOCIAL MEDIA ACTIVITY ═══════════════ -->
+        <section class="page" id="page-5" aria-label="Social media activity" hidden>
+            <div class="bar">
+                <img src="https://railway-news.com/wp-content/uploads/2025/08/Railway-News-White-Logo-CLEAR.png" alt="Railway-News">
+                <span class="runtime">Contract runtime:</span><span class="datebox" data-range></span>
+            </div>
+            <div class="body">
+                <div class="sec withnav"><div class="navrow"><button type="button" class="btn" data-go="1">Home</button><button type="button" class="btn" data-go="4">Previous</button></div><h2>Your Supplier News In Our Newsletter</h2></div>
+                <div class="block" style="min-height:220px"><div style="padding-top:12px"><table class="tbl" id="t-nl-news"></table></div><div class="counts"><div><span>Count</span><b id="v-nl-count"></b></div></div></div>
+
+                <div class="sec"><h2>Your Supplier News On Social Media</h2></div>
+                <div class="block" style="min-height:220px"><div style="display:grid;grid-template-columns:30px minmax(0,1fr);gap:6px;padding-top:20px">
+                        <img class="li-icon" src="https://railway-news.com/wp-content/uploads/2026/04/LI-In-Bug-1.png" alt="LinkedIn">
+                        <table class="tbl" id="t-social-news"></table>
+                    </div><div class="counts"><div><span>Count</span><b id="v-sn-count"></b></div></div></div>
+            </div>
+            <div class="footbar"><img src="stats-report-assets/dashboard-footer-logos.png" alt="Railway-News, Airport Industry-News, a2b Global Media, Bus-News, Future Transport-News" width="1205" height="80"></div>
+            <div class="updated" data-updated></div>
+        </section>
+    </main>
+</div>
+
+<script>
+/* ──────────────────────────────────────────────────────────────
+   DATA (dummy). Edit the arrays; counts, remaining and the
+   percentage are worked out from them. Same client and period as
+   RN-example-stats-report.html (Premium package, 30 Sept 2026).
+   ────────────────────────────────────────────────────────────── */
+const RANGE = '1 Jan 2026 - 31 Dec 2026';
+const UPDATED = 'Data last updated: 30/09/2026 08:40:22';
+const PACKAGE = 'RN Premium';
+
+const CONTACTS = 'marketing@yourcompany.com, alex.taylor@yourcompany.com';
+const ENQUIRY = 'sales@yourcompany.com';
+const NEWS_PAGE = 'https://www.yourcompany.com/news';
+const EXTRAS = 'x1 inside front cover in one of your magazine bookings. x1 additional targeted mail.';
+const NOTES = '-';
+
+// Your other dashboards: [label, colour, link]. Each example links to the other sites' examples.
+const OTHER_DASHBOARDS = [
+    ['Airport', '#43C7F4', 'AIN-example-dashboard.html'],
+    ['Future', '#8CC63E', 'FTN-example-dashboard.html'],
+    ['Bus', '#9789B4', 'BN-example-dashboard.html']
+];
+
+// Calls with your Partnership Manager: [type, date, guests, status]
+const CALLS = [
+    ['QBR 1', '24 Mar 2026', 'alex.taylor@yourcompany.com, sam.lee@yourcompany.com', 'Accepted'],
+    ['QBR 2', '23 Jun 2026', 'alex.taylor@yourcompany.com, sam.lee@yourcompany.com', 'Accepted'],
+    ['QBR 3', '22 Sept 2026', 'alex.taylor@yourcompany.com, sam.lee@yourcompany.com', 'Accepted'],
+    ['Renewal', '10 Nov 2026', 'alex.taylor@yourcompany.com, sam.lee@yourcompany.com', 'Booked and pending']
+];
+
+// In contract per feature (0 = not in the package)
+const IN_CONTRACT = { tm: 2, social: 4, homepage: 1, newsletter: 12, ps: 2, newspages: 1, featured: 4,
+                      magazine: 2, ifc: 1, writing: 0, interviews: 0, design: 0 };
+
+// Used and booked items per feature
+const TM_USED = [ ['19 May 2026', 'https://a2b-global-media-content-team.github.io/client-resources/2026-05-RN-dummy-email.html'] ];
+const TM_BOOKED = [];   // [date booked]
+const SOCIAL_USED = [   // [banner link, LinkedIn post, post no.]
+    ['https://www.yourcompany.com/innotrans-2026', 'https://www.linkedin.com/company/railway-news/', '3'],
+    ['https://www.yourcompany.com/rail', 'https://www.linkedin.com/company/railway-news/', '2'],
+    ['https://www.yourcompany.com/rail', 'https://www.linkedin.com/company/railway-news/', '1']
+];
+const SOCIAL_BOOKED = [];
+const HP_USED = [ ['5 Jan 2026', '12 months', 'https://www.yourcompany.com'] ];
+const NL_USED = [   // [date sent, banner link, newsletter link]
+    ['7 Sept 2026', 'https://www.yourcompany.com/rail', 'https://mailchi.mp/railway-news/newsletter-week-37a-2026'],
+    ['13 Aug 2026', 'https://www.yourcompany.com/rail', 'https://mailchi.mp/railway-news/newsletter-week-33b-2026'],
+    ['2 Jul 2026',  'https://www.yourcompany.com/rail', 'https://mailchi.mp/railway-news/newsletter-week-27b-2026'],
+    ['15 Jun 2026', 'https://www.yourcompany.com/rail', 'https://mailchi.mp/railway-news/newsletter-week-25a-2026'],
+    ['11 May 2026', 'https://www.yourcompany.com/rail', 'https://mailchi.mp/railway-news/newsletter-week-20a-2026'],
+    ['13 Apr 2026', 'https://www.yourcompany.com/rail', 'https://mailchi.mp/railway-news/newsletter-week-16a-2026'],
+    ['12 Mar 2026', 'https://www.yourcompany.com/rail', 'https://mailchi.mp/railway-news/newsletter-week-11b-2026'],
+    ['12 Feb 2026', 'https://www.yourcompany.com/rail', 'https://mailchi.mp/railway-news/newsletter-week-7b-2026'],
+    ['12 Jan 2026', 'https://www.yourcompany.com/rail', 'https://mailchi.mp/railway-news/newsletter-week-3a-2026']
+];
+const NL_BOOKED = [ ['9 Nov 2026'], ['12 Oct 2026'] ];   // [date scheduled]
+const PS_USED = [   // [P&S page, ad URL]
+    ['https://railway-news.com/products-services/railway-condition-monitoring/', 'https://www.yourcompany.com'],
+    ['https://railway-news.com/products-services/infrastructure-signalling-and-train-control/', 'https://www.yourcompany.com']
+];
+const NP_USED = [ ['5 Jan 2026'] ];
+const FS_USED = [
+    ['https://railway-news.com/products-services/railway-condition-monitoring/'],
+    ['https://railway-news.com/products-services/infrastructure-signalling-and-train-control/'],
+    ['https://railway-news.com/products-services/infrastructure-track-maintenance/'],
+    ['https://railway-news.com/products-services/components/']
+];
+const DESIGN_USED = [];   // [link, type]
+const MAG_USED = [ ['Issue 2 / 2026', '24 Aug 2026', 'https://railway-news.com/flipbook/issue-2-2026/'], ['Issue 1 / 2026', '16 Mar 2026', 'https://railway-news.com/flipbook/issue-1-2026/'] ];
+const MAG_BOOKED = [];   // [issue, content deadline, publication date, in conjunction with, status]
+const IFC_USED = [ ['Issue 1 / 2026'] ];
+const WRITING_USED = [];   // [article title, URL]
+const INTERVIEWS_USED = [];   // [link, type]
+const CALENDAR = [   // [issue, content submission deadline, publication date, event]
+    ['RN Issue 1 2026', '9 Feb 2026', '16 Mar 2026', 'TBC'],
+    ['RN Issue 2 2026', '6 Jul 2026', '24 Aug 2026', 'InnoTrans (22-25 Sep)'],
+    ['RN Issue 3 2026', '26 Oct 2026', '1 Dec 2026', 'TBC']
+];
+
+// Page 4: profile
+const NEWS = [   // [title, URL, publication date]
+    ['Siemens Signs €1 Billion Vietnam High-Speed Rail Contract at InnoTrans', 'https://railway-news.com/siemens-signs-e1-billion-vietnam-high-speed-rail-contract-at-innotrans/', '22 Sept 2026'],
+    ['Eurostar Introduces First ERTMS-Fitted Train into Service', 'https://railway-news.com/eurostar-introduces-first-ertms-fitted-train-into-service/', '14 Aug 2026'],
+    ['Val Venosta Railway Enters the Electric Era', 'https://railway-news.com/val-venosta-railway-enters-the-electric-era/', '14 Jul 2026'],
+    ['Designs Revealed for New York Penn Station Redevelopment', 'https://railway-news.com/designs-unveiled-for-new-york-penn-station-redevelopment/', '12 Jun 2026'],
+    ['HS2 Completes Construction of Network’s Tallest Bridge', 'https://railway-news.com/hs2-completes-construction-of-networks-tallest-bridge/', '14 May 2026'],
+    ['NJ TRANSIT Receives First Multilevel III Rail Car from Alstom', 'https://railway-news.com/nj-transit-receives-first-multilevel-iii-rail-car-from-alstom/', '14 Apr 2026'],
+    ['Stadler to Supply Up to 20 FLIRT Trains in Greater Poland', 'https://railway-news.com/stadler-to-supply-up-to-20-flirt-trains-in-greater-poland/', '13 Mar 2026'],
+    ['Wabtec to Upgrade CSX Locomotive Fleet in $670 Million Deal', 'https://railway-news.com/wabtec-to-upgrade-csx-locomotive-fleet-in-670-million-deal/', '13 Feb 2026'],
+    ['UK: Coventry to Trial Very Light Rail Network', 'https://railway-news.com/uk-coventry-to-trial-very-light-rail-network/', '14 Jan 2026']
+];
+const DOCUMENTS = [ ['Your Company Product Brochure 2026', '12 Jan 2026'], ['Case Study: Depot Lifting for a Metro Fleet', '20 Apr 2026'] ];
+const VIDEOS = [ ['Your Company at InnoTrans 2026', '28 Sept 2026'], ['How Our Condition Monitoring Works', '3 Mar 2026'] ];
+const CATEGORIES = [
+    'https://railway-news.com/products-services/railway-condition-monitoring',
+    'https://railway-news.com/products-services/infrastructure-signalling-and-train-control',
+    'https://railway-news.com/products-services/infrastructure-track-maintenance',
+    'https://railway-news.com/products-services/components',
+    'https://railway-news.com/products-services/asset-services',
+    'https://railway-news.com/products-services/data-and-information',
+    'https://railway-news.com/products-services/telematics-asset-tracking'
+];
+
+// Page 5: [date sent, article URL, newsletter URL] and [date, title, link]
+const NL_NEWS = [
+    ['24 Sept 2026', 'https://railway-news.com/siemens-signs-e1-billion-vietnam-high-speed-rail-contract-at-innotrans/', 'https://mailchi.mp/railway-news/newsletter-week-39b-2026'],
+    ['24 Aug 2026', 'https://railway-news.com/eurostar-introduces-first-ertms-fitted-train-into-service/', 'https://mailchi.mp/railway-news/newsletter-week-35a-2026'],
+    ['16 Jul 2026', 'https://railway-news.com/val-venosta-railway-enters-the-electric-era/', 'https://mailchi.mp/railway-news/newsletter-week-29b-2026'],
+    ['1 Jun 2026', 'https://railway-news.com/hs2-completes-construction-of-networks-tallest-bridge/', 'https://mailchi.mp/railway-news/newsletter-week-23a-2026'],
+    ['30 Mar 2026', 'https://railway-news.com/stadler-to-supply-up-to-20-flirt-trains-in-greater-poland/', 'https://mailchi.mp/railway-news/newsletter-week-14a-2026'],
+    ['23 Feb 2026', 'https://railway-news.com/wabtec-to-upgrade-csx-locomotive-fleet-in-670-million-deal/', 'https://mailchi.mp/railway-news/newsletter-week-9a-2026'],
+    ['26 Jan 2026', 'https://railway-news.com/uk-coventry-to-trial-very-light-rail-network/', 'https://mailchi.mp/railway-news/newsletter-week-5-2026']
+];
+const SOCIAL_NEWS = [
+    ['22 Sept 2026', 'Siemens Signs €1 Billion Vietnam High-Speed Rail Contract at InnoTrans', 'https://railway-news.com/siemens-signs-e1-billion-vietnam-high-speed-rail-contract-at-innotrans/'],
+    ['14 Aug 2026', 'Eurostar Introduces First ERTMS-Fitted Train into Service', 'https://railway-news.com/eurostar-introduces-first-ertms-fitted-train-into-service/'],
+    ['12 Jun 2026', 'Designs Revealed for New York Penn Station Redevelopment', 'https://railway-news.com/designs-unveiled-for-new-york-penn-station-redevelopment/'],
+    ['14 May 2026', 'HS2 Completes Construction of Network’s Tallest Bridge', 'https://railway-news.com/hs2-completes-construction-of-networks-tallest-bridge/'],
+    ['14 Apr 2026', 'NJ TRANSIT Receives First Multilevel III Rail Car from Alstom', 'https://railway-news.com/nj-transit-receives-first-multilevel-iii-rail-car-from-alstom/'],
+    ['14 Jan 2026', 'UK: Coventry to Trial Very Light Rail Network', 'https://railway-news.com/uk-coventry-to-trial-very-light-rail-network/']
+];
+
+/* ── COUNTS ─────────────────────────────────────────────────── */
+const USED = { tm: TM_USED.length, social: SOCIAL_USED.length, homepage: HP_USED.length, newsletter: NL_USED.length,
+               ps: PS_USED.length, newspages: NP_USED.length, featured: FS_USED.length, design: DESIGN_USED.length,
+               magazine: MAG_USED.length, ifc: IFC_USED.length, writing: WRITING_USED.length, interviews: INTERVIEWS_USED.length };
+const BOOKED = { tm: TM_BOOKED.length, social: SOCIAL_BOOKED.length, newsletter: NL_BOOKED.length, magazine: MAG_BOOKED.length,
+                 homepage: 0, design: 0, ifc: 0, writing: 0, interviews: 0 };
+
+/* ── HELPERS ────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const link = (url, text) => /^https?:/.test(url) ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(text || url)}</a>` : esc(text || url);
+
+function table(id, cols, rows, rowClass) {
+    // cols: [label, width, classes ('num', 'sort', 'sortup')]
+    const head = '<colgroup>' + cols.map(c => `<col style="width:${c[1] || 'auto'}">`).join('') + '</colgroup>'
+        + '<thead><tr>' + cols.map(c => `<th class="${c[2] || ''}">${esc(c[0])}</th>`).join('') + '</tr></thead>';
+    const body = rows.length
+        ? rows.map((r, ri) => `<tr class="${rowClass ? rowClass(r, ri) : ''}">` + r.map((v, i) => {
+            const cls = /\bnum\b/.test(cols[i][2] || '') ? 'num' : '';
+            return `<td class="${cls}" title="${esc(String(v).replace(/<[^>]+>/g, ''))}">${v}</td>`;
+          }).join('') + '</tr>').join('')
+        : `<tr class="nodata"><td colspan="${cols.length}">No data</td></tr>`;
+    $(id).innerHTML = head + '<tbody>' + body + '</tbody>';
+}
+
+/* ── PAGE 1 ─────────────────────────────────────────────────── */
+document.querySelectorAll('[data-range]').forEach(el => el.textContent = RANGE);
+document.querySelectorAll('[data-updated]').forEach(el => el.textContent = UPDATED);
+$('v-pkg').textContent = PACKAGE;
+$('v-contacts').textContent = CONTACTS;
+$('v-enquiry').textContent = ENQUIRY;
+$('v-newspage').innerHTML = link(NEWS_PAGE);
+$('v-extras').textContent = EXTRAS;
+$('v-notes').textContent = NOTES;
+
+table('t-calls', [['Call Type', '17%'], ['Date', '19%', 'sortup'], ['All Guests', '38%'], ['Status', '26%']],
+    CALLS.map(r => [esc(r[0]), esc(r[1]), esc(r[2]), esc(r[3])]));
+$('t-calls').querySelectorAll('tbody tr').forEach((tr, i) => { if (/pending/i.test(CALLS[i][3])) tr.lastElementChild.classList.add('pending'); });
+
+// Package at a glance: [key, label, has a "booked" figure, has a "remaining" figure]
+const GLANCE = [
+    ['tm', 'AI-Driven Targeted Mail', true, true],
+    ['social', 'Social Media Banner Posts', true, true],
+    ['homepage', 'Homepage Banner', true, true],
+    ['newsletter', 'Newsletter Banners', true, true],
+    ['ps', 'Products & Services Banner Positions', false, true],
+    ['newspages', 'News Pages Banner', false, true],
+    ['featured', 'Featured Supplier Positions', false, false]
+];
+const pill = n => `<span class="pill ${n === 0 ? 'lime' : 'red'}">${n}</span>`;
+$('t-glance').innerHTML = '<thead><tr><th></th><th>In contract</th><th>Used</th><th>Booked</th><th>Remaining</th></tr></thead><tbody>'
+    + GLANCE.map(([k, label, hasBook, hasRem]) => {
+        const n = IN_CONTRACT[k], u = USED[k] || 0, b = hasBook ? (BOOKED[k] || 0) : 0;
+        return `<tr><td class="name">${esc(label)}</td><td>${n}</td><td class="used">${u}</td><td>${hasBook ? b : 'N/A'}</td><td>${hasRem ? pill(n - u - b) : 'N/A'}</td></tr>`;
+    }).join('') + '</tbody>';
+$('t-glance2').innerHTML = '<thead><tr><th></th><th>In contract</th><th>Used</th><th>Booked/In progress</th></tr></thead><tbody>'
+    + [['magazine', 'Magazine'], ['writing', 'Content Writing'], ['interviews', 'Interviews']].map(([k, label]) =>
+        `<tr><td class="name">${label}</td><td>${IN_CONTRACT[k]}</td><td class="used">${USED[k] || 0}</td><td>${BOOKED[k] || 0}</td></tr>`).join('') + '</tbody>';
+$('v-dots').innerHTML = OTHER_DASHBOARDS.map(([label, colour, url]) => `<a href="${url}" style="background:${colour}" title="Example ${label} dashboard">${label}</a>`).join('');
+$('v-n-news').textContent = NEWS.length;
+$('v-n-docs').textContent = DOCUMENTS.length;
+$('v-n-videos').textContent = VIDEOS.length;
+
+// Percentage used: used ÷ in contract, over every feature in the package
+let inC = 0, usedC = 0;
+['tm', 'social', 'homepage', 'newsletter', 'ps', 'newspages', 'featured', 'magazine', 'writing', 'interviews'].forEach(k => {
+    if (IN_CONTRACT[k]) { inC += IN_CONTRACT[k]; usedC += Math.min(USED[k] || 0, IN_CONTRACT[k]); }
+});
+const pct = inC ? usedC / inC * 100 : 0;
+(function gauge() {
+    const cx = 130, cy = 120, r = 95, w = 34;
+    const arc = (a0, a1) => {
+        const p = a => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+        const [x0, y0] = p(a0), [x1, y1] = p(a1);
+        return `M${x0},${y0} A${r},${r} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${x1},${y1}`;
+    };
+    const end = Math.PI + Math.PI * Math.min(pct, 100) / 100;
+    $('gauge').innerHTML = `<svg viewBox="0 0 260 140" role="img" aria-label="Percentage used ${pct.toFixed(1)}%">
+        <path d="${arc(Math.PI, 2 * Math.PI)}" fill="none" stroke="#D1D1D1" stroke-width="${w}"/>
+        <path d="${arc(Math.PI, end)}" fill="none" stroke="${getComputedStyle(document.documentElement).getPropertyValue('--orange').trim()}" stroke-width="${w}"/>
+        <text x="${cx}" y="${cy - 22}" text-anchor="middle" font-size="12" fill="#333">Percentage Used</text>
+        <text x="${cx}" y="${cy + 2}" text-anchor="middle" font-size="24" fill="#1F1F1F">${pct.toFixed(1)}%</text></svg>`;
+})();
+
+/* ── COUNT COLUMNS (pages 2 and 3) ──────────────────────────── */
+document.querySelectorAll('[data-counts]').forEach(el => {
+    const k = el.dataset.counts, first = el.dataset.first || 'In package';
+    const item = (label, v) => `<div><span>${label}</span><b>${v}</b></div>`;
+    el.innerHTML = item(first, IN_CONTRACT[k] || 0) + item('Used', USED[k] || 0) + ('nobook' in el.dataset ? '' : item('Booked', BOOKED[k] || 0));
+});
+
+/* ── PAGE 2 ─────────────────────────────────────────────────── */
+table('t-tm', [['Date', '28%', 'sort'], ['Campaign URLs', '72%']], TM_USED.map(r => [esc(r[0]), link(r[1])]));
+table('t-tm-booked', [['Date Booked', '100%', 'sort']], TM_BOOKED.map(r => [esc(r[0])]));
+table('t-social', [['Banner Link', '42%', 'sortup'], ['LinkedIn Post', '42%'], ['Post no.', '16%', 'num']], SOCIAL_USED.map(r => [link(r[0]), link(r[1]), esc(r[2])]));
+table('t-social-booked', [['Date Booked', '100%', 'sort num']], SOCIAL_BOOKED.map(r => [esc(r[0])]));
+$('hp-area').innerHTML = HP_USED.length
+    ? `<div class="banner" style="margin-top:6px"><span class="h">Smarter Depot Lifting</span><span class="cta">EXPLORE MORE</span><span class="co">YOUR COMPANY</span></div>`
+    : '<p style="padding:4px 0 0 80px;font-size:11px">No data</p>';
+table('t-nl-used', [['Date Sent', '20%', 'sort'], ['Banner Links', '36%'], ['Newsletter Links', '44%']], NL_USED.map(r => [esc(r[0]), link(r[1]), link(r[2])]));
+table('t-nl-booked', [['Date Scheduled', '58%', 'sort num'], ['Banner', '42%']],
+    NL_BOOKED.map(r => [esc(r[0]), '<div class="banner mini"><span class="h">Smarter Depot Lifting</span></div>']));
+table('t-ps', [['Products & Services Page(s)', '66%', 'sortup'], ['Ad URL', '34%']], PS_USED.map(r => [link(r[0]), link(r[1])]));
+table('t-fs', [['Products & Services Page(s)', '100%', 'sort']], FS_USED.map(r => [link(r[0])]));
+table('t-design', [['Links to your content', '80%'], ['Type', '20%', 'sort']], DESIGN_USED);
+
+/* ── PAGE 3 ─────────────────────────────────────────────────── */
+if (!CALENDAR.length) document.querySelectorAll('.cover, .submit-mag').forEach(el => { el.parentElement.style.gridTemplateColumns = '1fr'; el.remove(); });
+table('t-calendar', [['Magazine Issue', '27%'], ['Content Submission Deadline', '27%', 'num'], ['Publication Date', '20%', 'sortup num'], ['Event', '26%']], CALENDAR.map(r => r.map(esc)));
+table('t-mag-used', [['Issue', '55%'], ['Publication Date', '45%', 'sort num']], MAG_USED.map(r => [link(r[2], r[0]), esc(r[1])]));
+table('t-mag-booked', [['Issue', '18%', 'sortup'], ['Content Deadline', '17%', 'num'], ['Publication Date', '17%', 'num'], ['In Conjunction With', '25%', 'num'], ['Status', '23%']],
+    MAG_BOOKED.map(r => r.map(esc)), () => 'booked');
+table('t-ifc', [['Inside Cover', '100%', 'sort']], IFC_USED.map(r => [esc(r[0])]));
+table('t-writing', [['Your Content Writing', '100%']], WRITING_USED.map(r => [link(r[1], r[0])]));
+table('t-interviews', [['Interview link(s)', '80%'], ['Type (Content Writing / Interview)', '20%', 'sort']], INTERVIEWS_USED);
+
+/* ── PAGE 4 ─────────────────────────────────────────────────── */
+table('t-news', [['Your News', '80%'], ['Publication Date', '20%', 'sort num']], NEWS.map(r => [link(r[1], r[0]), esc(r[2])]));
+table('t-docs', [['Your Documents', '70%', 'sort'], ['Publication Date', '30%', 'num']], DOCUMENTS.map(r => [esc(r[0]), esc(r[1])]));
+table('t-videos', [['Your Videos', '70%', 'sort'], ['Publication Date', '30%', 'num']], VIDEOS.map(r => [esc(r[0]), esc(r[1])]));
+table('t-cats', [['P&S Categories', '100%']], CATEGORIES.map(u => [link(u)]));
+$('v-cat-count').textContent = CATEGORIES.length;
+
+/* ── PAGE 5 ─────────────────────────────────────────────────── */
+table('t-nl-news', [['Date Sent', '14%', 'sort num'], ['Newsletter URL', '52%'], ['Newsletter Links', '34%']], NL_NEWS.map(r => [esc(r[0]), link(r[1]), link(r[2])]));
+$('v-nl-count').textContent = NL_NEWS.length;
+table('t-social-news', [['Date Published', '16%', 'sort'], ['Update title', '50%'], ['Update link', '34%']], SOCIAL_NEWS.map(r => [esc(r[0]), esc(r[1]), link(r[2])]));
+$('v-sn-count').textContent = SOCIAL_NEWS.length;
+
+/* ── PAGE SWITCHING ─────────────────────────────────────────── */
+function show(n) {
+    document.querySelectorAll('section.page').forEach(p => p.hidden = p.id !== 'page-' + n);
+    document.querySelectorAll('nav.pages button').forEach(b => {
+        if (b.dataset.go === String(n)) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
+    if (location.hash !== '#page-' + n) history.replaceState(null, '', location.pathname + location.search + '#page-' + n);
+}
+document.addEventListener('click', e => {
+    const b = e.target.closest('[data-go]');
+    if (!b) return;
+    show(b.dataset.go);
+    document.querySelector('.frame').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+const start = /^#page-([1-5])$/.exec(location.hash);
+show(start ? start[1] : 1);
+
+/* ──────────────────────────────────────────────────────────────
+   PDF export: every dashboard page becomes one PDF page, sized to
+   fit. Runs before printing (Chrome: Print → Save as PDF) and on
+   load when the URL ends in ?pdf (headless Chrome --print-to-pdf).
+   ────────────────────────────────────────────────────────────── */
+function sizePagesForPdf() {
+    document.documentElement.classList.add('pdf');
+    let css = '';
+    document.querySelectorAll('section.page').forEach((page, i) => {
+        const h = Math.ceil(page.getBoundingClientRect().height) + 1;
+        page.style.page = 'dash-p' + i;
+        css += '@page dash-p' + i + ' { size: 1000px ' + h + 'px; margin: 0; }\n';
+    });
+    let style = document.getElementById('pdf-pages');
+    if (!style) { style = document.createElement('style'); style.id = 'pdf-pages'; document.head.appendChild(style); }
+    style.textContent = css;
+}
+addEventListener('beforeprint', sizePagesForPdf);
+addEventListener('afterprint', () => { if (!/[?&]pdf\b/.test(location.search)) document.documentElement.classList.remove('pdf'); });
+if (/[?&]pdf\b/.test(location.search)) addEventListener('load', () => document.fonts.ready.then(sizePagesForPdf));
+</script>
+</body>
+</html>
