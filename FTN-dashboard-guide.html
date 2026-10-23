@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Guide: Future Transport-News — a2b Global Media</title>
+    <meta name="description" content="A guided tour of your Future Transport-News client dashboard: your package at a glance, banners, targeted mail, magazines, profile and news.">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:      #1B3342;
+            --navy-2:    #24465A;
+            --orange:    #8CC63E;
+            --orange-dk: #4A7A1E;
+            --light:     #F7F7F7;
+            --text:      #1F2A30;
+            --muted:     #5D6B73;
+            --rule:      #E2E8EC;
+            --white:     #FFFFFF;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Mukta', Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: var(--light);
+            font-size: 16px;
+            line-height: 1.55;
+        }
+        a { color: var(--orange-dk); }
+
+        /* ── HEADER ─────────────────────────────────────── */
+        .site-head {
+            background: var(--navy);
+            color: var(--white);
+            padding: 22px 24px 64px;
+            text-align: center;
+        }
+        .site-head .brand { display: flex; justify-content: space-between; align-items: center; max-width: 1240px; margin: 0 auto 46px; gap: 16px; }
+        .site-head .brand img.rn { height: 34px; width: auto; }
+        .site-head .brand img.a2b { height: 26px; width: auto; }
+        .eyebrow { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); font-weight: 600; }
+        .site-head h1 { font-size: 46px; line-height: 1.1; font-weight: 600; margin: 10px 0 14px; }
+        .site-head p.lead { max-width: 640px; margin: 0 auto; color: #C9D6DE; font-size: 18px; }
+
+        /* ── PLAYER ─────────────────────────────────────── */
+        .player-wrap { max-width: 1240px; margin: -36px auto 0; padding: 0 24px; }
+        .chapters {
+            display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin;
+        }
+        .chapters button {
+            flex: none; border: 0; cursor: pointer; font: inherit; font-size: 14px; font-weight: 500;
+            background: var(--navy-2); color: #D5E0E6; padding: 8px 14px; border-radius: 6px;
+            display: flex; align-items: center; gap: 8px; white-space: nowrap;
+        }
+        .chapters button .n { font-size: 12px; opacity: 0.7; }
+        .chapters button[aria-current="true"] { background: var(--orange); color: var(--navy); }
+        .chapters button:focus-visible, .ctrl button:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+        .player {
+            display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 0;
+            background: var(--white); border-radius: 12px; overflow: hidden;
+            box-shadow: 0 18px 50px rgba(27, 51, 66, 0.22);
+        }
+
+        /* Screen-share window */
+        .screen { background: #0F1F29; padding: 14px; position: relative; }
+        .share-badge {
+            position: absolute; top: 22px; right: 26px; z-index: 6;
+            background: rgba(229, 57, 53, 0.95); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+            padding: 3px 9px 2px; border-radius: 20px; display: flex; align-items: center; gap: 6px;
+        }
+        .share-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: blink 1.4s infinite; }
+        @keyframes blink { 50% { opacity: 0.25; } }
+
+        .browser { background: #fff; border-radius: 8px; overflow: hidden; }
+        .chrome {
+            height: 40px; background: #E9EDF0; display: flex; align-items: center; gap: 12px; padding: 0 12px;
+            border-bottom: 1px solid #D6DCE0;
+        }
+        .dots { display: flex; gap: 6px; flex: none; }
+        .dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+        .dots i:nth-child(1) { background: #FF5F57; } .dots i:nth-child(2) { background: #FEBC2E; } .dots i:nth-child(3) { background: #28C840; }
+        .url {
+            flex: 1; min-width: 0; background: #fff; border-radius: 6px; height: 26px; display: flex; align-items: center; gap: 7px;
+            padding: 0 10px; font-size: 13px; color: #44515A; white-space: nowrap; overflow: hidden;
+        }
+        .url svg { flex: none; width: 12px; height: 12px; }
+        .url .caret { display: inline-block; width: 1px; height: 14px; background: #333; margin-left: 1px; animation: blink 1s steps(1) infinite; vertical-align: -2px; }
+
+        .viewport { position: relative; overflow: hidden; aspect-ratio: 16 / 10; background: #DDE3E7; }
+        .layer { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+        .layer.anim { transition: transform 1.4s cubic-bezier(0.65, 0, 0.25, 1); }
+        .layer img.page { display: block; width: 1440px; height: auto; user-select: none; -webkit-user-drag: none; }
+        .layer .html-page { width: 1440px; }
+
+        .ring {
+            position: absolute; border: 5px solid var(--orange); border-radius: 14px; pointer-events: none;
+            box-shadow: 0 0 0 9999px rgba(15, 31, 41, 0.42), 0 0 24px rgba(140, 198, 62, 0.95);
+            opacity: 0; transition: opacity 0.5s ease, left 1.4s cubic-bezier(0.65, 0, 0.25, 1), top 1.4s cubic-bezier(0.65, 0, 0.25, 1), width 1.4s cubic-bezier(0.65, 0, 0.25, 1), height 1.4s cubic-bezier(0.65, 0, 0.25, 1);
+        }
+        .ring.on { opacity: 1; animation: pulse 1.8s ease-in-out infinite 1.4s; }
+        @keyframes pulse { 50% { box-shadow: 0 0 0 9999px rgba(15, 31, 41, 0.42), 0 0 44px rgba(140, 198, 62, 1); } }
+
+        .cursor {
+            position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 5; pointer-events: none;
+            transition: transform 1.2s cubic-bezier(0.65, 0, 0.25, 1); filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35));
+        }
+        .click {
+            position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; z-index: 4;
+            border: 3px solid var(--orange); opacity: 0; pointer-events: none;
+        }
+        .click.go { animation: ripple 0.7s ease-out; }
+        @keyframes ripple { from { transform: scale(0.3); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+
+        .loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; background: #fff; z-index: 3; transition: opacity 0.3s; }
+        .loading.hide { opacity: 0; pointer-events: none; }
+
+        /* Caption panel */
+        .panel { display: flex; flex-direction: column; padding: 26px 26px 20px; border-left: 1px solid var(--rule); }
+        .panel .chap { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; }
+        .panel h2 { font-size: 27px; line-height: 1.15; font-weight: 600; color: var(--navy); margin: 6px 0 12px; }
+        .panel .body { font-size: 16px; color: #34424A; flex: 1; }
+        .panel .body ul { margin: 8px 0 0 18px; }
+        .panel .body li { margin-bottom: 3px; }
+        .panel .spec { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+        .panel .spec span { background: #F1F8E8; color: #3D6418; font-size: 13px; font-weight: 500; padding: 3px 9px; border-radius: 4px; }
+        .panel .fade { animation: fadeUp 0.5s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+        .progress { display: flex; gap: 4px; margin: 18px 0 14px; }
+        .progress i { flex: 1; height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; position: relative; }
+        .progress i.done { background: var(--orange); }
+        .progress i.now::after { content: ""; position: absolute; inset: 0; background: var(--orange); transform-origin: left; animation: fill var(--dur, 7s) linear forwards; }
+        .progress.paused i.now::after { animation-play-state: paused; }
+        @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+        .ctrl { display: flex; align-items: center; gap: 8px; }
+        .ctrl button {
+            border: 0; cursor: pointer; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            background: #EEF2F4; color: var(--navy);
+        }
+        .ctrl button.play { width: 50px; height: 50px; background: var(--navy); color: #fff; }
+        .ctrl button svg { width: 18px; height: 18px; }
+        .ctrl { flex-wrap: wrap; row-gap: 12px; }
+        .ctrl button { flex: none; }
+        .ctrl .count { flex: 1 0 auto; margin-left: 0; white-space: nowrap; }
+        .ctrl button.sound { width: auto; height: 42px; border-radius: 21px; padding: 0 14px 0 12px; gap: 6px; font: inherit; font-size: 14px; font-weight: 600; }
+        .ctrl button.sound[aria-pressed="true"] { background: var(--orange); color: var(--navy); }
+        .ctrl button.sound:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+        .ctrl .count { margin-left: auto; font-size: 13px; color: var(--muted); }
+        .ctrl .open { font-size: 13px; margin-left: 10px; white-space: nowrap; }
+
+        /* ── REFERENCE SECTION ──────────────────────────── */
+        .ref { max-width: 1240px; margin: 70px auto 0; padding: 0 24px; }
+        .ref > h2 { font-size: 32px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+        .ref > p { color: var(--muted); margin-bottom: 26px; max-width: 700px; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+        .card {
+            background: #fff; border-radius: 10px; padding: 22px 22px 18px; border-top: 4px solid var(--orange);
+            box-shadow: 0 2px 8px rgba(27, 51, 66, 0.06);
+        }
+        .card h3 { font-size: 20px; font-weight: 600; color: var(--navy); line-height: 1.2; }
+        .card .ex { font-size: 13px; color: var(--muted); margin: 2px 0 12px; word-break: break-word; }
+        .card .ex a { color: var(--orange-dk); }
+        .card dl { font-size: 15px; }
+        .card dt { font-weight: 600; color: var(--navy); margin-top: 10px; }
+        .card dd { color: #3A4850; }
+        .card ul { margin: 4px 0 0 18px; font-size: 15px; color: #3A4850; }
+        .card button.watch {
+            margin-top: 14px; border: 0; background: none; color: var(--orange-dk); font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; padding: 0;
+        }
+
+
+        /* ── STEP BY STEP ───────────────────────────────── */
+        .howto { display: flex; flex-direction: column; gap: 16px; }
+        .stepcard {
+            background: #fff; border-radius: 10px; padding: 24px 26px 20px 84px; position: relative;
+            box-shadow: 0 2px 8px rgba(27, 51, 66, 0.06); border-left: 4px solid var(--orange);
+        }
+        .stepcard .num {
+            position: absolute; left: 24px; top: 22px; width: 42px; height: 42px; border-radius: 50%;
+            background: var(--navy); color: var(--orange); font-weight: 700; font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .stepcard h3 { font-size: 22px; font-weight: 600; color: var(--navy); line-height: 1.2; margin-bottom: 8px; }
+        .stepcard h4 { font-size: 17px; font-weight: 600; color: var(--navy); margin: 18px 0 6px; }
+        .stepcard p, .stepcard li { font-size: 16px; color: #34424A; }
+        .stepcard p { margin-bottom: 8px; }
+        .stepcard ol { margin: 6px 0 4px 20px; }
+        .stepcard li { margin-bottom: 5px; padding-left: 2px; }
+        .stepcard ol.tips li { margin-bottom: 8px; }
+        .stepcard .tip {
+            margin-top: 12px; background: #FFF3E3; border-radius: 6px; padding: 12px 14px; font-size: 15px; color: #5A3A10;
+        }
+        .stepcard table.ex { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 15px; }
+        .stepcard table.ex th, .stepcard table.ex td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+        .stepcard table.ex thead th { color: var(--navy); font-weight: 600; }
+        .stepcard table.ex tbody th { color: var(--navy); font-weight: 600; width: 22%; }
+        .stepcard table.ex td:nth-child(2) { color: #8A4B4B; }
+        .stepcard table.ex td:nth-child(3) { color: #2F5D3A; }
+        .stepcard button.watch {
+            margin-top: 12px; border: 0; background: none; color: var(--orange-dk); font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; padding: 0;
+        }
+        .help { margin-top: 26px; background: var(--navy); color: #D5E0E6; border-radius: 10px; padding: 24px 26px; }
+        .help h3 { color: #fff; font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+        .help p { margin-bottom: 8px; } .help a { color: var(--orange); } .help strong { color: #fff; }
+        @media (max-width: 600px) {
+            .stepcard { padding: 20px 18px 16px; }
+            .stepcard .num { position: static; margin-bottom: 10px; width: 36px; height: 36px; font-size: 17px; }
+            .stepcard table.ex { font-size: 14px; }
+            .stepcard table.ex tbody th { width: auto; }
+        }
+
+        .site-foot { margin-top: 80px; background: var(--navy); color: #C9D6DE; padding: 40px 24px; text-align: center; font-size: 15px; }
+        .site-foot img { height: 30px; width: auto; margin-bottom: 14px; }
+        .site-foot a { color: #fff; text-decoration: none; }
+        .site-foot .sep { opacity: 0.4; margin: 0 10px; }
+
+        /* ── RESPONSIVE ─────────────────────────────────── */
+        @media (max-width: 980px) {
+            .player { grid-template-columns: 1fr; }
+            .panel { border-left: 0; border-top: 1px solid var(--rule); }
+            .panel .body { min-height: 150px; }
+        }
+        @media (max-width: 600px) {
+            .site-head { padding: 18px 16px 56px; }
+            .site-head .brand { margin-bottom: 30px; }
+            .site-head .brand img.rn { height: 24px; }
+            .site-head .brand img.a2b { height: 18px; }
+            .site-head h1 { font-size: 34px; }
+            .site-head p.lead { font-size: 16px; }
+            .player-wrap, .ref { padding: 0 16px; }
+            .screen { padding: 8px; }
+            .chrome { height: 32px; } .dots { display: none; }
+            .url { font-size: 11px; height: 22px; }
+            .viewport { aspect-ratio: 4 / 5; }
+            .share-badge { top: 14px; right: 14px; }
+            .panel { padding: 20px 18px 16px; }
+            .panel h2 { font-size: 23px; }
+            .cards { grid-template-columns: 1fr; }
+            .ctrl .open { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .layer.anim, .cursor, .ring { transition-duration: 0.01s !important; }
+            .ring.on, .share-badge::before { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-head">
+    <div class="brand">
+        <img class="rn" src="https://futuretransport-news.com/wp-content/uploads/sites/3/2025/08/Future-Transport-News-White-Logo-CLEAR.png" alt="Future Transport-News">
+        <img class="a2b" src="https://a2bglobalmedia.com/wp-content/uploads/sites/5/2026/04/a2b-Global-Media-White-Logo-1.png" alt="a2b Global Media">
+    </div>
+    <div class="eyebrow">Future Transport-News Client Dashboard</div>
+    <h1>Dashboard Guide</h1>
+    <p class="lead">Your dashboard shows what your package includes, what you have used and what is still to come. Watch the tour, then read each page below.</p>
+</header>
+
+<main>
+    <section class="player-wrap" aria-label="Guided tour">
+        <nav class="chapters" id="chapters" aria-label="Tour chapters"></nav>
+        <div class="player">
+            <div class="screen">
+                <div class="share-badge" aria-hidden="true">Screen sharing</div>
+                <div class="browser">
+                    <div class="chrome">
+                        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                        <div class="url"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 5V3.5a3 3 0 0 1 6 0V5h.5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-5a.5.5 0 0 1 .5-.5H3zm1.2 0h3.6V3.5a1.8 1.8 0 0 0-3.6 0V5z" fill="#5D6B73"/></svg><span id="url"></span><span class="caret" aria-hidden="true"></span></div>
+                    </div>
+                    <div class="viewport" id="viewport">
+                        <div class="layer" id="layer"><div class="ring" id="ring"></div></div>
+                        <svg class="cursor" id="cursor" viewBox="0 0 26 26" aria-hidden="true"><path d="M5 3l15 8.2-6.6 1.6 3.9 7.4-2.9 1.5-3.9-7.4L5 19z" fill="#fff" stroke="#111" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                        <div class="click" id="click"></div>
+                        <div class="loading" id="loading">Loading page…</div>
+                    </div>
+                </div>
+            </div>
+            <aside class="panel" aria-live="polite">
+                <div class="fade" id="caption">
+                    <div class="chap" id="cap-chap"></div>
+                    <h2 id="cap-title"></h2>
+                    <div class="body" id="cap-body"></div>
+                    <div class="spec" id="cap-spec"></div>
+                </div>
+                <div class="progress" id="progress"></div>
+                <div class="ctrl">
+                    <button id="prev" aria-label="Previous step"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button id="play" class="play" aria-label="Pause"><svg viewBox="0 0 24 24" id="play-icon"></svg></button>
+                    <button id="next" aria-label="Next step"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button id="sound" class="sound" aria-pressed="false" title="Read each step aloud" hidden><svg viewBox="0 0 24 24" id="sound-icon"></svg><span>Sound</span></button>
+                    <span class="count" id="count"></span>
+                    <a class="open" id="open" href="#" target="_blank" rel="noopener">Open page ↗</a>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <section class="ref" id="steps">
+        <h2>Page by page</h2>
+        <p>Every part of the tour, with the details you need. Select “Watch this part” to see it in the tour. The screens show an <a href="https://a2b-global-media-content-team.github.io/client-resources/FTN-example-dashboard.html">example dashboard</a> with dummy figures for a made-up client.</p>
+        <div class="howto" id="howto"></div>
+        <div class="help">
+            <h3>Need help?</h3>
+            <p>Ask the <strong>Content Team</strong> if you have not received your dashboard link, or if any of your details need changing. Talk to your <strong>Partnership Manager</strong> about your package or extra services.</p>
+            <p>See where your package appears on Future Transport-News in the <a href="https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html">Visual Guide</a>, and everything your package includes in the <a href="https://a2b-global-media-content-team.github.io/client-resources/FTN-welcome-pack.html">Welcome Pack</a>.</p>
+        </div>
+    </section>
+</main>
+
+<footer class="site-foot">
+    <img src="https://futuretransport-news.com/wp-content/uploads/sites/3/2025/08/Future-Transport-News-White-Logo-CLEAR.png" alt="Future Transport-News"><br>
+    <a href="https://futuretransport-news.com/" target="_blank" rel="noopener">futuretransport-news.com</a><span class="sep">|</span>
+    <a href="tel:+441392580002">+44 1392 580002</a><span class="sep">|</span>
+    <a href="mailto:contact@a2bglobalmedia.com">contact@a2bglobalmedia.com</a>
+</footer>
+
+<script>
+/* ──────────────────────────────────────────────────────────────
+   TOUR DATA
+   Each chapter shows one page (a full-page screenshot 1440px wide,
+   or an HTML mock-up). Each step points the "camera" at a box on
+   that page: box = [x, y, width, height] in page pixels.
+   zoom: 1 = fit page width; higher = closer.
+   ────────────────────────────────────────────────────────────── */
+const A = 'visual-guide-assets/';
+const CHAPTERS = [
+    {
+        name: "Your dashboard",
+        url: 'Your dashboard (example), page 1',
+        link: "https://a2b-global-media-content-team.github.io/client-resources/FTN-example-dashboard.html#page-1",
+        img: 'ftn-dash-p1.jpg', h: 1754,
+        alt: "Example Future Transport-News client dashboard, page 1: overview",
+        guide: `<p>Every client has their own online dashboard. It shows what your package includes, what you have used, what is booked and what is still to come, with the detail behind every item.</p>
+        <ol>
+            <li>The <strong>Content Team</strong> sends you the link: once your profile is live if you are a new client, or at the start of each new subscription period if you are renewing. Bookmark it.</li>
+            <li>At the top you see your <strong>package</strong> and your <strong>contract runtime</strong>.</li>
+            <li>Use the buttons for your documents, our resources, to email us or to subscribe to our newsletter.</li>
+            <li>Check the <strong>contact details</strong> we have for you: who we send materials to, the email address that gets your enquiries, and the news page we track for you.</li>
+            <li>See the dates of your <strong>quarterly review and renewal calls</strong> with your Partnership Manager.</li>
+            <li>Under <strong>What would you like to do?</strong> you can book features, submit content and book a call with your Partnership Manager or content writer.</li>
+        </ol>
+        <div class="tip"><strong>Move between pages</strong> with the page list on the left, or with the Home, Previous, Next and “More” buttons on the dashboard. The date at the bottom of each page shows when the figures were last updated.</div>`,
+        steps: [
+            {"title": "Your client dashboard", "box": [0, 0, 1440, 900], "top": true, "noRing": true, "dur": 7, "text": "Every client gets their own dashboard. The Content Team sends you the link once your profile is live, or at the start of each new subscription period. This example is filled with dummy figures for a made-up client."},
+            {"title": "Your package and contract", "box": [0, 0, 1440, 95], "zoom": 0.9, "text": "At the top you see your package and your contract runtime: the start and end dates of your current subscription."},
+            {"title": "Quick links", "box": [29, 115, 256, 301], "zoom": 1.7, "text": "Use these buttons to open your documents and our resources, to email us, or to subscribe to our newsletter."},
+            {"title": "Your contact details", "box": [297, 115, 432, 301], "zoom": 1.7, "text": "The people we send materials to, the email address that receives enquiries from your profile, and the news page we track for your press releases. Tell the Content Team if anything changes."},
+            {"title": "Percentage used", "box": [740, 115, 432, 301], "zoom": 1.7, "text": "How much of your package you have used so far in this contract period."},
+            {"title": "Your calls", "box": [29, 425, 694, 185], "zoom": 1.0, "text": "The dates of your quarterly review calls and your renewal call with your Partnership Manager, who is invited, and whether each call is accepted or still to be confirmed."},
+            {"title": "Extras and notes", "box": [29, 642, 694, 78], "zoom": 1.0, "text": "Anything added to your package, such as an extra targeted mail. Notes from your Partnership Manager show under Client Notes, on the right."},
+            {"title": "What would you like to do?", "box": [734, 540, 694, 276], "zoom": 1.0, "text": "Book in a targeted mail, social media banner post or homepage banner, view your profile, submit content and assets, or book a call with your Partnership Manager or content writer."}
+        ]
+    },
+    {
+        name: "Your package at a glance",
+        url: 'Your dashboard (example), page 1',
+        link: "https://a2b-global-media-content-team.github.io/client-resources/FTN-example-dashboard.html#page-1",
+        img: 'ftn-dash-p1.jpg', h: 1754,
+        alt: "Example Future Transport-News client dashboard: your package at a glance",
+        guide: `<p>The lower half of the first page counts every feature in your package for your contract period.</p>
+        <ol>
+            <li><strong>In contract</strong> is what your package includes, <strong>Used</strong> is what we have delivered, and <strong>Booked</strong> is what is scheduled.</li>
+            <li><strong>Remaining</strong> is what is still to use. A red box means you still have some left. A green box means you have used it all.</li>
+            <li><strong>N/A</strong> means that figure does not apply. For example, Products &amp; Services positions run all year, so there is nothing to book.</li>
+            <li>The two boxes on the right count your news, PDFs and videos, and your magazine, content writing and interviews.</li>
+            <li>Use <strong>Page 2: More</strong>, <strong>Page 3: More</strong> and <strong>Page 4: More</strong> to see the details.</li>
+        </ol>
+        <div class="tip"><strong>Something still to use?</strong> Book it with the buttons under “What would you like to do?”, or ask the Content Team.</div>`,
+        steps: [
+            {"title": "Your package at a glance", "box": [29, 825, 694, 656], "zoom": 0.9, "text": "Every feature in your package, with what is in your contract, what you have used, what is booked and what is left."},
+            {"title": "In contract, used and booked", "box": [42, 964, 668, 29], "zoom": 1.1, "text": "In contract is what your package includes. Used is what we have delivered. Booked is what is already scheduled."},
+            {"title": "What is left", "box": [561, 964, 149, 493], "zoom": 1.1, "text": "Remaining shows what you still have to use. Red means you still have some left, so book it in. Green means you have used it all. N/A means it does not apply."},
+            {"title": "More detail", "box": [572, 909, 138, 37], "zoom": 1.8, "text": "Page 2 shows every banner and targeted mail in detail."},
+            {"title": "Your profile content", "box": [734, 894, 694, 246], "zoom": 1.0, "text": "How many news items, PDFs and videos are on your profile. Page 4 lists them all."},
+            {"title": "Your other dashboards", "box": [1243, 978, 167, 40], "zoom": 1.8, "text": "If your company is on more than one of our sites, you have a dashboard for each. Click a circle to open it. In this example they link to the Railway, Airport and Bus examples."},
+            {"title": "Magazine, content writing and interviews", "box": [734, 1152, 694, 329], "zoom": 1.0, "text": "Your magazine appearances, content writing and interviews. Page 3 has the details."},
+            {"title": "Features carried over", "box": [29, 1495, 1400, 67], "zoom": 0.9, "text": "If you carried features over from a previous contract, they may show as used here. You still get your full package for this contract period."}
+        ]
+    },
+    {
+        name: "Banners and targeted mail",
+        url: 'Your dashboard (example), page 2',
+        link: "https://a2b-global-media-content-team.github.io/client-resources/FTN-example-dashboard.html#page-2",
+        img: 'ftn-dash-p2.jpg', h: 3309,
+        alt: "Example Future Transport-News client dashboard, page 2: banners and targeted mail",
+        guide: `<p>Page 2 shows every banner and targeted mail in detail.</p>
+        <ol>
+            <li>Each feature has its own section. On the right you see what is <strong>in your package</strong>, what is <strong>used</strong> and what is <strong>booked</strong>.</li>
+            <li>The tables list each item we have run for you, with the date and links, so you can open the newsletter, LinkedIn post or campaign.</li>
+            <li><strong>Your banner bookings</strong> show the newsletter banners that are scheduled, with the date and the banner.</li>
+            <li>Your <strong>Products &amp; Services banners</strong> and <strong>featured supplier positions</strong> list the category pages they appear on.</li>
+        </ol>`,
+        steps: [
+            {"title": "Banners and targeted mail", "box": [0, 0, 1440, 900], "top": true, "noRing": true, "text": "Page 2 shows every banner and targeted mail in detail. Use Home and Next to move between pages."},
+            {"title": "Targeted mails", "box": [12, 109, 1428, 383], "zoom": 0.9, "text": "Every targeted mail we have sent for you, with the date and a link to the campaign. Bookings show on the right."},
+            {"title": "In package, used, booked", "box": [1261, 225, 158, 247], "zoom": 1.8, "text": "Each section shows what is in your package, what is used and what is booked."},
+            {"title": "Social media banners", "box": [12, 492, 1428, 348], "zoom": 0.9, "text": "Each social media banner post: the link on your banner and the LinkedIn post."},
+            {"title": "Homepage banner", "box": [12, 841, 1428, 362], "zoom": 0.9, "text": "Your homepage banner, as it appears on our homepage."},
+            {"title": "Newsletter banners", "box": [12, 1203, 1428, 523], "zoom": 0.9, "text": "Every newsletter your banner appeared in, with the date sent, your banner link and the newsletter."},
+            {"title": "Your banner bookings", "box": [793, 1335, 442, 178], "zoom": 1.6, "text": "The newsletter banners that are scheduled, with the date and the banner we will use."},
+            {"title": "Products & Services banners", "box": [12, 1726, 1428, 353], "zoom": 0.9, "text": "Your banner and the Products & Services pages it appears on, with the link it opens."},
+            {"title": "News pages banner", "box": [12, 2079, 1428, 353], "zoom": 0.9, "text": "Your banner on our news pages."},
+            {"title": "Featured supplier positions", "box": [12, 2432, 1428, 337], "zoom": 0.9, "text": "The Products & Services pages where your company is a featured supplier."},
+            {"title": "Graphic design", "box": [12, 2769, 1428, 348], "zoom": 0.9, "text": "Any graphic design we have done for you, if your package includes it."}
+        ]
+    },
+    {
+        name: "Content writing and interviews",
+        url: 'Your dashboard (example), page 3',
+        link: "https://a2b-global-media-content-team.github.io/client-resources/FTN-example-dashboard.html#page-3",
+        img: 'ftn-dash-p3.jpg', h: 2001,
+        alt: "Example Future Transport-News client dashboard, page 3",
+        guide: `<p>Page 3 shows your content writing and interviews.</p>
+        <ol>
+            <li>Future Transport-News does not publish a magazine, so the magazine sections stay empty.</li>
+            <li>Your <strong>content writing</strong> lists the articles we have written for you, if your package includes content writing.</li>
+            <li><strong>Interviews</strong> lists any interviews we have done with you.</li>
+        </ol>`,
+        steps: [
+            {"title": "Content writing and interviews", "box": [0, 0, 1440, 900], "top": true, "noRing": true, "text": "Page 3 shows your content writing and interviews. Future Transport-News does not publish a magazine, so the magazine sections stay empty."},
+            {"title": "Content writing", "box": [12, 1112, 1428, 348], "zoom": 0.9, "text": "The articles our content writer has written for you, if your package includes content writing."},
+            {"title": "Interviews", "box": [12, 1460, 1428, 348], "zoom": 0.9, "text": "Any interviews we have done with you."}
+        ]
+    },
+    {
+        name: "Your profile",
+        url: 'Your dashboard (example), page 4',
+        link: "https://a2b-global-media-content-team.github.io/client-resources/FTN-example-dashboard.html#page-4",
+        img: 'ftn-dash-p4.jpg', h: 1403,
+        alt: "Example Future Transport-News client dashboard, page 4: your profile",
+        guide: `<p>Page 4 shows everything on your company profile.</p>
+        <ol>
+            <li><strong>Your supplier news activity feed</strong> lists every news item on your profile, with the publication date. Click a title to open it.</li>
+            <li><strong>Your documents</strong> and <strong>your videos</strong> list the PDFs and videos on your profile.</li>
+            <li><strong>All your Products &amp; Services categories</strong> lists the category pages your company is listed on, with a count.</li>
+            <li>Use the <strong>Your Profile</strong> button to open your company page.</li>
+        </ol>`,
+        steps: [
+            {"title": "Your news", "box": [35, 287, 1385, 371], "zoom": 0.9, "text": "Every news item on your profile, newest first, with the publication date. Click a title to open it."},
+            {"title": "Open your profile", "box": [35, 225, 1385, 62], "zoom": 0.9, "text": "This button opens your company page on our site."},
+            {"title": "Your documents and videos", "box": [35, 766, 1385, 110], "zoom": 0.9, "text": "The PDFs and videos on your profile. Send new ones to the Content Team."},
+            {"title": "Your categories", "box": [12, 897, 1428, 315], "zoom": 0.9, "text": "Every Products & Services category your company is listed in, with a count. You choose these in Manage My Page."}
+        ]
+    },
+    {
+        name: "Newsletter and social media",
+        url: 'Your dashboard (example), page 5',
+        link: "https://a2b-global-media-content-team.github.io/client-resources/FTN-example-dashboard.html#page-5",
+        img: 'ftn-dash-p5.jpg', h: 1102,
+        alt: "Example Future Transport-News client dashboard, page 5: your news in our newsletter and on social media",
+        guide: `<p>Page 5 shows where we have shared your news.</p>
+        <ol>
+            <li><strong>Your supplier news in our newsletter</strong> lists each news item that featured in our newsletter, with the date sent and a link to the newsletter.</li>
+            <li><strong>Your supplier news on social media</strong> lists each news item we shared on our LinkedIn page, with a link.</li>
+        </ol>`,
+        steps: [
+            {"title": "Your news in our newsletter", "box": [12, 109, 1428, 412], "zoom": 0.9, "text": "Each of your news items that featured in our newsletter, with the date sent, the article and the newsletter it was in."},
+            {"title": "Your news on social media", "box": [12, 522, 1428, 389], "zoom": 0.9, "text": "Each of your news items we shared on our LinkedIn page, with the date and a link."}
+        ]
+    },
+];
+
+/* ── ENGINE ──────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const viewport = $('viewport'), layer = $('layer'), ring = $('ring'), cursor = $('cursor'), click = $('click');
+const STEPS = [];
+CHAPTERS.forEach((c, ci) => c.steps.forEach((s, si) => STEPS.push({ ...s, ci, si })));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let idx = 0, playing = !reduced, timer = null, pageCi = -1, typeTimer = null;
+let cursorPos = { x: 40, y: 40 };
+
+// Page elements, one per chapter, built once
+const pages = CHAPTERS.map(c => {
+    let el;
+    if (c.html) { el = document.createElement('div'); el.className = 'html-page'; el.innerHTML = c.html; }
+    else { el = new Image(); el.className = 'page'; el.alt = c.alt || ''; el.decoding = 'async'; el.loading = 'eager'; }
+    el.style.display = 'none';
+    layer.insertBefore(el, ring);
+    return el;
+});
+
+// Chapter buttons
+CHAPTERS.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.innerHTML = `<span class="n">${i + 1}</span>${c.name}`;
+    b.onclick = () => go(STEPS.findIndex(s => s.ci === i), true);
+    $('chapters').appendChild(b);
+});
+
+const icon = p => $('play-icon').innerHTML = p
+    ? '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/>'
+    : '<path d="M8 5l11 7-11 7z" fill="currentColor"/>';
+
+function typeUrl(text) {
+    clearInterval(typeTimer);
+    const el = $('url');
+    if (reduced) { el.textContent = text; return; }
+    let i = 0; el.textContent = '';
+    typeTimer = setInterval(() => { el.textContent = text.slice(0, ++i); if (i >= text.length) clearInterval(typeTimer); }, 22);
+}
+
+function showPage(ci) {
+    if (ci === pageCi) return Promise.resolve(false);
+    const c = CHAPTERS[ci], el = pages[ci];
+    pages.forEach((p, i) => p.style.display = i === ci ? 'block' : 'none');
+    pageCi = ci;
+    typeUrl(c.url);
+    $('open').href = c.link || ('https://' + c.url);
+    $('open').style.visibility = c.link === null ? 'hidden' : 'visible';
+    if (c.html) { $('loading').classList.add('hide'); return Promise.resolve(true); }
+    $('loading').classList.remove('hide');
+    return new Promise(res => {
+        const done = () => { $('loading').classList.add('hide'); res(true); };
+        if (el.src && el.complete) return done();
+        el.onload = done; el.onerror = done;
+        if (!el.src) el.src = A + c.img;
+    });
+}
+
+function pageHeight(ci) {
+    const c = CHAPTERS[ci];
+    return c.h || pages[ci].offsetHeight || 4000;
+}
+
+// Camera: fit `box` into the viewport at `zoom`, clamp to the page edges
+function camera(step, animate) {
+    const vw = viewport.clientWidth, vh = viewport.clientHeight;
+    const base = vw / 1440;
+    const [bx, by, bw, bh] = step.box || [0, 0, 1440, vh / base];
+    let s = base * (step.zoom || 1);
+    // never zoom so far that the box no longer fits
+    s = Math.min(s, (vw * 0.92) / bw, (vh * 0.86) / bh);
+    s = Math.max(s, base * 0.5);              // zoom out past full width if a tall box needs it
+    const H = pageHeight(step.ci) * s, W = 1440 * s;
+    let tx = vw / 2 - (bx + bw / 2) * s, ty = vh / 2 - (by + bh / 2) * s;
+    if (step.top) ty = -by * s + 20;
+    tx = W <= vw ? (vw - W) / 2 : Math.min(0, Math.max(vw - W, tx));
+    ty = H <= vh ? (vh - H) / 2 : Math.min(0, Math.max(vh - H, ty));
+    layer.classList.toggle('anim', animate && !reduced);
+    layer.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+
+    if (step.box && !step.noRing) {
+        Object.assign(ring.style, { left: bx - 10 + 'px', top: by - 10 + 'px', width: bw + 20 + 'px', height: bh + 20 + 'px' });
+        ring.classList.add('on');
+        // cursor goes to the lower-right part of the box, as seen on screen
+        const cx = tx + (bx + bw * 0.62) * s, cy = ty + (by + bh * 0.6) * s;
+        moveCursor(Math.min(vw - 30, Math.max(10, cx)), Math.min(vh - 30, Math.max(10, cy)), true);
+    } else {
+        ring.classList.remove('on');
+        moveCursor(vw * 0.55, vh * 0.35, false);
+    }
+}
+
+function moveCursor(x, y, doClick) {
+    cursorPos = { x, y };
+    cursor.style.transform = `translate(${x}px, ${y}px)`;
+    if (doClick && !reduced) setTimeout(() => {
+        click.style.left = x + 4 + 'px'; click.style.top = y + 4 + 'px';
+        click.classList.remove('go'); void click.offsetWidth; click.classList.add('go');
+    }, 1400);
+}
+
+function caption(step) {
+    const c = CHAPTERS[step.ci];
+    const cap = $('caption');
+    cap.classList.remove('fade'); void cap.offsetWidth; cap.classList.add('fade');
+    $('cap-chap').textContent = `${step.ci + 1}. ${c.name}`;
+    $('cap-title').textContent = step.title;
+    $('cap-body').innerHTML = step.text;
+    $('cap-spec').innerHTML = (step.spec || []).map(s => `<span>${s}</span>`).join('');
+    $('count').textContent = `Step ${idx + 1} of ${STEPS.length}`;
+    [...$('chapters').children].forEach((b, i) => b.setAttribute('aria-current', i === step.ci ? 'true' : 'false'));
+    const cur = $('chapters').children[step.ci];
+    cur.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' });
+}
+
+function progress(step) {
+    const inChap = STEPS.filter(s => s.ci === step.ci);
+    const dur = stepDur(step) + 's';
+    $('progress').innerHTML = inChap.map(s => `<i class="${s.si < step.si ? 'done' : s.si === step.si ? 'now' : ''}" style="--dur:${dur}"></i>`).join('');
+    $('progress').classList.toggle('paused', !playing);
+}
+
+async function go(i, user) {
+    idx = (i + STEPS.length) % STEPS.length;
+    const step = STEPS[idx];
+    clearTimeout(timer);
+    caption(step); progress(step); narrate(step);
+    const fresh = await showPage(step.ci);
+    if (STEPS[idx] !== step) return;          // user moved on while the page loaded
+    if (fresh) {
+        // start a new page at the top, then glide to the first focus
+        camera({ ci: step.ci }, false);
+        await new Promise(r => setTimeout(r, reduced ? 0 : 450));
+    }
+    camera(step, true);
+    schedule();
+}
+
+function schedule() {
+    clearTimeout(timer);
+    if (!playing) return;
+    // While the voice reads, its end moves the tour on; this is only a fallback.
+    const wait = soundOn && speaking ? speechSecs(STEPS[idx]) + 6 : stepDur(STEPS[idx]);
+    timer = setTimeout(() => go(idx + 1), wait * 1000);
+}
+
+/* ── NARRATION ─────────────────────────────────────────────────── */
+const synth = window.speechSynthesis;
+let soundOn = false, speaking = false, utter = null, stepT0 = 0, voice = null;
+
+function spoken(step) {
+    const d = document.createElement('div');
+    d.innerHTML = (step.title + '. ' + step.text).replace(/<\/li>/g, '. ');
+    return d.textContent.replace(/×/g, 'the cross').replace(/\(s\)/g, 's').replace(/ \/ /g, ' of ').replace(/\+(?=\s|$|,)/g, ' plus').replace(/\s+/g, ' ').trim();
+}
+const speechSecs = step => spoken(step).split(' ').length / 2.6 + 1.5;
+const stepDur = step => soundOn ? Math.max(step.dur || 7, Math.ceil(speechSecs(step))) : (step.dur || 7);
+
+function pickVoice() {
+    const all = synth.getVoices();
+    const like = ['Google UK English Female', 'Microsoft Sonia', 'Microsoft Libby', 'Serena', 'Kate', 'Martha', 'Daniel', 'Google UK English Male'];
+    voice = like.map(n => all.find(v => v.name.startsWith(n))).find(Boolean)
+        || all.find(v => v.lang === 'en-GB') || all.find(v => v.lang.startsWith('en')) || null;
+}
+
+function hush() { speaking = false; utter = null; if (synth) synth.cancel(); }
+
+function narrate(step) {
+    stepT0 = performance.now();
+    if (!soundOn || !synth) return;
+    hush();
+    const u = new SpeechSynthesisUtterance(spoken(step));
+    u.lang = 'en-GB'; if (voice) u.voice = voice;
+    u.onend = u.onerror = () => {
+        if (utter !== u) return;           // a newer step took over
+        speaking = false; utter = null;
+        if (!playing) return;
+        const left = (step.dur || 7) * 1000 - (performance.now() - stepT0);
+        clearTimeout(timer);
+        timer = setTimeout(() => go(idx + 1), Math.max(1200, left));
+    };
+    utter = u; speaking = true;
+    synth.speak(u);
+}
+
+const soundIcon = on => $('sound-icon').innerHTML = '<path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>' + (on
+    ? '<path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+    : '<path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>');
+
+if (synth) {
+    pickVoice(); synth.addEventListener?.('voiceschanged', pickVoice);
+    $('sound').hidden = false; soundIcon(false);
+    $('sound').onclick = () => {
+        soundOn = !soundOn;
+        $('sound').setAttribute('aria-pressed', soundOn);
+        $('sound').title = soundOn ? 'Stop reading aloud' : 'Read each step aloud';
+        soundIcon(soundOn);
+        if (soundOn) narrate(STEPS[idx]); else hush();
+        progress(STEPS[idx]); schedule();
+    };
+}
+
+function setPlaying(p) {
+    playing = p; icon(p);
+    if (p) narrate(STEPS[idx]); else hush();
+    $('play').setAttribute('aria-label', p ? 'Pause' : 'Play');
+    $('progress').classList.toggle('paused', !p);
+    if (p) { progress(STEPS[idx]); schedule(); } else clearTimeout(timer);
+}
+
+$('play').onclick = () => setPlaying(!playing);
+$('next').onclick = () => { go(idx + 1, true); };
+$('prev').onclick = () => { go(idx - 1, true); };
+document.addEventListener('keydown', e => {
+    if (e.target.closest('input, textarea')) return;
+    if (e.key === 'ArrowRight') go(idx + 1, true);
+    else if (e.key === 'ArrowLeft') go(idx - 1, true);
+    else if (e.key === ' ' && e.target === document.body) { e.preventDefault(); setPlaying(!playing); }
+});
+let resizeT; addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(() => camera(STEPS[idx], false), 120); });
+
+// Pause the tour while it is off screen
+new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting && playing) { clearTimeout(timer); hush(); $('progress').classList.add('paused'); }
+    else if (e.isIntersecting && playing) { progress(STEPS[idx]); narrate(STEPS[idx]); schedule(); }
+}, { threshold: 0.35 }).observe(viewport);
+
+// Page-by-page cards
+CHAPTERS.forEach((c, ci) => {
+    const card = document.createElement('article');
+    card.className = 'stepcard';
+    card.id = 'part-' + (ci + 1);
+    card.innerHTML = `<div class="num">${ci + 1}</div><h3>${c.name}</h3>${c.guide}<button class="watch">Watch this part ▸</button>`;
+    card.querySelector('.watch').onclick = () => { go(STEPS.findIndex(s => s.ci === ci), true); document.querySelector('.player-wrap').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); };
+    $('howto').appendChild(card);
+});
+
+// Preload the remaining screenshots after the first one
+icon(playing);
+go(0).then(() => CHAPTERS.forEach((c, i) => { if (!c.html && !pages[i].src) setTimeout(() => pages[i].src = A + c.img, 1500 + i * 400); }));
+</script>
+</body>
+</html>
