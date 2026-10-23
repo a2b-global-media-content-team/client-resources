@@ -351,9 +351,9 @@ const CHAPTERS = [
             {"title": "Quick links", "box": [29, 115, 256, 301], "zoom": 1.7, "text": "Use these buttons to open your documents and our resources, to email us, or to subscribe to our newsletter."},
             {"title": "Your contact details", "box": [297, 115, 432, 301], "zoom": 1.7, "text": "The people we send materials to, the email address that receives enquiries from your profile, and the news page we track for your press releases. Tell the Content Team if anything changes."},
             {"title": "Percentage used", "box": [740, 115, 432, 301], "zoom": 1.7, "text": "How much of your package you have used so far in this contract period."},
-            {"title": "Your calls", "box": [29, 425, 694, 185], "zoom": 1.0, "text": "The dates of your quarterly review calls and your renewal call with your Partnership Manager, who is invited, and whether each call is accepted or still to be confirmed."},
+            {"title": "Your calls", "box": [29, 425, 694, 185], "zoom": 1.0, "text": "The dates of your quarterly review calls and your renewal call with your Partnership Manager, and whether each call is accepted or still to be confirmed."},
             {"title": "Extras and notes", "box": [29, 642, 694, 78], "zoom": 1.0, "text": "Anything added to your package, such as an extra targeted mail. Notes from your Partnership Manager show under Client Notes, on the right."},
-            {"title": "What would you like to do?", "box": [734, 540, 694, 276], "zoom": 1.0, "text": "Book in a targeted mail, social media banner post or homepage banner, view your profile, submit content and assets, or book a call with your Partnership Manager or content writer."}
+            {"title": "What would you like to do?", "box": [907, 588, 513, 228], "zoom": 1.4, "text": "Book in a targeted mail, social media banner post or homepage banner, view your profile, submit content and assets, or book a call with your Partnership Manager or content writer."}
         ]
     },
     {
@@ -366,7 +366,7 @@ const CHAPTERS = [
         <ol>
             <li><strong>In contract</strong> is what your package includes, <strong>Used</strong> is what we have delivered, and <strong>Booked</strong> is what is scheduled.</li>
             <li><strong>Remaining</strong> is what is still to use. A red box means you still have some left. A green box means you have used it all.</li>
-            <li><strong>N/A</strong> means that figure does not apply. For example, Products &amp; Services positions run all year, so there is nothing to book.</li>
+            <li><strong>N/A</strong> means it cannot be booked. For example, Products &amp; Services positions run all year, so there is nothing to book.</li>
             <li>The two boxes on the right count your news, PDFs and videos, and your magazine, content writing and interviews.</li>
             <li>Use <strong>Page 2: More</strong>, <strong>Page 3: More</strong> and <strong>Page 4: More</strong> to see the details.</li>
         </ol>
@@ -374,7 +374,7 @@ const CHAPTERS = [
         steps: [
             {"title": "Your package at a glance", "box": [29, 825, 694, 656], "zoom": 0.9, "text": "Every feature in your package, with what is in your contract, what you have used, what is booked and what is left."},
             {"title": "In contract, used and booked", "box": [42, 964, 668, 29], "zoom": 1.1, "text": "In contract is what your package includes. Used is what we have delivered. Booked is what is already scheduled."},
-            {"title": "What is left", "box": [561, 964, 149, 493], "zoom": 1.1, "text": "Remaining shows what you still have to use. Red means you still have some left, so book it in. Green means you have used it all. N/A means it does not apply."},
+            {"title": "What is left", "box": [561, 964, 149, 493], "zoom": 1.1, "text": "Remaining shows what you still have to use. Red means you still have some left, so book it in. Green means you have used it all. N/A means it cannot be booked."},
             {"title": "More detail", "box": [572, 909, 138, 37], "zoom": 1.8, "text": "Page 2 shows every banner and targeted mail in detail."},
             {"title": "Your profile content", "box": [734, 894, 694, 246], "zoom": 1.0, "text": "How many news items, PDFs and videos are on your profile. Page 4 lists them all."},
             {"title": "Your other dashboards", "box": [1243, 978, 167, 40], "zoom": 1.8, "text": "If your company is on more than one of our sites, you have a dashboard for each. Click a circle to open it. In this example they link to the Airport, Future and Bus examples."},
@@ -386,7 +386,7 @@ const CHAPTERS = [
         name: "Banners and targeted mail",
         url: 'Your dashboard (example), page 2',
         link: "https://a2b-global-media-content-team.github.io/client-resources/RN-example-dashboard.html#page-2",
-        img: 'rn-dash-p2.jpg', h: 3309,
+        img: 'rn-dash-p2.jpg', h: 3317,
         alt: "Example Railway-News client dashboard, page 2: banners and targeted mail",
         guide: `<p>Page 2 shows every banner and targeted mail in detail.</p>
         <ol>
@@ -400,20 +400,20 @@ const CHAPTERS = [
             {"title": "Targeted mails", "box": [12, 109, 1428, 383], "zoom": 0.9, "text": "Every targeted mail we have sent for you, with the date and a link to the campaign. Bookings show on the right."},
             {"title": "In package, used, booked", "box": [1261, 225, 158, 247], "zoom": 1.8, "text": "Each section shows what is in your package, what is used and what is booked."},
             {"title": "Social media banners", "box": [12, 492, 1428, 348], "zoom": 0.9, "text": "Each social media banner post: the link on your banner and the LinkedIn post."},
-            {"title": "Homepage banner", "box": [12, 841, 1428, 362], "zoom": 0.9, "text": "Your homepage banner, as it appears on our homepage."},
-            {"title": "Newsletter banners", "box": [12, 1203, 1428, 523], "zoom": 0.9, "text": "Every newsletter your banner appeared in, with the date sent, your banner link and the newsletter."},
-            {"title": "Your banner bookings", "box": [793, 1335, 442, 178], "zoom": 1.6, "text": "The newsletter banners that are scheduled, with the date and the banner we will use."},
-            {"title": "Products & Services banners", "box": [12, 1726, 1428, 353], "zoom": 0.9, "text": "Your banner and the Products & Services pages it appears on, with the link it opens."},
-            {"title": "News pages banner", "box": [12, 2079, 1428, 353], "zoom": 0.9, "text": "Your banner on our news pages."},
-            {"title": "Featured supplier positions", "box": [12, 2432, 1428, 337], "zoom": 0.9, "text": "The Products & Services pages where your company is a featured supplier."},
-            {"title": "Graphic design", "box": [12, 2769, 1428, 348], "zoom": 0.9, "text": "Any graphic design we have done for you, if your package includes it."}
+            {"title": "Homepage banner", "box": [12, 841, 1428, 369], "zoom": 0.9, "text": "Your homepage banner, as it appears on our homepage."},
+            {"title": "Newsletter banners", "box": [12, 1210, 1428, 523], "zoom": 0.9, "text": "Every newsletter your banner appeared in, with the date sent, your banner link and the newsletter."},
+            {"title": "Your banner bookings", "box": [793, 1342, 442, 178], "zoom": 1.6, "text": "The newsletter banners that are scheduled, with the date and the banner we will use."},
+            {"title": "Products & Services banners", "box": [12, 1733, 1428, 353], "zoom": 0.9, "text": "Your banner and the Products & Services pages it appears on, with the link it opens."},
+            {"title": "News pages banner", "box": [12, 2086, 1428, 353], "zoom": 0.9, "text": "Your banner on our news pages."},
+            {"title": "Featured supplier positions", "box": [12, 2439, 1428, 337], "zoom": 0.9, "text": "The Products & Services pages where your company is a featured supplier."},
+            {"title": "Graphic design", "box": [12, 2776, 1428, 348], "zoom": 0.9, "text": "Any graphic design we have done for you, if your package includes it."}
         ]
     },
     {
         name: "Magazines and content writing",
         url: 'Your dashboard (example), page 3',
         link: "https://a2b-global-media-content-team.github.io/client-resources/RN-example-dashboard.html#page-3",
-        img: 'rn-dash-p3.jpg', h: 2240,
+        img: 'rn-dash-p3.jpg', h: 2241,
         alt: "Example Railway-News client dashboard, page 3",
         guide: `<p>Page 3 shows your magazine content, content writing and interviews.</p>
         <ol>

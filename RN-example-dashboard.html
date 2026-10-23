@@ -100,6 +100,8 @@
         .banner .h { font-size: 18px; line-height: 1.05; font-style: italic; text-transform: uppercase; }
         .banner .cta { align-self: flex-start; background: #1F1F1F; font-size: 9px; padding: 4px 6px; letter-spacing: 0.4px; }
         .banner .co { color: #0F5C6E; font-size: 11px; align-self: flex-end; }
+        .banner.wide { width: 360px; aspect-ratio: 2 / 1; }   /* homepage banner, 1024 × 512 */
+        .banner.wide .h { font-size: 22px; }
         .banner.mini { width: 46px; padding: 3px; }
         .banner.mini .h { font-size: 5px; }
         .banner.mini .cta, .banner.mini .co { display: none; }
@@ -278,7 +280,7 @@
                 </div>
                 <p class="disclaimer">*Disclaimer: your 'used' features may be roll-over features from your previous contract (features from your previous contract used in this contract period). You will still get all your full package features for this contract period.</p>
             </div>
-            <div class="footbar"><img src="stats-report-assets/dashboard-footer-logos.png" alt="Railway-News, Airport Industry-News, a2b Global Media, Bus-News, Future Transport-News" width="1205" height="80"></div>
+            <div class="footbar"><img src="stats-report-assets/network-logos-banner.png" alt="The a2b Global Media network: Railway-News, Aviation Industry-News, Bus-News, Future Transport-News and Maritime Industry-News" width="1200" height="80"></div>
             <div class="updated" data-updated></div>
         </section>
 
@@ -326,7 +328,7 @@
                 <div class="block"><div><p class="used-title">Your used graphic designs:</p><table class="tbl" id="t-design"></table></div>
                     <div class="counts" data-counts="design"></div></div>
             </div>
-            <div class="footbar"><img src="stats-report-assets/dashboard-footer-logos.png" alt="Railway-News, Airport Industry-News, a2b Global Media, Bus-News, Future Transport-News" width="1205" height="80"></div>
+            <div class="footbar"><img src="stats-report-assets/network-logos-banner.png" alt="The a2b Global Media network: Railway-News, Aviation Industry-News, Bus-News, Future Transport-News and Maritime Industry-News" width="1200" height="80"></div>
             <div class="updated" data-updated></div>
         </section>
 
@@ -359,7 +361,7 @@
                 <div class="sec"><h2>Interviews</h2></div>
                 <div class="block"><div><p class="used-title">Your used interviews:</p><table class="tbl" id="t-interviews"></table></div><div class="counts" data-counts="interviews"></div></div>
             </div>
-            <div class="footbar"><img src="stats-report-assets/dashboard-footer-logos.png" alt="Railway-News, Airport Industry-News, a2b Global Media, Bus-News, Future Transport-News" width="1205" height="80"></div>
+            <div class="footbar"><img src="stats-report-assets/network-logos-banner.png" alt="The a2b Global Media network: Railway-News, Aviation Industry-News, Bus-News, Future Transport-News and Maritime Industry-News" width="1200" height="80"></div>
             <div class="updated" data-updated></div>
         </section>
 
@@ -383,7 +385,7 @@
                 <div class="sec"><h2>All Your Products &amp; Services Categories</h2></div>
                 <div class="block"><div style="padding-top:20px"><table class="tbl" id="t-cats"></table></div><div class="counts"><div><span>Count</span><b id="v-cat-count"></b></div></div></div>
             </div>
-            <div class="footbar"><img src="stats-report-assets/dashboard-footer-logos.png" alt="Railway-News, Airport Industry-News, a2b Global Media, Bus-News, Future Transport-News" width="1205" height="80"></div>
+            <div class="footbar"><img src="stats-report-assets/network-logos-banner.png" alt="The a2b Global Media network: Railway-News, Aviation Industry-News, Bus-News, Future Transport-News and Maritime Industry-News" width="1200" height="80"></div>
             <div class="updated" data-updated></div>
         </section>
 
@@ -403,7 +405,7 @@
                         <table class="tbl" id="t-social-news"></table>
                     </div><div class="counts"><div><span>Count</span><b id="v-sn-count"></b></div></div></div>
             </div>
-            <div class="footbar"><img src="stats-report-assets/dashboard-footer-logos.png" alt="Railway-News, Airport Industry-News, a2b Global Media, Bus-News, Future Transport-News" width="1205" height="80"></div>
+            <div class="footbar"><img src="stats-report-assets/network-logos-banner.png" alt="The a2b Global Media network: Railway-News, Aviation Industry-News, Bus-News, Future Transport-News and Maritime Industry-News" width="1200" height="80"></div>
             <div class="updated" data-updated></div>
         </section>
     </main>
@@ -629,7 +631,7 @@ table('t-tm-booked', [['Date Booked', '100%', 'sort']], TM_BOOKED.map(r => [esc(
 table('t-social', [['Banner Link', '42%', 'sortup'], ['LinkedIn Post', '42%'], ['Post no.', '16%', 'num']], SOCIAL_USED.map(r => [link(r[0]), link(r[1]), esc(r[2])]));
 table('t-social-booked', [['Date Booked', '100%', 'sort num']], SOCIAL_BOOKED.map(r => [esc(r[0])]));
 $('hp-area').innerHTML = HP_USED.length
-    ? `<div class="banner" style="margin-top:6px"><span class="h">Smarter Depot Lifting</span><span class="cta">EXPLORE MORE</span><span class="co">YOUR COMPANY</span></div>`
+    ? `<div class="banner wide" style="margin-top:6px"><span class="h">Smarter Depot Lifting</span><span class="cta">EXPLORE MORE</span><span class="co">YOUR COMPANY</span></div>`
     : '<p style="padding:4px 0 0 80px;font-size:11px">No data</p>';
 table('t-nl-used', [['Date Sent', '20%', 'sort'], ['Banner Links', '36%'], ['Newsletter Links', '44%']], NL_USED.map(r => [esc(r[0]), link(r[1]), link(r[2])]));
 table('t-nl-booked', [['Date Scheduled', '58%', 'sort num'], ['Banner', '42%']],
