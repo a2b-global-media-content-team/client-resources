@@ -265,9 +265,14 @@
         .enq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
         .enq { border-left: 4px solid var(--orange); background: #FBFCFD; border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 15px; }
         .enq small { display: block; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; margin-bottom: 4px; }
+        .quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+        .quote { border: 1px solid var(--rule); border-radius: 10px; background: #FBFCFD; padding: 16px 18px; font-size: 15px; }
+        .quote p::before { content: '“'; font-size: 30px; line-height: 0; vertical-align: -10px; color: var(--orange); margin-right: 2px; }
+        .quote cite { display: block; margin-top: 10px; font-style: normal; font-size: 13.5px; color: var(--muted); }
+        .quote cite b { color: var(--navy); }
         .contact-card { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
         @media screen and (max-width: 760px) {
-            .numbers-grid, .enq-grid, .contact-card { grid-template-columns: 1fr; }
+            .numbers-grid, .enq-grid, .quotes, .contact-card { grid-template-columns: 1fr; }
             .showcase { margin-right: 34px; }
             .phone { right: -34px; width: 30%; border-width: 4px; border-radius: 14px; }
             .stats { grid-template-columns: 1fr; }
@@ -275,12 +280,13 @@
             .bar { grid-template-columns: 110px 1fr 50px; font-size: 13px; }
         }
         @media print {
-            .stats, .svc, .enq-grid, .covers, .bar, table.pkg tr { break-inside: avoid; }
-            .block h2, .period, .stats { break-after: avoid; }
+            .stats, .svc, .enq-grid, .covers, .bar, .quote, table.pkg tr { break-inside: avoid; }
+            .block h2, .period, .stats, table.pkg tr.group { break-after: avoid; }
             #numbers, #services { break-before: page; }
+            .quote { padding: 12px 14px; font-size: 13.5px; }
             .showcase { width: 58%; margin: 10px auto 32px; }
             .welcome .sisters { margin-top: 14px; padding-top: 12px; }
-            #numbers, #services, #bolt-ons, #calendar, #enquiries, #contact { break-inside: avoid; }
+            #numbers, #services, #bolt-ons, #calendar, #testimonials, #enquiries, #contact { break-inside: avoid; }
         }
     </style>
 </head>
@@ -324,7 +330,7 @@
             </div>
             <div class="intro-text">
                 <div>
-                    <p>Aviation Industry-News is the leading digital marketing platform for the airport sector. We help connect suppliers, buyers and decision makers from across the globe, as well as supply the latest industry news from around the world.</p>
+                    <p>Aviation Industry-News is the leading digital marketing platform for the aviation sector. We help connect suppliers, buyers and decision makers from across the globe, as well as supply the latest industry news from around the world.</p>
                     <p style="margin-top:12px;">We have a dedicated team of writers, editors and social media experts to ensure the highest-possible quality of information with the maximum reach.</p>
                     <p style="margin-top:12px;font-size:15px;color:var(--muted);">An a2b Global Media brand, formerly Airport Industry-News.</p>
                 </div>
@@ -340,9 +346,7 @@
             <h2>Aviation Industry-News in Numbers</h2>
             <p class="period">Over the past 12 months.</p>
             <div class="stats">
-                <div class="stat"><b>232,190+</b><span>Unique web users</span></div>
-                <div class="stat"><b>328,500+</b><span>Unique page views</span></div>
-                <div class="stat"><b>33,570+</b><span>Social media connections</span></div>
+                <div class="stat"><b>232,190+</b><span>Unique web users</span></div><div class="stat"><b>328,500+</b><span>Unique page views</span></div><div class="stat"><b>33,570+</b><span>Social media connections</span></div>
             </div>
             <h3>Who is reading your content?</h3>
             <div class="numbers-grid">
@@ -399,7 +403,7 @@
 <tr><td>Digital magazine (3 A4 pages)</td><td class="no">—</td><td>1 issue</td><td>1 issue</td><td>1 issue</td></tr>
 <tr class="group"><td colspan="5">Design</td></tr>
 <tr><td>Graphic design: one 300 × 250 banner, one 1024 × 512 banner and, if needed, one A4 magazine advert</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td>✓</td></tr>
-<tr class="price"><td>Price per year</td><td>£5,000</td><td>£7,500</td><td>£10,500</td><td>£14,000</td></tr>
+<tr class="price"><td>Price per year</td><td>£3,500</td><td>£5,000</td><td>£8,000</td><td>£10,000</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -428,10 +432,7 @@
             <h2>Editorial Calendar</h2>
             <div class="packages">Packages: <span class="off">Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
             <div class="covers">
-                <img src="media-pack-assets/ain-magazine-cover-2026.jpg" alt="Magazine cover, 2026">
-                <img src="media-pack-assets/ain-magazine-cover-2025.jpg" alt="Magazine cover, 2025">
-                <img src="media-pack-assets/ain-magazine-cover-2024.jpg" alt="Magazine cover, 2024">
-                <img src="media-pack-assets/ain-magazine-cover-2023.jpg" alt="Magazine cover, 2023">
+                <img src="media-pack-assets/ain-magazine-cover-2026.jpg" alt="Magazine cover, 2026"><img src="media-pack-assets/ain-magazine-cover-2025.jpg" alt="Magazine cover, 2025"><img src="media-pack-assets/ain-magazine-cover-2024.jpg" alt="Magazine cover, 2024"><img src="media-pack-assets/ain-magazine-cover-2023.jpg" alt="Magazine cover, 2023">
             </div>
             <p>The publication dates and the associated content-submission deadlines are below. We frequently focus our magazines around major industry shows (e.g. interAirport Europe). Please feel free to ask us which shows these will be.</p>
             <div class="table-scroll">
@@ -441,6 +442,7 @@
                 </table>
             </div>
         </section>
+
 
         <!-- ═══ TYPICAL ENQUIRIES ═════════════════════════════ -->
         <section class="block" id="enquiries">

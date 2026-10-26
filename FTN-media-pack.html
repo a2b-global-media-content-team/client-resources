@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pack 2026/27: Future Transport-News — a2b Global Media</title>
+    <meta name="description" content="The Future Transport-News media pack: who reads us, our services, packages and prices and typical enquiries.">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:      #1B3342;
+            --navy-2:    #24465A;
+            --orange:    #8CC63E;
+            --orange-dk: #4A7A1E;
+            --orange-lt: #F1F8E8;
+            --light:     #F7F7F7;
+            --text:      #1F2A30;
+            --muted:     #5D6B73;
+            --rule:      #E2E8EC;
+            --white:     #FFFFFF;
+        }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+        body {
+            font-family: 'Mukta', Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: var(--light);
+            font-size: 17px;
+            line-height: 1.6;
+        }
+        a { color: var(--orange-dk); }
+        strong { font-weight: 600; }
+
+        /* ── HEADER ─────────────────────────────────────── */
+        .site-head {
+            background: var(--navy);
+            color: var(--white);
+            padding: 22px 24px 70px;
+            text-align: center;
+        }
+        .site-head .brand { display: flex; justify-content: space-between; align-items: center; max-width: 1180px; margin: 0 auto 48px; gap: 16px; }
+        .site-head .brand img.rn { height: 34px; width: auto; }
+        .site-head .brand img.a2b { height: 26px; width: auto; }
+        .eyebrow { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); font-weight: 600; }
+        .site-head h1 { font-size: 48px; line-height: 1.1; font-weight: 600; margin: 10px 0 8px; }
+        .site-head .sub { font-size: 20px; color: #C9D6DE; margin-bottom: 30px; }
+        .year { display: inline-block; background: var(--orange); color: var(--navy); font-weight: 600; font-size: 14px; letter-spacing: 1px; padding: 4px 14px 2px; border-radius: 4px; }
+
+        /* ── LAYOUT ─────────────────────────────────────── */
+        .wrap { max-width: 1180px; margin: -40px auto 0; padding: 0 24px; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 32px; align-items: start; }
+
+        nav.toc {
+            position: sticky; top: 20px; background: var(--white); border-radius: 10px; padding: 18px 0 14px;
+            box-shadow: 0 2px 10px rgba(27, 51, 66, 0.08); font-size: 15px;
+        }
+        nav.toc h2 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 0 20px 8px; }
+        nav.toc a { display: block; padding: 5px 20px 5px 17px; color: var(--navy); text-decoration: none; border-left: 3px solid transparent; }
+        nav.toc a.sub { padding-left: 32px; font-size: 14px; color: var(--muted); }
+        nav.toc a:hover { background: var(--light); }
+        nav.toc a.on { border-left-color: var(--orange); background: var(--orange-lt); font-weight: 600; }
+        nav.toc a.sub.on { color: var(--navy); }
+
+        main { min-width: 0; }
+
+        .welcome, section.block {
+            background: var(--white); border-radius: 12px; padding: 34px 38px; margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(27, 51, 66, 0.06);
+        }
+        .welcome { border-top: 5px solid var(--orange); }
+        .welcome h2 { font-size: 32px; font-weight: 600; color: var(--navy); line-height: 1.15; }
+        .welcome h2 span { color: var(--orange-dk); }
+        .welcome .sig { margin-top: 18px; font-size: 15px; color: var(--muted); }
+        .welcome .sig strong { display: block; color: var(--navy); font-size: 17px; }
+        .sisters { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--rule); }
+        .sisters h3 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+        .sisters img { width: 100%; height: auto; display: block; border-radius: 8px; }
+
+        section.block h2 { font-size: 32px; font-weight: 600; color: var(--navy); line-height: 1.15; display: flex; align-items: center; gap: 14px; }
+        section.block h2::before { content: ""; width: 5px; align-self: stretch; background: var(--orange); border-radius: 3px; }
+        section.block h3 { font-size: 22px; font-weight: 600; color: var(--navy); margin: 28px 0 8px; scroll-margin-top: 24px; }
+        section.block p { margin-bottom: 12px; }
+        section.block ul, section.block ol { margin: 6px 0 14px 22px; }
+        section.block li { margin-bottom: 5px; }
+
+        .packages { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 12px 0 20px; font-size: 14px; color: var(--muted); }
+        .packages span { background: var(--navy); color: #fff; font-weight: 500; padding: 2px 10px 1px; border-radius: 4px; font-size: 13px; }
+        .packages span.off { background: var(--rule); color: #8A979E; text-decoration: line-through; }
+
+        .note {
+            background: var(--orange-lt); border-left: 4px solid var(--orange); border-radius: 0 8px 8px 0;
+            padding: 14px 18px; margin: 16px 0; font-size: 16px;
+        }
+        .note strong { color: var(--navy); }
+
+        .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; margin: 12px 0 18px; }
+        .tile { border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; background: #FBFCFD; }
+        .tile b { display: block; color: var(--navy); font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+        .tile span { font-size: 14px; color: var(--muted); }
+
+        .guide-link {
+            display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; font-weight: 600; font-size: 15px;
+            text-decoration: none; color: var(--orange-dk);
+        }
+        .guide-link:hover { text-decoration: underline; }
+
+        /* Tabs for the targeted mail options */
+        .tabs { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+        .tabs button {
+            font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; border: 1px solid var(--rule);
+            background: var(--light); color: var(--navy); padding: 8px 16px; border-radius: 8px 8px 0 0; border-bottom: 0;
+        }
+        .tabs button[aria-selected="true"] { background: var(--navy); color: #fff; border-color: var(--navy); }
+        .tabpanel { border: 1px solid var(--rule); border-radius: 0 8px 8px 8px; padding: 16px 20px 6px; }
+        .tabpanel[hidden] { display: none; }
+
+        /* Size diagrams: magazine pages at 1px = 3mm, banners at 1:4 */
+        .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; margin: 18px 0 14px; }
+        .specs.banners { grid-template-columns: minmax(180px, 1fr) minmax(280px, 2fr); }
+        .spec { border: 1px solid var(--rule); border-radius: 10px; background: #FBFCFD; padding: 18px 16px 14px; display: flex; flex-direction: column; gap: 14px; }
+        .spec .fig { height: 132px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .spec .cap { font-size: 14px; line-height: 1.4; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 10px; }
+        .spec .cap b { display: block; color: var(--navy); font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .spread { display: flex; position: relative; }
+        .ad.spread-ad { background: linear-gradient(90deg, var(--orange-lt) calc(50% - 1px), var(--orange) calc(50% - 1px), var(--orange) calc(50% + 0px), var(--orange-lt) calc(50% + 0px)); }
+        .page {
+            position: relative; width: 70px; height: 99px; background: #fff; border: 1px solid #C9D2D8; border-radius: 2px;
+            box-shadow: 0 2px 6px rgba(27, 51, 66, 0.10);
+        }
+        .spread .page + .page { border-left: 1px dashed #C9D2D8; }
+        .page::before, .page::after { content: ""; position: absolute; left: 8px; right: 8px; height: 3px; border-radius: 2px; background: #E8EDF0; }
+        .page::before { top: 10px; }
+        .page::after { top: 18px; right: 26px; }
+        .ad {
+            position: absolute; z-index: 1; background: var(--orange-lt); border: 1.5px solid var(--orange); border-radius: 2px;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            font-size: 11px; font-weight: 600; line-height: 1.2; color: var(--orange-dk);
+        }
+        .ad.spread-ad span { background: var(--orange-lt); padding: 2px 5px; border-radius: 3px; position: relative; }
+        .ad.full { inset: -1px; }
+        .ad.half { left: 3px; right: 3px; bottom: 3px; height: 44px; }
+        .banner {
+            background: var(--orange-lt); border: 1.5px dashed var(--orange); border-radius: 4px;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            font-size: 12px; font-weight: 600; color: var(--orange-dk); line-height: 1.2;
+        }
+        @media screen and (max-width: 600px) { .specs.banners { grid-template-columns: 1fr; } }
+
+        table.cal { width: 100%; border-collapse: collapse; margin: 12px 0 10px; font-size: 16px; }
+        table.cal th { text-align: left; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; padding: 8px 10px; border-bottom: 2px solid var(--orange); }
+        table.cal td { padding: 10px; border-bottom: 1px solid var(--rule); }
+        table.cal td a { font-weight: 600; }
+        table.cal td.past { color: #8A979E; }
+        mark.tbc { background: #FFE58A; color: #1F2A30; padding: 0 4px; border-radius: 3px; font-weight: 600; }
+
+        /* Package comparison */
+        .table-scroll { overflow-x: auto; margin: 12px 0 10px; }
+        table.pkg { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 15px; }
+        table.pkg th { font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; padding: 8px 10px; border-bottom: 2px solid var(--orange); text-align: center; }
+        table.pkg th:first-child { text-align: left; }
+        table.pkg td { padding: 8px 10px; border-bottom: 1px solid var(--rule); text-align: center; }
+        table.pkg td:first-child { text-align: left; color: var(--navy); }
+        table.pkg tr.group td { background: var(--light); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); font-weight: 600; text-align: left; }
+        table.pkg .no { color: #B5C0C6; }
+
+        /* Getting-started steps */
+        ol.steps { list-style: none; counter-reset: step; margin: 14px 0 18px; padding: 0; }
+        ol.steps > li { counter-increment: step; position: relative; padding: 0 0 16px 50px; margin: 0; }
+        ol.steps > li::before {
+            content: counter(step); position: absolute; left: 0; top: 0; width: 34px; height: 34px; border-radius: 50%;
+            background: var(--navy); color: #fff; font-weight: 600; display: flex; align-items: center; justify-content: center;
+        }
+        ol.steps > li b { display: block; color: var(--navy); font-size: 18px; font-weight: 600; }
+        ul.check { list-style: none; margin: 8px 0 14px; padding: 0; columns: 2 220px; }
+        ul.check li { padding-left: 26px; position: relative; break-inside: avoid; }
+        ul.check li::before { content: "✓"; position: absolute; left: 4px; color: var(--orange-dk); font-weight: 700; }
+
+        .site-foot { margin-top: 60px; background: var(--navy); color: #C9D6DE; padding: 40px 24px; text-align: center; font-size: 15px; }
+        .site-foot img { height: 30px; width: auto; margin-bottom: 14px; }
+        .site-foot a { color: #fff; text-decoration: none; }
+        .site-foot .sep { opacity: 0.4; margin: 0 10px; }
+
+        /* ── RESPONSIVE ─────────────────────────────────── */
+        @media screen and (max-width: 900px) {
+            .wrap { grid-template-columns: 1fr; }
+            nav.toc { position: static; display: none; }
+        }
+        @media screen and (max-width: 600px) {
+            body { font-size: 16px; }
+            .site-head { padding: 18px 16px 60px; }
+            .site-head .brand { margin-bottom: 32px; }
+            .site-head .brand img.rn { height: 24px; }
+            .site-head .brand img.a2b { height: 18px; }
+            .site-head h1 { font-size: 36px; }
+            .site-head .sub { font-size: 17px; }
+            .wrap { padding: 0 16px; }
+            .welcome, section.block { padding: 24px 20px; }
+            section.block h2, .welcome h2 { font-size: 26px; }
+            table.cal { font-size: 14px; }
+            table.cal th, table.cal td { padding: 8px 6px; }
+        }
+        /* PDF / print: A4 portrait, one column, desktop layout inside it.
+           Chrome: Print > Save as PDF (Background graphics on). */
+        @page { size: A4; margin: 12mm 12mm 14mm; }
+        @media print {
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            html { scroll-behavior: auto; }
+            body { background: #fff; font-size: 15px; }
+            nav.toc, .guide-link { display: none; }
+            .site-head { padding: 18px 24px 34px; }
+            .site-head .brand { margin-bottom: 26px; }
+            .wrap { display: block; max-width: none; margin: 0; padding: 0; }
+            .welcome, section.block { box-shadow: none; border: 1px solid var(--rule); margin: 14px 0 0; padding: 24px 26px; break-inside: auto; }
+            section.block h2, section.block h3, h4 { break-after: avoid; }
+            .tile, .spec, .note, tr, ol.steps > li, ul.check li, .packages, .sisters { break-inside: avoid; }
+            .table-scroll { overflow: visible; }
+            table.pkg { min-width: 0; }
+            /* Show both targeted mail options instead of tabs */
+            .tabs { display: none; }
+            .tabpanel, .tabpanel[hidden] { display: block !important; border-radius: 8px; margin-bottom: 10px; break-inside: avoid; }
+            #panel-own::before { content: "If you design your own email"; }
+            #panel-ours::before { content: "If you would like us to design it"; }
+            #panel-own::before, #panel-ours::before { display: block; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+            .site-foot { margin-top: 20px; break-inside: avoid; }
+        }
+    
+        /* ── MEDIA PACK ADDITIONS ─────────────────────── */
+        html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        main img { max-width: 100%; height: auto; }
+        .numbers-grid > * { min-width: 0; }
+        .showcase { position: relative; margin: 18px 70px 26px 0; }
+        .browser { border-radius: 10px; overflow: hidden; box-shadow: 0 14px 36px rgba(27, 51, 66, 0.22); border: 1px solid #D6DCE0; background: #fff; }
+        .browser .bar { height: 30px; background: #E9EDF0; display: flex; align-items: center; gap: 6px; padding: 0 12px; border-bottom: 1px solid #D6DCE0; }
+        .browser .bar i { width: 9px; height: 9px; border-radius: 50%; background: #C5CDD3; display: block; }
+        .browser .bar i:nth-child(1) { background: #FF5F57; } .browser .bar i:nth-child(2) { background: #FEBC2E; } .browser .bar i:nth-child(3) { background: #28C840; }
+        .browser .bar span { margin-left: 10px; flex: 1; max-width: 300px; background: #fff; border-radius: 5px; font-size: 11px; color: var(--muted); padding: 2px 10px; }
+        .browser img { display: block; width: 100%; height: auto; }
+        .phone { position: absolute; right: -70px; bottom: -22px; width: 23%; border: 6px solid var(--navy); border-radius: 22px; overflow: hidden; background: var(--navy); box-shadow: 0 14px 30px rgba(27, 51, 66, 0.3); }
+        .phone img { display: block; width: 100%; height: auto; border-radius: 15px; }
+        .intro-text { max-width: 640px; }
+        .phone.static { position: static; width: 190px; margin: 0 auto; }
+        .numbers-grid { grid-template-columns: 220px 1fr; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0 6px; }
+        .stat { border-radius: 10px; padding: 20px 16px; text-align: center; color: #fff; background: var(--navy); }
+        .stat:nth-child(2) { background: var(--orange-dk); } .stat:nth-child(3) { background: var(--orange); color: var(--navy); }
+        .stat b { display: block; font-size: 32px; line-height: 1.1; font-weight: 700; }
+        .stat span { font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; }
+        .period { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+        .numbers-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 20px; align-items: center; margin-top: 18px; }
+        .bar { display: grid; grid-template-columns: 160px 1fr 58px; align-items: center; gap: 10px; font-size: 14px; margin: 6px 0; }
+        .bar .lab { text-align: right; }
+        .bar .track { display: block; height: 14px; background: #EEF2F4; border-radius: 3px; overflow: hidden; }
+        .bar .fill { display: block; height: 100%; background: var(--orange); border-radius: 3px; }
+        .bar.geo .fill { background: var(--orange-dk); }
+        .bar .val { font-size: 13px; color: var(--muted); }
+        .svc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 14px; }
+        .svc div { border: 1px solid var(--rule); border-radius: 10px; background: #FBFCFD; padding: 16px 10px 14px; text-align: center; }
+        .svc .ico { width: 60px; height: 60px; border-radius: 50%; background: var(--orange-lt); color: var(--orange-dk); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
+        .svc .ico svg { width: 30px; height: 30px; }
+        .svc b { display: block; font-size: 14.5px; font-weight: 600; color: var(--navy); line-height: 1.3; }
+        table.pkg tr.price td { font-weight: 700; color: var(--navy); background: var(--orange-lt); }
+        .covers { display: flex; gap: 16px; margin: 14px 0 18px; }
+        .covers img { width: 23%; max-width: 160px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .enq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+        .enq { border-left: 4px solid var(--orange); background: #FBFCFD; border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 15px; }
+        .enq small { display: block; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; margin-bottom: 4px; }
+        .quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+        .quote { border: 1px solid var(--rule); border-radius: 10px; background: #FBFCFD; padding: 16px 18px; font-size: 15px; }
+        .quote p::before { content: '“'; font-size: 30px; line-height: 0; vertical-align: -10px; color: var(--orange); margin-right: 2px; }
+        .quote cite { display: block; margin-top: 10px; font-style: normal; font-size: 13.5px; color: var(--muted); }
+        .quote cite b { color: var(--navy); }
+        .contact-card { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+        @media screen and (max-width: 760px) {
+            .numbers-grid, .enq-grid, .quotes, .contact-card { grid-template-columns: 1fr; }
+            .showcase { margin-right: 34px; }
+            .phone { right: -34px; width: 30%; border-width: 4px; border-radius: 14px; }
+            .stats { grid-template-columns: 1fr; }
+            .svc { grid-template-columns: repeat(2, 1fr); }
+            .bar { grid-template-columns: 110px 1fr 50px; font-size: 13px; }
+        }
+        @media print {
+            .stats, .svc, .enq-grid, .covers, .bar, .quote, table.pkg tr { break-inside: avoid; }
+            .block h2, .period, .stats, table.pkg tr.group { break-after: avoid; }
+            #numbers, #services { break-before: page; }
+            .quote { padding: 12px 14px; font-size: 13.5px; }
+            .showcase { width: 58%; margin: 10px auto 32px; }
+            .welcome .sisters { margin-top: 14px; padding-top: 12px; }
+            #numbers, #services, #bolt-ons, #calendar, #testimonials, #enquiries, #contact { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-head">
+    <div class="brand">
+        <img class="rn" src="https://futuretransport-news.com/wp-content/uploads/sites/3/2025/08/Future-Transport-News-White-Logo-CLEAR.png" alt="Future Transport-News">
+        <img class="a2b" src="https://a2bglobalmedia.com/wp-content/uploads/sites/5/2026/04/a2b-Global-Media-White-Logo-1.png" alt="a2b Global Media">
+    </div>
+    <div class="eyebrow">Future Transport-News</div>
+    <h1>Media Pack</h1>
+    <p class="sub">Reach the future transport sector</p>
+    <span class="year">2026/27 MEDIA PACK</span>
+</header>
+
+<div class="wrap">
+    <nav class="toc" id="toc" aria-label="Contents">
+        <h2>Contents</h2>
+        <a href="#about">About Us</a>
+        <a href="#numbers">In Numbers</a>
+        <a href="#services">Our Services</a>
+        <a href="#packages">Packages &amp; Prices</a>
+        <a href="#bolt-ons">Bolt-Ons</a>
+        <a href="#enquiries">Typical Enquiries</a>
+        <a href="#contact">Contact Us</a>
+    </nav>
+
+    <main>
+        <!-- ═══ ABOUT ═════════════════════════════════════════ -->
+        <div class="welcome" id="about">
+            <div class="eyebrow">About us</div>
+            <h2>What is <span>Future Transport-News</span>?</h2>
+            <div class="showcase">
+                <div class="browser">
+                    <div class="bar"><i></i><i></i><i></i><span>futuretransport-news.com</span></div>
+                    <img src="media-pack-assets/ftn-home-desktop.jpg" alt="The Future Transport-News homepage on a desktop screen" width="1200" height="750">
+                </div>
+                <div class="phone"><img src="media-pack-assets/ftn-home-phone.jpg" alt="The Future Transport-News homepage on a phone" width="390" height="844"></div>
+            </div>
+            <div class="intro-text">
+                <div>
+                    <p>Future Transport-News is the leading digital marketing platform for the future transport sector. We help connect suppliers, buyers and decision makers from across the globe, as well as supply the latest industry news from around the world.</p>
+                    <p style="margin-top:12px;">We have a dedicated team of writers, editors and social media experts to ensure the highest-possible quality of information with the maximum reach.</p>
+                    <p style="margin-top:12px;font-size:15px;color:var(--muted);">An a2b Global Media brand.</p>
+                </div>
+            </div>
+            <div class="sisters">
+                <h3>Our sister brands</h3>
+                <img src="https://railway-news.com/wp-content/uploads/2026/10/a2b-Global-Media-network-logos-banner.png" alt="The a2b Global Media network: Railway-News, Aviation Industry-News, Bus-News, Future Transport-News and Maritime Industry-News" width="1200" height="80">
+            </div>
+        </div>
+
+        <!-- ═══ IN NUMBERS ════════════════════════════════════ -->
+        <section class="block" id="numbers">
+            <h2>Future Transport-News in Numbers</h2>
+            <p class="period">Over the past 12 months.</p>
+            <div class="stats">
+                <div class="stat"><b>112,000+</b><span>Unique web users</span></div><div class="stat"><b>140,300+</b><span>Unique page views</span></div><div class="stat"><b>29,310+</b><span>Social media connections</span></div>
+            </div>
+            <h3>Who is reading your content?</h3>
+            <div class="numbers-grid">
+                <div class="phone static"><img src="media-pack-assets/ftn-home-phone.jpg" alt="The Future Transport-News homepage on a phone" width="390" height="844"></div>
+                <div>
+                    <p style="font-weight:600;color:var(--navy);margin-bottom:4px;">Readership by job function</p>
+                    <div class="bar"><span class="lab">Business Development</span><span class="track"><span class="fill" style="width:98.5%"></span></span><span class="val"></span></div><div class="bar"><span class="lab">Sales</span><span class="track"><span class="fill" style="width:55.0%"></span></span><span class="val"></span></div><div class="bar"><span class="lab">Operations</span><span class="track"><span class="fill" style="width:52.5%"></span></span><span class="val"></span></div><div class="bar"><span class="lab">Engineering</span><span class="track"><span class="fill" style="width:35.0%"></span></span><span class="val"></span></div><div class="bar"><span class="lab">Information Technology</span><span class="track"><span class="fill" style="width:26.0%"></span></span><span class="val"></span></div><div class="bar"><span class="lab">Marketing</span><span class="track"><span class="fill" style="width:24.0%"></span></span><span class="val"></span></div><div class="bar"><span class="lab">Project Management</span><span class="track"><span class="fill" style="width:18.0%"></span></span><span class="val"></span></div><div class="bar"><span class="lab">Media and Communication</span><span class="track"><span class="fill" style="width:12.0%"></span></span><span class="val"></span></div>
+                </div>
+            </div>
+            <p style="font-weight:600;color:var(--navy);margin:18px 0 4px;">Readers by region</p>
+            <div class="bar geo"><span class="lab">Asia</span><span class="track"><span class="fill" style="width:86.7%"></span></span><span class="val">52,000</span></div><div class="bar geo"><span class="lab">Americas</span><span class="track"><span class="fill" style="width:61.5%"></span></span><span class="val">36,900</span></div><div class="bar geo"><span class="lab">Europe</span><span class="track"><span class="fill" style="width:36.3%"></span></span><span class="val">21,800</span></div>
+            <p class="period" style="margin-top:8px;">Both charts: over the past 12 months.</p>
+        </section>
+
+        <!-- ═══ SERVICES ══════════════════════════════════════ -->
+        <section class="block" id="services">
+            <h2>Our Services</h2>
+            <p>Everything you need to reach buyers in the future transport sector, managed for you by our team.</p>
+            <div class="svc">
+                <div><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="15" height="12" rx="2"/><path d="m2.5 5.5 7 5 7-5"/><circle cx="18" cy="17" r="4" fill="#fff"/><circle cx="18" cy="17" r="1.3" fill="currentColor" stroke="none"/></svg></span><b>AI-Targeted Mail</b></div><div><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.4 3.6a2.1 2.1 0 0 1 3 3L7.4 18.6a2 2 0 0 1-.9.5l-2.9.9a.5.5 0 0 1-.6-.6l.9-2.9a2 2 0 0 1 .5-.9z"/></svg></span><b>Content Writing</b></div><div><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span><b>Content Management</b></div><div><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="m7 13 2.5-2.5 2 2L15 9"/></svg></span><b>Search Engine Optimisation</b></div><div><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></svg></span><b>Social Media</b></div><div><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18h-5"/><path d="M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect x="10" y="6" width="8" height="4" rx="1"/></svg></span><b>Digital Newsletter</b></div><div><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 0 0 0 20c.9 0 1.6-.7 1.6-1.7 0-.4-.2-.8-.4-1.1-.3-.3-.5-.7-.5-1.1a1.6 1.6 0 0 1 1.7-1.7h2a5.6 5.6 0 0 0 5.6-5.5C22 6 17.5 2 12 2z"/><circle cx="13.5" cy="6.5" r="1" fill="currentColor"/><circle cx="17.5" cy="10.5" r="1" fill="currentColor"/><circle cx="8.5" cy="7.5" r="1" fill="currentColor"/><circle cx="6.5" cy="12.5" r="1" fill="currentColor"/></svg></span><b>Graphic Design Services</b></div>
+            </div>
+        </section>
+
+        <!-- ═══ PACKAGES & PRICES ═════════════════════════════ -->
+        <section class="block" id="packages">
+            <h2>Packages &amp; Prices</h2>
+            <p>All subscriptions include a fully managed service: quarterly reviews with your dedicated Partnership Manager, reviewing activity and planning next steps.</p>
+            <div class="table-scroll">
+                <table class="pkg">
+                    <thead><tr><th>Included</th><th>Essentials</th><th>Essentials+</th><th>Premium</th><th>Ultra</th></tr></thead>
+                    <tbody>
+<tr class="group"><td colspan="5">Your profile</td></tr>
+<tr><td>Company profile, written by you and optimised by us for SEO, GEO/AEO, with your news, videos, images and documents</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+<tr><td>News hosting</td><td>Up to 6 items</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+<tr><td>Quarterly statistics report and package utilisation dashboard</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+<tr><td>Products &amp; Services listing and Supplier A–Z</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+<tr><td>Digital weekly newsletter and social media channels</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+<tr><td>Quarterly check-in calls with your Partnership Manager</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+<tr class="group"><td colspan="5">Onboarding</td></tr>
+<tr><td>Onboarding call</td><td class="no">—</td><td class="no">—</td><td>✓</td><td>✓</td></tr>
+<tr class="group"><td colspan="5">Lead generation</td></tr>
+<tr><td>AI-Driven Targeted Mail campaigns</td><td class="no">—</td><td>1</td><td>2</td><td>3</td></tr>
+<tr><td>Targeted LinkedIn campaign with statistics report</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td>✓</td></tr>
+<tr class="group"><td colspan="5">Brand awareness</td></tr>
+<tr><td>News pages banner</td><td class="no">—</td><td class="no">—</td><td>6 months</td><td>12 months</td></tr>
+<tr><td>Homepage banner</td><td class="no">—</td><td>4 weeks, below the fold</td><td>6 months, above the fold</td><td>12 months, above the fold</td></tr>
+<tr><td>Social media banner posts</td><td class="no">—</td><td>2</td><td>4</td><td>4</td></tr>
+<tr><td>Digital newsletter banners</td><td class="no">—</td><td>4</td><td>6 (every other month)</td><td>12 (monthly)</td></tr>
+<tr><td>Products &amp; Services page banners</td><td class="no">—</td><td>1</td><td>2</td><td>4</td></tr>
+<tr><td>Products &amp; Services featured supplier positions</td><td class="no">—</td><td>Up to 2</td><td>Up to 4</td><td>Up to 8</td></tr>
+<tr><td>Your events and webinars on our Events page and in the newsletter</td><td class="no">—</td><td class="no">—</td><td>✓</td><td>✓</td></tr>
+<tr class="group"><td colspan="5">Thought leadership</td></tr>
+<tr><td>Content writing (4 articles)</td><td class="no">—</td><td class="no">—</td><td>✓</td><td>✓</td></tr>
+<tr class="group"><td colspan="5">Design</td></tr>
+<tr><td>Graphic design: one 300 × 250 banner, one 1024 × 512 banner</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td>✓</td></tr>
+<tr class="price"><td>Price per year</td><td>£3,000</td><td>£4,500</td><td>£6,500</td><td>£9,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:15px;color:var(--muted);">Multi-year discounts are available on request.</p>
+        </section>
+
+        <!-- ═══ BOLT-ONS ══════════════════════════════════════ -->
+        <section class="block" id="bolt-ons">
+            <h2>Bolt-Ons</h2>
+            <p>Add any of these to your subscription.</p>
+            <div class="table-scroll">
+                <table class="pkg">
+                    <thead><tr><th>Bolt-on</th><th>Price</th></tr></thead>
+                    <tbody>
+                        <tr><td>Content writing (4 pieces)</td><td>£2,000 / year</td></tr>
+                        <tr><td>Short-form content</td><td>£2,000 / year</td></tr>
+                        <tr><td>Graphic design services</td><td>POA</td></tr>
+                        <tr><td>LinkedIn campaigns <span style="color:var(--muted);font-size:14px;">(bespoke pricing based on campaign)</span></td><td>POA</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <!-- ═══ TYPICAL ENQUIRIES ═════════════════════════════ -->
+        <section class="block" id="enquiries">
+            <h2>Typical Enquiries</h2>
+            <p>Readers contact suppliers directly through the enquiry form on their company profile. Here are some of the enquiries our suppliers have received.</p>
+            <div class="enq-grid">
+                <div class="enq"><small>Enquiry</small>We have a tender that requires your product. Please provide an offer for the required product as soon as possible and I’ll get back to you with mandatory technical specifications of thermal containers used for vehicle inspection on the road.</div><div class="enq"><small>Enquiry</small>We are interested in your docking solution. I would like to know more about your partners in Australia.</div><div class="enq"><small>Enquiry</small>I would like to enquire about whether you can provide a CAN symbol file (either peak sym or dbc) for translating the messages transmitted by the G20-VA05 REV D.</div><div class="enq"><small>Enquiry</small>We currently use Tritium Chargers at our current EV Depot but want to put wireless charging pads in to the other EV depots due to room. Please send information on your charging pads.</div>
+            </div>
+        </section>
+
+        <!-- ═══ CONTACT ═══════════════════════════════════════ -->
+        <section class="block" id="contact">
+            <h2>Contact Us</h2>
+            <p>Want to know more, or ready to book? Get in touch.</p>
+            <div class="tiles contact-card">
+                <div class="tile"><b>Email</b><span><a href="mailto:contact@a2bglobalmedia.com">contact@a2bglobalmedia.com</a></span></div>
+                <div class="tile"><b>Phone</b><span><a href="tel:+441392580002">+44 1392 580002</a></span></div>
+                <div class="tile"><b>Web</b><span><a href="https://futuretransport-news.com/contact/" target="_blank" rel="noopener">futuretransport-news.com/contact</a></span></div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<footer class="site-foot">
+    <img src="https://futuretransport-news.com/wp-content/uploads/sites/3/2025/08/Future-Transport-News-White-Logo-CLEAR.png" alt="Future Transport-News"><br>
+    <a href="https://a2bglobalmedia.com/" target="_blank" rel="noopener">a2bglobalmedia.com</a><span class="sep">|</span>
+    <a href="tel:+441392580002">+44 1392 580002</a><span class="sep">|</span>
+    <a href="mailto:contact@a2bglobalmedia.com">contact@a2bglobalmedia.com</a>
+</footer>
+
+<script>
+// Contents highlight
+const links = [...document.querySelectorAll('#toc a')];
+const targets = links.map(a => document.querySelector(a.getAttribute('href')));
+function spy() {
+    let cur = 0;
+    targets.forEach((t, i) => { if (t && t.getBoundingClientRect().top < 140) cur = i; });
+    links.forEach((a, i) => a.classList.toggle('on', i === cur));
+}
+addEventListener('scroll', spy, { passive: true });
+spy();
+</script>
+</body>
+</html>
