@@ -285,6 +285,33 @@
 const A = 'visual-guide-assets/';
 const CHAPTERS = [
     {
+        name: 'Homepage',
+        isPage: true,
+        url: 'futuretransport-news.com',
+        img: 'ftn-homepage.jpg', h: 4300,
+        alt: 'Future Transport-News homepage',
+        ref: `<dl>
+            <dt>Homepage featured supplier position</dt><dd>A banner advert in the Featured Suppliers section of our homepage, linking to your website. Depending on your package, it shows for 4 weeks or for your whole contract.</dd>
+            <dt>Format</dt><dd>JPEG, PNG or GIF, 1024 × 512 px.</dd>
+            <dt>Latest News banner</dt><dd>A second banner position in the Latest News grid near the top of the homepage, linking to your website.</dd>
+            <dt>Your news and videos on the homepage</dt><dd>Your press releases appear in the Supplier News section, and your videos in Video Highlights.</dd>
+            <dt>Design service</dt><dd>We can design your homepage banner for you. Ask us for details.</dd>
+        </dl>`,
+        steps: [
+            { title: 'The Future Transport-News homepage', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
+              text: 'The homepage is the busiest page on Future Transport-News, with the latest future transport news, events and videos.' },
+            { title: 'Banner in the latest news', box: [975, 1311, 303, 252], zoom: 2.4,
+              text: 'A banner position sits in the Latest News grid near the top of the homepage, right beside the newest headlines, with a link to your website. Until a client books it, it shows our own advert.' },
+            { title: 'Your news on the homepage', box: [110, 1985, 1220, 990], zoom: 1.1,
+              text: 'Your press releases appear in the Supplier News section of the homepage, as well as on your profile.' },
+            { title: 'Featured Suppliers', box: [110, 3200, 1220, 130], zoom: 1.6,
+              text: 'The homepage featured supplier position puts your banner advert in the Featured Suppliers section, with a link to your website. Depending on your package, it shows for 4 weeks or for your whole contract.',
+              spec: ['1024 × 512 px', 'JPEG, PNG or GIF'] },
+            { title: 'Your videos on the homepage', box: [110, 3480, 1220, 700], zoom: 1.2,
+              text: 'Every video you send us features in Video Highlights on the homepage.' }
+        ]
+    },
+    {
         name: 'Company Profile',
         url: 'futuretransport-news.com/suppliers/geotab-fleet-management',
         img: 'ftn-profile.jpg', h: 6560,
@@ -416,33 +443,6 @@ const CHAPTERS = [
             { title: 'Reach and engagement', box: [440, 600, 560, 98], zoom: 2.2,
               text: 'Followers can like, comment on and share your post, which takes it to their own networks too. We report views, interactions and clicks in your stats report.' }
         ]
-    },
-    {
-        name: 'Homepage',
-        isPage: true,
-        url: 'futuretransport-news.com',
-        img: 'ftn-homepage.jpg', h: 4300,
-        alt: 'Future Transport-News homepage',
-        ref: `<dl>
-            <dt>Homepage featured supplier position</dt><dd>A banner advert in the Featured Suppliers section of our homepage, linking to your website. Depending on your package, it shows for 4 weeks or for your whole contract.</dd>
-            <dt>Format</dt><dd>JPEG, PNG or GIF, 1024 × 512 px.</dd>
-            <dt>Latest News banner</dt><dd>A second banner position in the Latest News grid near the top of the homepage, linking to your website.</dd>
-            <dt>Your news and videos on the homepage</dt><dd>Your press releases appear in the Supplier News section, and your videos in Video Highlights.</dd>
-            <dt>Design service</dt><dd>We can design your homepage banner for you. Ask us for details.</dd>
-        </dl>`,
-        steps: [
-            { title: 'The Future Transport-News homepage', top: true, box: [0, 0, 1440, 900], noRing: true, dur: 6,
-              text: 'The homepage is the busiest page on Future Transport-News, with the latest future transport news, events and videos.' },
-            { title: 'Banner in the latest news', box: [975, 1311, 303, 252], zoom: 2.4,
-              text: 'A banner position sits in the Latest News grid near the top of the homepage, right beside the newest headlines, with a link to your website. Until a client books it, it shows our own advert.' },
-            { title: 'Your news on the homepage', box: [110, 1985, 1220, 990], zoom: 1.1,
-              text: 'Your press releases appear in the Supplier News section of the homepage, as well as on your profile.' },
-            { title: 'Featured Suppliers', box: [110, 3200, 1220, 130], zoom: 1.6,
-              text: 'The homepage featured supplier position puts your banner advert in the Featured Suppliers section, with a link to your website. Depending on your package, it shows for 4 weeks or for your whole contract.',
-              spec: ['1024 × 512 px', 'JPEG, PNG or GIF'] },
-            { title: 'Your videos on the homepage', box: [110, 3480, 1220, 700], zoom: 1.2,
-              text: 'Every video you send us features in Video Highlights on the homepage.' }
-        ]
     }
 ];
 
@@ -558,6 +558,7 @@ function caption(step) {
     [...$('chapters').children].forEach((b, i) => b.setAttribute('aria-current', i === step.ci ? 'true' : 'false'));
     const cur = $('chapters').children[step.ci];
     cur.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' });
+    history.replaceState(null, '', '#' + slug(c) + (step.si ? '-' + (step.si + 1) : ''));
 }
 
 function progress(step) {
@@ -700,9 +701,27 @@ CHAPTERS.forEach((c, ci) => {
     $('cards').appendChild(card);
 });
 
+/* ── DEEP LINKS ────────────────────────────────────────────────
+   #homepage, #company-profile, #products-services, … open a chapter;
+   #targeted-mail-3 opens step 3 of that chapter. The address bar
+   follows the tour, so a copied link opens the step on screen.
+   ────────────────────────────────────────────────────────────── */
+function slug(c) { return c.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+function stepFromHash() {
+    const m = decodeURIComponent(location.hash.slice(1)).toLowerCase().match(/^(.*?)(?:-(\d+))?$/);
+    const ci = CHAPTERS.findIndex(c => slug(c) === m[1]);
+    if (ci < 0) return -1;
+    const first = STEPS.findIndex(s => s.ci === ci), n = STEPS.filter(s => s.ci === ci).length;
+    return first + Math.min(Math.max((+m[2] || 1) - 1, 0), n - 1);
+}
+const toPlayer = () => document.querySelector('.player-wrap').scrollIntoView({ behavior: 'auto', block: 'start' });
+addEventListener('hashchange', () => { const i = stepFromHash(); if (i >= 0 && i !== idx) { go(i, true); toPlayer(); } });
+const startAt = stepFromHash();
+if (startAt >= 0) toPlayer();
+
 // Preload the remaining screenshots after the first one
 icon(playing);
-go(0).then(() => CHAPTERS.forEach((c, i) => { if (!c.html && !pages[i].src) setTimeout(() => pages[i].src = A + c.img, 1500 + i * 400); }));
+go(Math.max(startAt, 0)).then(() => CHAPTERS.forEach((c, i) => { if (!c.html && !pages[i].src) setTimeout(() => pages[i].src = A + c.img, 1500 + i * 400); }));
 </script>
 </body>
 </html>
