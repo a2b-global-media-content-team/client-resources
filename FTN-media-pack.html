@@ -277,6 +277,9 @@
         a.vg:hover { text-decoration: underline; }
         .svc a.vg { display: block; margin-top: 4px; }
         .svc b + a.vg { margin-top: 8px; }
+        .sister-links { margin-top: 10px; font-size: 15px; }
+        .sister-links a { font-weight: 600; }
+        .sister-links .sep { color: var(--muted); margin: 0 4px; }
         .contact-card { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
         @media screen and (max-width: 760px) {
             .numbers-grid, .enq-grid, .quotes, .contact-card { grid-template-columns: 1fr; }
@@ -291,9 +294,11 @@
             .block h2, .period, .stats, table.pkg tr.group { break-after: avoid; }
             #numbers, #services { break-before: page; }
             .quote { padding: 12px 14px; font-size: 13.5px; }
-            .showcase { width: 58%; margin: 10px auto 32px; }
+            .showcase { width: 52%; margin: 8px auto 26px; }
+            .sister-links { margin-top: 6px; font-size: 13.5px; }
             .welcome .sisters { margin-top: 14px; padding-top: 12px; }
-            #numbers, #services, #bolt-ons, #calendar, #testimonials, #enquiries, #contact { break-inside: avoid; }
+            #numbers, #services, #bolt-ons, #testimonials, #enquiries, #contact { break-inside: avoid; }
+            #calendar .covers, #calendar > p, #calendar .packages { break-after: avoid; }
         }
     </style>
 </head>
@@ -344,6 +349,7 @@
             <div class="sisters">
                 <h3>Our sister brands</h3>
                 <img src="https://railway-news.com/wp-content/uploads/2026/10/a2b-Global-Media-network-logos-banner.png" alt="The a2b Global Media network: Railway-News, Aviation Industry-News, Bus-News, Future Transport-News and Maritime Industry-News" width="1200" height="80">
+                <p class="sister-links">Our other media packs: <a href="https://a2b-global-media-content-team.github.io/client-resources/RN-media-pack.html" target="_blank" rel="noopener">Railway-News</a> <span class="sep">·</span> <a href="https://a2b-global-media-content-team.github.io/client-resources/AIN-media-pack.html" target="_blank" rel="noopener">Aviation Industry-News</a> <span class="sep">·</span> <a href="https://a2b-global-media-content-team.github.io/client-resources/BN-media-pack.html" target="_blank" rel="noopener">Bus-News</a></p>
             </div>
         </div>
 
@@ -424,7 +430,7 @@
                 <table class="pkg">
                     <thead><tr><th>Bolt-on</th><th>Price</th></tr></thead>
                     <tbody>
-                        <tr><td>Content writing (4 pieces)</td><td>£2,000 / year</td></tr>
+                        <tr><td><a href="https://a2b-global-media-content-team.github.io/client-resources/content-writing-guidelines.html" target="_blank" rel="noopener" title="Our content writing guidelines (opens in a new tab)">Content writing</a> (4 pieces)</td><td>£2,000 / year</td></tr>
                         <tr><td>Short-form content</td><td>£2,000 / year</td></tr>
                         <tr><td>Graphic design services</td><td>POA</td></tr>
                         <tr><td>LinkedIn campaigns <span style="color:var(--muted);font-size:14px;">(bespoke pricing based on campaign)</span></td><td>POA</td></tr>
