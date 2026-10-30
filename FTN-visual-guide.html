@@ -558,7 +558,7 @@ function caption(step) {
     [...$('chapters').children].forEach((b, i) => b.setAttribute('aria-current', i === step.ci ? 'true' : 'false'));
     const cur = $('chapters').children[step.ci];
     cur.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' });
-    history.replaceState(null, '', '#' + slug(c) + (step.si ? '-' + (step.si + 1) : ''));
+    if (!location.hash || stepFromHash() >= 0) history.replaceState(null, '', '#' + slug(c) + (step.si ? '-' + (step.si + 1) : ''));
 }
 
 function progress(step) {

@@ -578,6 +578,7 @@ function caption(step) {
     [...$('chapters').children].forEach((b, i) => b.setAttribute('aria-current', i === step.ci ? 'true' : 'false'));
     const cur = $('chapters').children[step.ci];
     cur.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' });
+    if (!location.hash || stepFromHash() >= 0) history.replaceState(null, '', '#' + slug(c) + (step.si ? '-' + (step.si + 1) : ''));
 }
 
 function progress(step) {
@@ -720,9 +721,27 @@ CHAPTERS.forEach((c, ci) => {
     $('howto').appendChild(card);
 });
 
+/* ── DEEP LINKS ────────────────────────────────────────────────
+   #homepage, #company-profile, #products-services, … open a chapter;
+   #targeted-mail-3 opens step 3 of that chapter. The address bar
+   follows the tour, so a copied link opens the step on screen.
+   ────────────────────────────────────────────────────────────── */
+function slug(c) { return c.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+function stepFromHash() {
+    const m = decodeURIComponent(location.hash.slice(1)).toLowerCase().match(/^(.*?)(?:-(\d+))?$/);
+    const ci = CHAPTERS.findIndex(c => slug(c) === m[1]);
+    if (ci < 0) return -1;
+    const first = STEPS.findIndex(s => s.ci === ci), n = STEPS.filter(s => s.ci === ci).length;
+    return first + Math.min(Math.max((+m[2] || 1) - 1, 0), n - 1);
+}
+const toPlayer = () => document.querySelector('.player-wrap').scrollIntoView({ behavior: 'auto', block: 'start' });
+addEventListener('hashchange', () => { const i = stepFromHash(); if (i >= 0 && i !== idx) { go(i, true); toPlayer(); } });
+const startAt = stepFromHash();
+if (startAt >= 0) toPlayer();
+
 // Preload the remaining screenshots after the first one
 icon(playing);
-go(0).then(() => CHAPTERS.forEach((c, i) => { if (!c.html && !pages[i].src) setTimeout(() => pages[i].src = A + c.img, 1500 + i * 400); }));
+go(Math.max(startAt, 0)).then(() => CHAPTERS.forEach((c, i) => { if (!c.html && !pages[i].src) setTimeout(() => pages[i].src = A + c.img, 1500 + i * 400); }));
 </script>
 </body>
 </html>

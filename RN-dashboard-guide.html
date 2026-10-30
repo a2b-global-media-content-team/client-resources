@@ -418,14 +418,14 @@ const CHAPTERS = [
         alt: "Example Railway-News client dashboard, page 3",
         guide: `<p>Page 3 shows your magazine content, content writing and interviews.</p>
         <ol>
-            <li>The <strong>editorial calendar</strong> lists the Railway-News magazine issues during your contract period, with the content deadline and publication date. We publish three issues a year.</li>
+            <li>The <strong>Digital Magazine Calendar</strong> lists the Railway-News magazine issues during your contract period, with the content deadline and publication date. We publish three issues a year.</li>
             <li>Use <strong>Submit Magazine Content</strong> to send us your magazine content.</li>
             <li><strong>Your magazine appearances</strong> list the issues you have been in. <strong>Booked into</strong> shows the issues you are booked into next, and their status.</li>
             <li>Your <strong>content writing</strong> lists the articles we have written for you, and <strong>interviews</strong> lists any interviews.</li>
         </ol>`,
         steps: [
             {"title": "Magazines and content writing", "box": [0, 0, 1440, 900], "top": true, "noRing": true, "text": "Page 3 shows your magazine content, content writing and interviews."},
-            {"title": "Editorial calendar", "box": [12, 109, 1428, 545], "zoom": 0.9, "text": "The Railway-News magazine issues during your contract period, with each content deadline, publication date and event. We publish three issues a year."},
+            {"title": "Digital Magazine Calendar", "box": [12, 109, 1428, 545], "zoom": 0.9, "text": "The Railway-News magazine issues during your contract period, with each content deadline, publication date and event. We publish three issues a year."},
             {"title": "Submit magazine content", "box": [1168, 584, 252, 50], "zoom": 1.8, "text": "Use this button to send us your magazine content before the deadline."},
             {"title": "Your magazines", "box": [12, 655, 1428, 348], "zoom": 0.9, "text": "The issues you have appeared in, and the upcoming issues you are booked into with their status."},
             {"title": "Inside front cover", "box": [12, 1003, 1428, 348], "zoom": 0.9, "text": "If your package includes the inside front cover, the issue it is in."},
@@ -583,6 +583,7 @@ function caption(step) {
     [...$('chapters').children].forEach((b, i) => b.setAttribute('aria-current', i === step.ci ? 'true' : 'false'));
     const cur = $('chapters').children[step.ci];
     cur.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' });
+    if (!location.hash || stepFromHash() >= 0) history.replaceState(null, '', '#' + slug(c) + (step.si ? '-' + (step.si + 1) : ''));
 }
 
 function progress(step) {
@@ -725,9 +726,27 @@ CHAPTERS.forEach((c, ci) => {
     $('howto').appendChild(card);
 });
 
+/* ── DEEP LINKS ────────────────────────────────────────────────
+   #homepage, #company-profile, #products-services, … open a chapter;
+   #targeted-mail-3 opens step 3 of that chapter. The address bar
+   follows the tour, so a copied link opens the step on screen.
+   ────────────────────────────────────────────────────────────── */
+function slug(c) { return c.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+function stepFromHash() {
+    const m = decodeURIComponent(location.hash.slice(1)).toLowerCase().match(/^(.*?)(?:-(\d+))?$/);
+    const ci = CHAPTERS.findIndex(c => slug(c) === m[1]);
+    if (ci < 0) return -1;
+    const first = STEPS.findIndex(s => s.ci === ci), n = STEPS.filter(s => s.ci === ci).length;
+    return first + Math.min(Math.max((+m[2] || 1) - 1, 0), n - 1);
+}
+const toPlayer = () => document.querySelector('.player-wrap').scrollIntoView({ behavior: 'auto', block: 'start' });
+addEventListener('hashchange', () => { const i = stepFromHash(); if (i >= 0 && i !== idx) { go(i, true); toPlayer(); } });
+const startAt = stepFromHash();
+if (startAt >= 0) toPlayer();
+
 // Preload the remaining screenshots after the first one
 icon(playing);
-go(0).then(() => CHAPTERS.forEach((c, i) => { if (!c.html && !pages[i].src) setTimeout(() => pages[i].src = A + c.img, 1500 + i * 400); }));
+go(Math.max(startAt, 0)).then(() => CHAPTERS.forEach((c, i) => { if (!c.html && !pages[i].src) setTimeout(() => pages[i].src = A + c.img, 1500 + i * 400); }));
 </script>
 </body>
 </html>
