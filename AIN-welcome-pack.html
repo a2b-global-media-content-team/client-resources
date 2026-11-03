@@ -224,6 +224,22 @@
             #panel-own::before, #panel-ours::before { display: block; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
             .site-foot { margin-top: 20px; break-inside: avoid; }
         }
+    
+        /* ── MAGAZINE COVERS BY PACKAGE ───────────────── */
+        .covers { display: flex; gap: 16px; margin: 14px 0 18px; }
+        .covers img { width: 23%; max-width: 160px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: filter 0.2s, opacity 0.2s; }
+        .covers img.dim { filter: grayscale(1); opacity: 0.4; }
+        .packages span.pick { padding: 0; }
+        .packages .pick button { all: unset; display: block; padding: 2px 10px 1px; border-radius: 4px; cursor: pointer; }
+        .packages .pick button:focus-visible { outline: 2px solid var(--orange-dk); outline-offset: 1px; }
+        .packages span.pick:hover { box-shadow: 0 0 0 2px var(--orange); }
+        .packages span.pick.on { background: var(--orange); color: var(--navy); }
+        .cover-note { margin: -6px 0 16px; font-size: 15px; color: var(--muted); }
+        .cover-note b { color: var(--navy); }
+        @media print {
+            .cover-note, .wp-covers { display: none; }
+            .covers img.dim { filter: none; opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -575,7 +591,8 @@
         <!-- ═══ MAGAZINE ══════════════════════════════════════ -->
         <section class="block" id="magazine">
             <h2>Aviation Industry-News Magazine</h2>
-            <div class="packages">Packages: <span class="off">Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
+            <div class="packages" data-covers="0 1 1 1">Packages: <span class="off">Essentials</span><span>Essentials+</span><span>Premium</span><span>Ultra</span></div>
+            <div class="covers wp-covers"><img src="media-pack-assets/ain-magazine-cover-2026.jpg" alt="Magazine cover, 2026"><img src="media-pack-assets/ain-magazine-cover-2025.jpg" alt="Magazine cover, 2025"><img src="media-pack-assets/ain-magazine-cover-2024.jpg" alt="Magazine cover, 2024"><img src="media-pack-assets/ain-magazine-cover-2023.jpg" alt="Magazine cover, 2023"></div>
             <p>We publish <strong>one issue a year</strong> of our interactive e-magazine. Your package includes three A4 pages in the issue (Essentials+, Premium and Ultra). We contact you before the submission deadline to remind you to send your content.</p>
             <p>As well as appearing in the magazine, your pages are published as a stand-alone PDF on your company profile, so readers can download your article.</p>
             <p><a href="https://form.jotform.com/222503646676359" target="_blank" rel="noopener"><strong>Submit your magazine content using this form ▸</strong></a></p>
@@ -686,6 +703,41 @@ function spy() {
 }
 addEventListener('scroll', spy, { passive: true });
 spy();
+</script>
+<script>
+(function () {
+    Array.prototype.forEach.call(document.querySelectorAll('.packages[data-covers]'), function (box) {
+        var counts = box.getAttribute('data-covers').split(' ').map(Number);
+        var covers = box.nextElementSibling;
+        var imgs = covers.querySelectorAll('img');
+        var note = document.createElement('p');
+        note.className = 'cover-note';
+        note.setAttribute('aria-live', 'polite');
+        covers.parentNode.insertBefore(note, covers.nextSibling);
+        var buttons = [], picked = null;
+        function render() {
+            Array.prototype.forEach.call(imgs, function (im, j) { im.classList.toggle('dim', picked !== null && j >= counts[picked]); });
+            buttons.forEach(function (b, i) {
+                b.setAttribute('aria-pressed', i === picked);
+                b.parentNode.classList.toggle('on', i === picked);
+            });
+            if (picked === null) { note.textContent = 'Select a package to see how many issues it includes.'; return; }
+            var n = counts[picked], name = buttons[picked].textContent;
+            note.innerHTML = '<b>' + name + '</b> ' + (n ? 'includes ' + n + (n === 1 ? ' issue.' : ' issues.') : 'doesn’t include the magazine.');
+        }
+        Array.prototype.forEach.call(box.querySelectorAll('span'), function (s, i) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.textContent = s.textContent;
+            s.textContent = '';
+            s.classList.add('pick');
+            s.appendChild(b);
+            buttons.push(b);
+            b.onclick = function () { picked = picked === i ? null : i; render(); };
+        });
+        render();
+    });
+})();
 </script>
 </body>
 </html>
