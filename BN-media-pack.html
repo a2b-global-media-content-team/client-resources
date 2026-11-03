@@ -329,8 +329,14 @@
         .covers { display: flex; gap: 16px; margin: 14px 0 18px; }
         .covers img { width: 23%; max-width: 160px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .enq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
-        .enq { border-left: 4px solid var(--orange); background: #FBFCFD; border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 15px; }
-        .enq small { display: block; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange-dk); font-weight: 600; margin-bottom: 4px; }
+        .enq { display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 8px 22px rgba(27, 51, 66, 0.13); }
+        .enq-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--navy); color: #fff; font-size: 14px; }
+        .enq-bar svg { width: 18px; height: 18px; flex: none; color: var(--orange); }
+        .enq-bar span { margin-left: auto; font-size: 12.5px; text-align: right; opacity: 0.85; }
+        .enq-body { flex: 1; padding: 12px 16px 16px; font-size: 15.5px; line-height: 1.5; color: var(--text); }
+        .enq-to { margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); font-size: 13px; color: var(--muted); }
+        .enq-to b { color: var(--navy); }
+        .enq small { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
         .quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
         .quote { border: 1px solid var(--rule); border-radius: 10px; background: #FBFCFD; padding: 16px 18px; font-size: 15px; }
         .quote p::before { content: '“'; font-size: 30px; line-height: 0; vertical-align: -10px; color: var(--orange); margin-right: 2px; }
@@ -359,6 +365,11 @@
         }
         @media print {
             table.compare { min-width: 0; }
+            .enq-grid { gap: 10px; margin-top: 8px; }
+            .enq { box-shadow: none; }
+            .enq-bar { padding: 5px 12px; font-size: 13px; }
+            .enq-body { padding: 8px 12px 10px; font-size: 13.5px; line-height: 1.4; }
+            .enq-to { margin-bottom: 5px; padding-bottom: 4px; font-size: 12px; }
             table.compare tfoot { display: table-row-group; }
             .tier-open::after, #pkg-pop { display: none; }
             table.compare th, table.compare tfoot td { padding: 8px 6px; }
@@ -548,7 +559,7 @@
             <h2>Typical Enquiries</h2>
             <p>Readers contact suppliers directly through the enquiry form on their company profile. Here are some of the enquiries our suppliers have received.</p>
             <div class="enq-grid">
-                <div class="enq"><small>Enquiry</small>We want to know if we have opportunity to work with your company as the role of supplier for the in-vehicle industrial PCs with AI performance systems. Looking forward to receiving your reply.</div><div class="enq"><small>Enquiry</small>We are interested in your “Innovated Temperature Switch KTSZ4H”, we would like to ask a quotation for the following batches: 2 units, 30 units, 240 units. We need price and delivery time.</div>
+                <div class="enq"><div class="enq-bar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><b>New enquiry</b><span>via your company profile</span></div><div class="enq-body"><small>Enquiry</small><div class="enq-to" aria-hidden="true">To: <b>Your company</b></div>We want to know if we have opportunity to work with your company as the role of supplier for the in-vehicle industrial PCs with AI performance systems. Looking forward to receiving your reply.</div></div><div class="enq"><div class="enq-bar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><b>New enquiry</b><span>via your company profile</span></div><div class="enq-body"><small>Enquiry</small><div class="enq-to" aria-hidden="true">To: <b>Your company</b></div>We are interested in your “Innovated Temperature Switch KTSZ4H”, we would like to ask a quotation for the following batches: 2 units, 30 units, 240 units. We need price and delivery time.</div></div>
             </div>
         </section>
 
