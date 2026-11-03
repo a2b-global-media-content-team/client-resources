@@ -283,6 +283,32 @@
         table.compare .yes { display: inline-block; width: 22px; height: 22px; line-height: 22px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 13px; font-weight: 700; text-align: center; }
         table.compare tfoot td { padding: 14px 8px; border: 0; }
         table.compare tfoot td:first-child { color: var(--navy); font-weight: 700; }
+        .tier-open { all: unset; display: block; width: 100%; box-sizing: border-box; cursor: pointer; text-align: center; border-radius: 4px; }
+        .tier-open::after { content: "View package ▸"; display: block; margin-top: 5px; font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; text-decoration: underline; }
+        .tier-open:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+        table.compare th:hover .tier-open::after, table.compare tfoot td:hover .tier-open::after { text-decoration-thickness: 2px; }
+        #pkg-pop { width: min(1120px, 94vw); max-height: 92vh; margin: auto; padding: 0; border: 0; border-radius: 12px; overflow: hidden; color: var(--text); box-shadow: 0 20px 60px rgba(27, 51, 66, 0.4); }
+        #pkg-pop[open] { display: flex; flex-direction: column; }
+        #pkg-pop::backdrop { background: rgba(27, 51, 66, 0.6); }
+        .pop-head { display: flex; align-items: center; gap: 16px; padding: 14px 22px; flex: none; color: var(--navy); }
+        .pop-head h3 { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.2; color: inherit; }
+        .pop-head .pop-price { margin-left: auto; font-size: 22px; font-weight: 700; white-space: nowrap; }
+        .pop-head .pop-price small { font-size: 13px; font-weight: 500; }
+        .pop-close { all: unset; cursor: pointer; width: 32px; height: 32px; line-height: 32px; flex: none; text-align: center; font-size: 22px; border-radius: 50%; }
+        .pop-close:hover, .pop-close:focus-visible { background: rgba(127, 127, 127, 0.3); }
+        #pkg-pop.t0 .pop-head { background: color-mix(in srgb, var(--orange) 26%, #fff); }
+        #pkg-pop.t1 .pop-head { background: color-mix(in srgb, var(--orange) 50%, #fff); }
+        #pkg-pop.t2 .pop-head { background: var(--orange); color: #0E1F2A; }
+        #pkg-pop.t3 .pop-head { background: var(--navy); color: #fff; }
+        #pkg-pop.t3 .pop-price { color: var(--orange); }
+        .pop-body { columns: 3; column-gap: 28px; padding: 14px 22px 6px; overflow-y: auto; }
+        .pop-sec { break-inside: avoid; margin-bottom: 12px; }
+        .pop-sec h4 { margin: 0 0 4px; padding-bottom: 3px; font-size: 12px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--navy); border-bottom: 2px solid var(--orange); }
+        .pop-item { display: flex; gap: 8px; align-items: baseline; padding: 4px 0; font-size: 13.5px; line-height: 1.35; border-bottom: 1px solid color-mix(in srgb, var(--orange) 22%, #fff); }
+        .pop-item .lab { flex: 1; color: var(--navy); }
+        .pop-item .val { flex: none; max-width: 42%; text-align: right; font-weight: 700; color: var(--orange-dk); }
+        .pop-item a.vg { white-space: nowrap; }
+        .pop-foot { flex: none; padding: 8px 22px 12px; font-size: 13.5px; color: var(--muted); }
         .covers { display: flex; gap: 16px; margin: 14px 0 18px; }
         .covers img { width: 23%; max-width: 160px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .enq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
@@ -311,10 +337,13 @@
             .stats { grid-template-columns: 1fr; }
             .svc { grid-template-columns: repeat(2, 1fr); }
             .bar { grid-template-columns: 110px 1fr 50px; font-size: 13px; }
+            .pop-body { columns: 1; }
+            .pop-head h3, .pop-head .pop-price { font-size: 18px; }
         }
         @media print {
             table.compare { min-width: 0; }
             table.compare tfoot { display: table-row-group; }
+            .tier-open::after, #pkg-pop { display: none; }
             table.compare th, table.compare tfoot td { padding: 8px 6px; }
             table.compare .amt { font-size: 18px; }
             table.compare tr.group td { padding-top: 8px; }
@@ -539,6 +568,55 @@ function spy() {
 }
 addEventListener('scroll', spy, { passive: true });
 spy();
+
+(function () {
+    var table = document.querySelector('table.compare');
+    if (!table || !window.HTMLDialogElement) return;
+    var pop = document.createElement('dialog');
+    pop.id = 'pkg-pop';
+    pop.setAttribute('aria-labelledby', 'pkg-pop-title');
+    document.body.appendChild(pop);
+    var tiers = Array.prototype.slice.call(table.tHead.rows[0].cells, 1).map(function (th) {
+        return { name: th.querySelector('.tier').textContent, price: th.querySelector('.amt').textContent };
+    });
+    function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+    function open(i, from) {
+        var secs = [], sec = null;
+        Array.prototype.forEach.call(table.tBodies[0].rows, function (r) {
+            if (r.classList.contains('group')) { sec = { name: r.cells[0].textContent, items: [] }; secs.push(sec); return; }
+            var c = r.cells[i + 1];
+            if (c.classList.contains('no')) return;
+            sec.items.push('<div class="pop-item"><span class="lab">' + r.cells[0].innerHTML + '</span>' +
+                '<span class="val">' + esc(c.textContent) + '</span>' + '</div>');
+        });
+        pop.className = 't' + i;
+        pop.innerHTML = '<div class="pop-head"><h3 id="pkg-pop-title">' + esc(tiers[i].name) + '</h3>' +
+            '<span class="pop-price">' + esc(tiers[i].price) + ' <small>per year</small></span>' +
+            '<button type="button" class="pop-close" aria-label="Close">×</button></div>' +
+            '<div class="pop-body">' + secs.filter(function (x) { return x.items.length; }).map(function (x) {
+                return '<div class="pop-sec"><h4>' + esc(x.name) + '</h4>' + x.items.join('') + '</div>';
+            }).join('') + '</div>' +
+            '<div class="pop-foot">Multi-year discounts are available on request.</div>';
+        pop.querySelector('.pop-close').onclick = function () { pop.close(); };
+        pop.opener_ = from;
+        pop.showModal();
+        pop.querySelector('.pop-close').focus();
+    }
+    pop.addEventListener('click', function (e) { if (e.target === pop) pop.close(); });
+    pop.addEventListener('close', function () { if (pop.opener_) pop.opener_.focus(); });
+    [table.tHead.rows[0], table.tFoot.rows[0]].forEach(function (row) {
+        Array.prototype.slice.call(row.cells, 1).forEach(function (cell, i) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'tier-open';
+            b.setAttribute('aria-haspopup', 'dialog');
+            while (cell.firstChild) b.appendChild(cell.firstChild);
+            cell.appendChild(b);
+            b.onclick = function () { open(i, b); };
+        });
+    });
+})();
+
 </script>
 </body>
 </html>
