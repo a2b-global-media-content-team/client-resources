@@ -259,7 +259,31 @@
         .svc .ico { width: 60px; height: 60px; border-radius: 50%; background: var(--orange-lt); color: var(--orange-dk); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
         .svc .ico svg { width: 30px; height: 30px; }
         .svc b { display: block; font-size: 14.5px; font-weight: 600; color: var(--navy); line-height: 1.3; }
-        table.pkg tr.price td { font-weight: 700; color: var(--navy); background: var(--orange-lt); }
+        table.compare { table-layout: fixed; min-width: 640px; }
+        table.compare th:first-child, table.compare td:first-child { width: 36%; }
+        table.compare .tier, table.compare .amt, table.compare .per { display: block; }
+        table.compare .tier { font-size: 13px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 700; }
+        table.compare .amt { font-size: 21px; font-weight: 700; letter-spacing: 0; line-height: 1.25; margin-top: 2px; text-transform: none; }
+        table.compare .per { font-size: 12px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+        table.compare th { border: 0; color: var(--navy); padding: 14px 8px; vertical-align: bottom; }
+        table.compare th:first-child { color: var(--orange-dk); }
+        table.compare th:nth-child(2), table.compare tfoot td:nth-child(2) { background: color-mix(in srgb, var(--orange) 26%, #fff); }
+        table.compare th:nth-child(3), table.compare tfoot td:nth-child(3) { background: color-mix(in srgb, var(--orange) 50%, #fff); }
+        table.compare th:nth-child(4), table.compare tfoot td:nth-child(4) { background: var(--orange); color: #0E1F2A; }
+        table.compare th:nth-child(5), table.compare tfoot td:nth-child(5) { background: var(--navy); color: #fff; }
+        table.compare th:nth-child(5) .amt, table.compare tfoot td:nth-child(5) .amt { color: var(--orange); }
+        table.compare tbody td { border-bottom: 1px solid color-mix(in srgb, var(--orange) 22%, #fff); }
+        table.compare tbody td:nth-child(2) { background: color-mix(in srgb, var(--orange) 5%, #fff); }
+        table.compare tbody td:nth-child(3) { background: color-mix(in srgb, var(--orange) 10%, #fff); }
+        table.compare tbody td:nth-child(4) { background: color-mix(in srgb, var(--orange) 18%, #fff); }
+        table.compare tbody td:nth-child(5) { background: color-mix(in srgb, var(--orange) 28%, #fff); }
+        table.compare tr.group td { color: var(--navy); font-weight: 700; border-bottom: 2px solid var(--orange); padding-top: 16px; }
+        table.compare tr.group td:first-child { background: #fff; }
+        table.compare .no { color: #6F7E87; }
+        table.compare a.vg { white-space: nowrap; }
+        table.compare .yes { display: inline-block; width: 22px; height: 22px; line-height: 22px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 13px; font-weight: 700; text-align: center; }
+        table.compare tfoot td { padding: 14px 8px; border: 0; }
+        table.compare tfoot td:first-child { color: var(--navy); font-weight: 700; }
         .covers { display: flex; gap: 16px; margin: 14px 0 18px; }
         .covers img { width: 23%; max-width: 160px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .enq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
@@ -290,6 +314,12 @@
             .bar { grid-template-columns: 110px 1fr 50px; font-size: 13px; }
         }
         @media print {
+            table.compare { min-width: 0; }
+            table.compare tfoot { display: table-row-group; }
+            table.compare th, table.compare tfoot td { padding: 8px 6px; }
+            table.compare .amt { font-size: 18px; }
+            table.compare tr.group td { padding-top: 8px; }
+            table.compare tbody td { padding-top: 6px; padding-bottom: 6px; }
             .stats, .svc, .enq-grid, .covers, .bar, .quote, table.pkg tr { break-inside: avoid; }
             .block h2, .period, .stats, table.pkg tr.group { break-after: avoid; }
             #numbers, #services { break-before: page; }
@@ -390,36 +420,35 @@
             <h2>Packages &amp; Prices</h2>
             <p>All subscriptions include a fully managed service: quarterly reviews with your dedicated Partnership Manager, reviewing activity and planning next steps. Select <b>See it ▸</b> beside a feature to see where it appears in our <a href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html" target="_blank" rel="noopener">Visual Guide</a>.</p>
             <div class="table-scroll">
-                <table class="pkg">
-                    <thead><tr><th>Included</th><th>Essentials</th><th>Essentials+</th><th>Premium</th><th>Ultra</th></tr></thead>
+                <table class="pkg compare">
+                    <thead><tr><th>Included</th><th><span class="tier">Essentials</span><span class="amt">£3,500</span><span class="per">per year</span></th><th><span class="tier">Essentials+</span><span class="amt">£5,000</span><span class="per">per year</span></th><th><span class="tier">Premium</span><span class="amt">£8,000</span><span class="per">per year</span></th><th><span class="tier">Ultra</span><span class="amt">£10,000</span><span class="per">per year</span></th></tr></thead>
                     <tbody>
-<tr class="group"><td colspan="5">Your profile</td></tr>
-<tr><td>Company profile, written by you and optimised by us for SEO, GEO/AEO, with your news, videos, images and documents <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#company-profile" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+<tr class="group"><td>Your profile</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Company profile, written by you and optimised by us for SEO, GEO/AEO, with your news, videos, images and documents <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#company-profile" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr>
 <tr><td>News hosting</td><td>Up to 6 items</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
-<tr><td>Quarterly statistics report and package utilisation dashboard</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
-<tr><td>Products &amp; Services listing and Supplier A–Z <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#products-services-4" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
-<tr><td>Digital weekly newsletter and social media channels <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#digital-newsletter" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
-<tr><td>Quarterly check-in calls with your Partnership Manager</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
-<tr class="group"><td colspan="5">Onboarding</td></tr>
-<tr><td>Onboarding call</td><td class="no">—</td><td class="no">—</td><td>✓</td><td>✓</td></tr>
-<tr class="group"><td colspan="5">Lead generation</td></tr>
+<tr><td>Quarterly statistics report and package utilisation dashboard</td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr>
+<tr><td>Products &amp; Services listing and Supplier A–Z <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#products-services-4" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr>
+<tr><td>Digital weekly newsletter and social media channels <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#digital-newsletter" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr>
+<tr><td>Quarterly check-in calls with your Partnership Manager</td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr>
+<tr class="group"><td>Lead generation</td><td></td><td></td><td></td><td></td></tr>
 <tr><td>AI-Driven Targeted Mail campaigns <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#targeted-mail" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td class="no">—</td><td>1</td><td>2</td><td>3</td></tr>
-<tr><td>Targeted LinkedIn campaign with statistics report</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td>✓</td></tr>
-<tr class="group"><td colspan="5">Brand awareness</td></tr>
+<tr><td>Targeted LinkedIn campaign with statistics report</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td><span class="yes" aria-label="Included">✓</span></td></tr>
+<tr class="group"><td>Brand awareness</td><td></td><td></td><td></td><td></td></tr>
 <tr><td>News pages banner</td><td class="no">—</td><td class="no">—</td><td>6 months</td><td>12 months</td></tr>
 <tr><td>Homepage banner <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#homepage-5" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td class="no">—</td><td>4 weeks, below the fold</td><td>6 months, above the fold</td><td>12 months, above the fold</td></tr>
 <tr><td>Social media banner posts <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#social-media-banners" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td class="no">—</td><td>2</td><td>4</td><td>4</td></tr>
 <tr><td>Digital newsletter banners <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#digital-newsletter-2" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td class="no">—</td><td>4</td><td>6 (every other month)</td><td>12 (monthly)</td></tr>
 <tr><td>Products &amp; Services page banners <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#products-services-2" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td class="no">—</td><td>1</td><td>2</td><td>4</td></tr>
 <tr><td>Products &amp; Services featured supplier positions <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#products-services-3" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td class="no">—</td><td>Up to 2</td><td>Up to 4</td><td>Up to 8</td></tr>
-<tr><td>Your events and webinars on our Events page and in the newsletter</td><td class="no">—</td><td class="no">—</td><td>✓</td><td>✓</td></tr>
-<tr class="group"><td colspan="5">Thought leadership</td></tr>
-<tr><td>Content writing (4 articles)</td><td class="no">—</td><td class="no">—</td><td>✓</td><td>✓</td></tr>
+<tr><td>Your events and webinars on our Events page and in the newsletter</td><td class="no">—</td><td class="no">—</td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr>
+<tr class="group"><td>Thought leadership</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Content writing (4 articles)</td><td class="no">—</td><td class="no">—</td><td><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr>
 <tr><td>Digital magazine (3 A4 pages) <a class="vg" href="https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#digital-magazine" target="_blank" rel="noopener" title="See it in the Visual Guide (opens in a new tab)">See it&nbsp;▸</a></td><td class="no">—</td><td>1 issue</td><td>1 issue</td><td>2 issues</td></tr>
-<tr class="group"><td colspan="5">Design</td></tr>
-<tr><td>Graphic design: one 300 × 250 banner, one 1024 × 512 banner and, if needed, one A4 magazine advert</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td>✓</td></tr>
-<tr class="price"><td>Price per year</td><td>£3,500</td><td>£5,000</td><td>£8,000</td><td>£10,000</td></tr>
+<tr class="group"><td>Design</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Graphic design: one 300 × 250 banner, one 1024 × 512 banner and, if needed, one A4 magazine advert</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td><span class="yes" aria-label="Included">✓</span></td></tr>
+
                     </tbody>
+                    <tfoot><tr><td>Price per year</td><td><span class="tier">Essentials</span><span class="amt">£3,500</span></td><td><span class="tier">Essentials+</span><span class="amt">£5,000</span></td><td><span class="tier">Premium</span><span class="amt">£8,000</span></td><td><span class="tier">Ultra</span><span class="amt">£10,000</span></td></tr></tfoot>
                 </table>
             </div>
             <p style="font-size:15px;color:var(--muted);">Multi-year discounts are available on request.</p>
@@ -435,6 +464,7 @@
                     <tbody>
                         <tr><td><a href="https://a2b-global-media-content-team.github.io/client-resources/content-writing-guidelines.html" target="_blank" rel="noopener" title="Our content writing guidelines (opens in a new tab)">Content writing</a> (4 pieces)</td><td>£2,000 / year</td></tr>
                         <tr><td>Short-form content</td><td>£2,000 / year</td></tr>
+                        <tr><td>Onboarding call</td><td>POA</td></tr>
                         <tr><td>Graphic design services</td><td>POA</td></tr>
                         <tr><td>LinkedIn campaigns <span style="color:var(--muted);font-size:14px;">(bespoke pricing based on campaign)</span></td><td>POA</td></tr>
                     </tbody>

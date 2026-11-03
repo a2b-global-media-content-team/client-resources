@@ -79,7 +79,7 @@ Everything you need to reach buyers in the future transport sector, managed for 
 
 All subscriptions include a fully managed service: quarterly reviews with your dedicated Partnership Manager, reviewing activity and planning next steps. Select **See it ▸** beside a feature to see where it appears in our [Visual Guide](https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html).
 
-| Included | Essentials | Essentials+ | Premium | Ultra |
+| Included | Essentials £3,000 per year | Essentials+ £4,500 per year | Premium £6,500 per year | Ultra £9,000 per year |
 | --- | --- | --- | --- | --- |
 | Your profile |  |  |  |  |
 | Company profile, written by you and optimised by us for SEO, GEO/AEO, with your news, videos, images and documents [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html#company-profile) | ✓ | ✓ | ✓ | ✓ |
@@ -88,8 +88,6 @@ All subscriptions include a fully managed service: quarterly reviews with your d
 | Products & Services listing and Supplier A–Z [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html#products-services-4) | ✓ | ✓ | ✓ | ✓ |
 | Digital weekly newsletter and social media channels [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html#digital-newsletter) | ✓ | ✓ | ✓ | ✓ |
 | Quarterly check-in calls with your Partnership Manager | ✓ | ✓ | ✓ | ✓ |
-| Onboarding |  |  |  |  |
-| Onboarding call | — | — | ✓ | ✓ |
 | Lead generation |  |  |  |  |
 | AI-Driven Targeted Mail campaigns [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/FTN-visual-guide.html#targeted-mail) | — | 1 | 2 | 3 |
 | Targeted LinkedIn campaign with statistics report | — | — | — | ✓ |
@@ -105,7 +103,7 @@ All subscriptions include a fully managed service: quarterly reviews with your d
 | Content writing (4 articles) | — | — | ✓ | ✓ |
 | Design |  |  |  |  |
 | Graphic design: one 300 × 250 banner, one 1024 × 512 banner | — | — | — | ✓ |
-| Price per year | £3,000 | £4,500 | £6,500 | £9,000 |
+| Price per year | Essentials £3,000 | Essentials+ £4,500 | Premium £6,500 | Ultra £9,000 |
 
 Multi-year discounts are available on request.
 
@@ -117,6 +115,7 @@ Add any of these to your subscription.
 | --- | --- |
 | [Content writing](https://a2b-global-media-content-team.github.io/client-resources/content-writing-guidelines.html) (4 pieces) | £2,000 / year |
 | Short-form content | £2,000 / year |
+| Onboarding call | POA |
 | Graphic design services | POA |
 | LinkedIn campaigns (bespoke pricing based on campaign) | POA |
 

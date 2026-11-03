@@ -82,7 +82,7 @@ Everything you need to reach buyers in the rail industry, managed for you by our
 
 All subscriptions include a fully managed service: quarterly reviews with your dedicated Partnership Manager, reviewing activity and planning next steps. Select **See it ▸** beside a feature to see where it appears in our [Visual Guide](https://a2b-global-media-content-team.github.io/client-resources/RN-visual-guide.html).
 
-| Included | Essentials | Essentials+ | Premium | Ultra |
+| Included | Essentials £5,000 per year | Essentials+ £7,500 per year | Premium £10,500 per year | Ultra £14,000 per year |
 | --- | --- | --- | --- | --- |
 | Your profile |  |  |  |  |
 | Company profile, written by you and optimised by us for SEO, GEO/AEO, with your news, videos, images and documents [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/RN-visual-guide.html#company-profile) | ✓ | ✓ | ✓ | ✓ |
@@ -91,8 +91,6 @@ All subscriptions include a fully managed service: quarterly reviews with your d
 | Products & Services listing and Supplier A–Z [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/RN-visual-guide.html#products-services-4) | ✓ | ✓ | ✓ | ✓ |
 | Digital bi-weekly (twice a week) newsletter and social media channels [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/RN-visual-guide.html#digital-newsletter) | ✓ | ✓ | ✓ | ✓ |
 | Quarterly check-in calls with your Partnership Manager | ✓ | ✓ | ✓ | ✓ |
-| Onboarding |  |  |  |  |
-| Onboarding call | — | — | ✓ | ✓ |
 | Lead generation |  |  |  |  |
 | AI-Driven Targeted Mail campaigns [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/RN-visual-guide.html#targeted-mail) | — | 1 | 2 | 3 |
 | Targeted LinkedIn campaign with statistics report | — | — | — | ✓ |
@@ -109,7 +107,7 @@ All subscriptions include a fully managed service: quarterly reviews with your d
 | Digital magazine (3 A4 pages) [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/RN-visual-guide.html#digital-magazine) | — | 1 issue | 1 issue | 2 issues |
 | Design |  |  |  |  |
 | Graphic design: one 300 × 250 banner, one 1024 × 512 banner and, if needed, one A4 magazine advert | — | — | — | ✓ |
-| Price per year | £5,000 | £7,500 | £10,500 | £14,000 |
+| Price per year | Essentials £5,000 | Essentials+ £7,500 | Premium £10,500 | Ultra £14,000 |
 
 Multi-year discounts are available on request.
 
@@ -121,6 +119,7 @@ Add any of these to your subscription.
 | --- | --- |
 | [Content writing](https://a2b-global-media-content-team.github.io/client-resources/content-writing-guidelines.html) (4 pieces) | £2,000 / year |
 | Short-form content | £2,000 / year |
+| Onboarding call | POA |
 | Graphic design services | POA |
 | LinkedIn campaigns (bespoke pricing based on campaign) | POA |
 
