@@ -68,7 +68,7 @@ Everything you need to reach buyers in the rail industry, managed for you by our
 
 **Content Management** [Guidelines ▸](https://a2b-global-media-content-team.github.io/client-resources/press-release-guidelines.html) [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/RN-visual-guide.html#company-profile)
 
-**Search Engine Optimisation**
+**SEO | AEO | GEO**
 
 **Social Media** [Guidelines ▸](https://a2b-global-media-content-team.github.io/client-resources/social-media-banner-guidelines.html) [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/RN-visual-guide.html#social-media-banners)
 

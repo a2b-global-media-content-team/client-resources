@@ -67,7 +67,7 @@ Everything you need to reach buyers in the bus and coach sector, managed for you
 
 **Content Management** [Guidelines ▸](https://a2b-global-media-content-team.github.io/client-resources/press-release-guidelines.html) [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#company-profile)
 
-**Search Engine Optimisation**
+**SEO | AEO | GEO**
 
 **Social Media** [Guidelines ▸](https://a2b-global-media-content-team.github.io/client-resources/social-media-banner-guidelines.html) [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/BN-visual-guide.html#social-media-banners)
 

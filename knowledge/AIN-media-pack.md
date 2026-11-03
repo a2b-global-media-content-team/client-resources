@@ -67,7 +67,7 @@ Everything you need to reach buyers in the airport and aviation sector, managed 
 
 **Content Management** [Guidelines ▸](https://a2b-global-media-content-team.github.io/client-resources/press-release-guidelines.html) [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/AIN-visual-guide.html#company-profile)
 
-**Search Engine Optimisation**
+**SEO | AEO | GEO**
 
 **Social Media** [Guidelines ▸](https://a2b-global-media-content-team.github.io/client-resources/social-media-banner-guidelines.html) [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/AIN-visual-guide.html#social-media-banners)
 
