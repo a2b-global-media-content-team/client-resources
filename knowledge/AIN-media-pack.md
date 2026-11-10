@@ -101,7 +101,7 @@ All subscriptions include a fully managed service: quarterly reviews with your d
 | Products & Services page banners [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/AIN-visual-guide.html#products-services-2) | — | 1 | 2 | 4 |
 | Products & Services featured supplier positions [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/AIN-visual-guide.html#products-services-3) | — | Up to 2 | Up to 4 | Up to 8 |
 | Your events and webinars on our Events page and in the newsletter | — | — | ✓ | ✓ |
-| Thought leadership |  |  |  |  |
+| Education / thought leadership |  |  |  |  |
 | Content writing (4 articles) | — | — | ✓ | ✓ |
 | Digital magazine (3 A4 pages) [See it ▸](https://a2b-global-media-content-team.github.io/client-resources/AIN-visual-guide.html#digital-magazine) | — | 1 issue | 1 issue | 1 issue |
 | Design |  |  |  |  |
