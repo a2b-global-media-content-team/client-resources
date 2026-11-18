@@ -288,6 +288,12 @@
         .tier-open::after { content: "View package ▸"; display: block; margin-top: 5px; font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; text-decoration: underline; }
         .tier-open:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
         table.compare th:hover .tier-open::after, table.compare tfoot td:hover .tier-open::after { text-decoration-thickness: 2px; }
+        /* Sticky tier headers. The scroll wrapper would trap them, so JS adds .fits only while the table fits it. */
+        @media screen {
+            .table-scroll.fits { overflow: visible; }
+            .table-scroll.fits table.compare thead th { position: sticky; top: 0; z-index: 2; box-shadow: 0 6px 8px -6px rgba(27, 51, 66, 0.3); }
+            .table-scroll.fits table.compare thead th:first-child { background: #fff; }
+        }
         #pkg-pop { width: min(1120px, 94vw); max-height: 92vh; margin: auto; padding: 0; border: 0; border-radius: 12px; overflow: hidden; color: var(--text); box-shadow: 0 20px 60px rgba(27, 51, 66, 0.4); }
         #pkg-pop[open] { display: flex; flex-direction: column; }
         #pkg-pop::backdrop { background: rgba(27, 51, 66, 0.6); }
@@ -550,6 +556,16 @@ function spy() {
 }
 addEventListener('scroll', spy, { passive: true });
 spy();
+
+// Sticky tier headers: drop the scroll wrapper while the table fits it
+(function () {
+    var table = document.querySelector('table.compare');
+    if (!table || !window.ResizeObserver) return;
+    var box = table.parentElement;
+    new ResizeObserver(function () {
+        box.classList.toggle('fits', table.offsetWidth <= box.clientWidth + 1);
+    }).observe(box);
+})();
 
 (function () {
     var table = document.querySelector('table.compare');
